@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section class="row items-center">
-      <div class="text-h6">Submit Result Result</div>
+      <div class="text-h6">Submit Test Result</div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
