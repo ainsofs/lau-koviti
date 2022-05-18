@@ -27,12 +27,18 @@
 
       <!-- button -->
       <div class="q-pa-md"></div>
-      <q-btn @click="showModal = true" rounded  icon="add" color="primary" label="Add Test Result" />
+      <q-btn @click="showAddModal = true" rounded  icon="add" color="primary" label="Add Test Result" />
 
-
-      <q-dialog v-model="showModal">
+      <!-- Add Modal -->
+      <q-dialog v-model="showAddModal">
         <add-results />
       </q-dialog>
+
+      <!-- Submit Modal -->
+      <q-dialog v-model="showSubmitModal">
+        <submit-results />
+      </q-dialog>
+
     </template>
   </q-page>
 </template>
@@ -54,19 +60,21 @@ export default defineComponent({
   },
   data() {
     return {
-      showModal: false,
+      showAddModal: false,
+      showSubmitModal: false,
     }
   },
   methods: {
     submitTest() {
-      console.log('submitTest')
+      this.showSubmitModal = true
     },
     formatDate(timeStamp) {
       return date.formatDate(timeStamp, 'D MMMM')
     }
   },
   components: {
-    'add-results': require('components/TestResults/Modal/AddTestResult.vue').default
+    'add-results': require('components/TestResults/Modal/AddTestResult.vue').default,
+    'submit-results': require('components/TestResults/Modal/SubmitTestResult.vue').default,
   }
 })
 </script>
