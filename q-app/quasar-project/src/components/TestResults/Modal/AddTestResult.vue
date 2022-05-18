@@ -58,7 +58,6 @@ export default defineComponent({
     const store = useStoreResults()
 
     return {
-      // you can return the whole store instance to use it in the template
       store
     }
   },

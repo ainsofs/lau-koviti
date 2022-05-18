@@ -8,39 +8,82 @@
 
     <form @submit.prevent="submitForm">
       <q-card-section class="q-pt-none">
-        <div class="q-gutter-md">
 
-          <q-input outlined v-model="test.date" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="test.date" >
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
+      <div class="q-gutter-md" >
+        <q-input outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" />
 
-          <div class="q-pa-sm rounded-borders">
-            Test result / Faaiuga ole suesuega
-            <div>
-              <q-option-group
-                :options="options"
-                type="radio"
-                v-model="test.result"
-              />
-            </div>
-          </div>
+        <q-input outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" />
 
+        <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
+
+        <q-input outlined v-model="personal.dob" mask="date" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="personal.dob">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+
+        <div class="q-pa-sm rounded-borders">
+          Itaiga:
+          <q-option-group
+            :options="gender_opt"
+            type="radio"
+            v-model="personal.gender"
+          />
         </div>
+
+        <div>
+          <q-select
+            outlined
+            v-model="personal.village"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="village_opt"
+            hint="Nuu / Afioaga"
+            label="Village"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
+
+        <div class="q-pa-sm rounded-borders">
+          Do you have any underlying conditions?
+          <div class="q-pa-md">
+            <q-option-group
+              :options="condition_opt"
+              type="checkbox"
+              v-model="personal.conditions"
+            />
+          </div>
+        </div>
+
+        <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
+
+        <q-input outlined v-model="personal.email" label="Email" hint="Imeli" />
+
+      </div>
 
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn icon="save" type="submit" outline color="primary" label="Save" class="q-ma-md" v-close-popup />
+        <q-btn rounded icon="send" type="submit" color="primary" label="Submit" class="q-mb-md" />
+        <q-btn rounded icon="schedule" class="bg-secondary q-mb-xl" label="Submit Later" />
+        <q-btn rounded icon="check" color="green" class="bg-secondary q-mb-md" label="Mark Submitted" />
       </q-card-actions>
 
     </form>
@@ -58,27 +101,46 @@ export default defineComponent({
     const store = useStoreResults()
 
     return {
-      // you can return the whole store instance to use it in the template
       store
     }
   },
   data() {
     return {
-      options: [
-        { label: 'Positive / Ua aafia', value: 'Positive / Ua aafia' },
-        { label: 'Negative / E lei aafia', value: 'Negative / E lei aafia' },
-        { label: 'Inconclusive / Le mautinoa', value: 'Inconclusive / Le mautinoa' },
+      gender_opt: [
+        { label: "Male/ Ali'i", value: 'm' },
+        { label: "Female/ Tama'ita'i", value: 'f' },
       ],
+      village_opt: [
+        { label: 'Siusega', value: '1' },
+        { label: 'Moamoa', value: '2' },
+        { label: 'Apia', value: '3' },
+      ],
+      condition_opt: [
+        { label: "Diabetes / Ma'i Suka", value: 'p' },
+        { label: "Hypertension / Toto Maualuga", value: 'n' },
+        { label: "Cardiac disease / Ma'i Fatu", value: 'i' },
+      ],
+      personal: {
+        firstName: this.store.personal.firstName,
+        lastName: this.store.personal.lastName,
+        vaccinationId: this.store.personal.vaccinationId,
+        dob: this.store.personal.dob,
+        gender: this.store.personal.gender,
+        village: this.store.personal.village,
+        conditions: [],
+        phone: this.store.personal.phone,
+        email: this.store.personal.email,
+      },
       test: {
-        date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
-        result: 'Negative / E lei aafia',
+        date: '',
+        result: 'p',
         isSubmitted: false,
       },
     }
   },
   methods: {
     submitForm() {
-      this.store.addResult(this.test)
+      this.store.updatePersonal(this.personal)
     }
   }
 })

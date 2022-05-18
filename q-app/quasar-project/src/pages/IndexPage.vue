@@ -14,7 +14,7 @@
 
             <q-item-section side>
               <div v-if="!t.isSubmitted">
-                <q-btn @click="submitTest" outline round color="primary" icon="send" />
+                <q-btn @click="submitTest(t.id)" outline round color="primary" icon="send" />
               </div>
               <span v-else>
                 <q-icon name="check_circle" color="green" size="3rem" />
@@ -61,12 +61,13 @@ export default defineComponent({
   data() {
     return {
       showAddModal: false,
-      showSubmitModal: false,
+      showSubmitModal: true,
     }
   },
   methods: {
-    submitTest() {
+    submitTest(id) {
       this.showSubmitModal = true
+      console.log(id)
     },
     formatDate(timeStamp) {
       return date.formatDate(timeStamp, 'D MMMM')

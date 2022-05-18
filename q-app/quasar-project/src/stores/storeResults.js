@@ -9,14 +9,29 @@ export const useStoreResults = defineStore('storeResults', {
         date: '2022-05-13',
         result: 'Negative / E lei aafia',
         isSubmitted: false,
+        dateSubmitted: '',
+        personal: {}
       },
       {
         id: 'ID2',
         date: '2022-05-10',
         result: 'Negative / E lei aafia',
         isSubmitted: true,
+        dateSubmitted: '',
+        personal: {}
       },
-    ]
+    ],
+    personal: {
+      firstName: 'Ainsof',
+      lastName: "So'o",
+      vaccinationId: 'ABCDE',
+      dob: '1',
+      gender: 'm',
+      village: 'Siusega',
+      conditions: [],
+      phone: '2222',
+      email: 'ainsofs@test.com',
+    }
   }),
 
   // getters: {
@@ -30,6 +45,9 @@ export const useStoreResults = defineStore('storeResults', {
       testResult.id = uid()
 
       this.tests.unshift(testResult)
+    },
+    updatePersonal(payload) {
+      this.personal = payload
     }
   }
 })
