@@ -11,6 +11,8 @@ docker-compose up -d
 
 Once installed you can access the dev site on port 8080. e.g. localhost:8080
 
+Compiled SPA can be accessed on port 8000. e.g. localhost:8000/index.html
+
 
 **Common commands**
 
