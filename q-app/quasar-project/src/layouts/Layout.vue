@@ -12,10 +12,9 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          My COVID-19 Tests
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
