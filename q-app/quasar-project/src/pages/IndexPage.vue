@@ -14,7 +14,7 @@
 
             <q-item-section side>
               <div v-if="!t.isSubmitted">
-                <q-btn @click="submitTest(t.id)" outline round color="primary" icon="send" />
+                <q-btn @click.stop="submitTest(key)" outline round color="primary" icon="send" />
               </div>
               <span v-else>
                 <q-icon name="check_circle" color="green" size="3rem" />
