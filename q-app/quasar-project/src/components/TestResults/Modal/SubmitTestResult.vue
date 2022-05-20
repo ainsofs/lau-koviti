@@ -84,9 +84,9 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat color="primary" label="Mark Submitted" />
-        <q-btn flat color="primary" label="Submit Later" />
-        <q-btn type="submit" color="primary" label="Submit" class="btn-submit" />
+        <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
+        <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
+        <q-btn type="submit" color="primary" label="Submit" class="btn-submit" v-close-popup />
       </q-card-actions>
 
     </form>
@@ -100,6 +100,7 @@ import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
 
 export default defineComponent({
+  props: ['testResult', 'resultId'],
   setup() {
     const store = useStoreResults()
 
@@ -134,17 +135,29 @@ export default defineComponent({
         phone: this.store.personal.phone,
         email: this.store.personal.email,
       },
-      test: {
-        date: '',
-        result: 'p',
-        isSubmitted: false,
-      },
+      test: {},
     }
   },
   methods: {
     submitForm() {
       this.store.updatePersonal(this.personal)
+      this.test.isSubmitted = true
+      this.store.updateResult(this.resultId, this.test)
+
+      // TODO - post results to Google Form
+      alert('TODO submit to MOH now....')
+    },
+    submitLater() {
+      this.store.updatePersonal(this.personal)
+    },
+    markSubmitted() {
+      this.store.updatePersonal(this.personal)
+      this.test.isSubmitted = true
+      this.store.updateResult(this.resultId, this.test)
     }
+  },
+  created() {
+    Object.assign(this.test, this.testResult)
   }
 })
 </script>

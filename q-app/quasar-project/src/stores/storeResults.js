@@ -20,15 +20,15 @@ export const useStoreResults = defineStore('storeResults', {
       },
     },
     personal: {
-      firstName: 'Ainsof',
-      lastName: "So'o",
-      vaccinationId: 'ABCDE',
-      dob: '2022/05/01',
-      gender: 'm',
-      village: 'Siusega',
+      firstName: '',
+      lastName: "",
+      vaccinationId: '',
+      dob: '',
+      gender: '',
+      village: '',
       conditions: [],
-      phone: '2222',
-      email: 'ainsofs@test.com',
+      phone: '',
+      email: '',
     }
   }),
 
@@ -40,15 +40,14 @@ export const useStoreResults = defineStore('storeResults', {
 
   actions: {
     addResult(testResult) {
-      console.log(testResult)
       let id = uid()
       this.tests[id] = testResult
     },
     updateResult(id, testResult) {
       Object.assign(this.tests[id], testResult)
     },
-    updatePersonal(payload) {
-      Object.assign(this.personal, payload)
+    updatePersonal(personalDetails) {
+      Object.assign(this.personal, personalDetails)
     }
   }
 })

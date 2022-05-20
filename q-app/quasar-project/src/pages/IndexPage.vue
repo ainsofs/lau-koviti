@@ -14,7 +14,7 @@
 
             <q-item-section side>
               <div v-if="!t.isSubmitted">
-                <q-btn @click.stop="submitTest(key)" outline round color="primary" icon="send" />
+                <q-btn @click.stop="submitTest(key, t)" outline round color="primary" icon="send" />
               </div>
               <span v-else>
                 <q-icon name="check_circle" color="green" size="3rem" />
@@ -37,7 +37,7 @@
 
       <!-- Submit Modal -->
       <q-dialog v-model="showSubmitModal">
-        <submit-results />
+        <submit-results :testResult="testResult" :resultId="resultId" />
       </q-dialog>
 
     </template>
@@ -79,9 +79,10 @@ export default defineComponent({
       this.formMode = 'add'
       this.showAddModal = true
     },
-    submitTest(id) {
+    submitTest(id, testResult) {
+      this.resultId = id
+      this.testResult = testResult
       this.showSubmitModal = true
-      console.log(id)
     },
     formatDate(timeStamp) {
       return date.formatDate(timeStamp, 'D MMMM')
