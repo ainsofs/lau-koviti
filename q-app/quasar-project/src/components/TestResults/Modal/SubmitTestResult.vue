@@ -7,79 +7,87 @@
     </q-card-section>
 
     <form @submit.prevent="submitForm">
+
       <q-card-section class="q-pt-none">
 
-        <div class="q-gutter-md" >
-          <div class="row">
+        <q-checkbox v-model="showForm" label="Review Personal Details" class="q-pb-md" />
 
-              <q-input outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" />
+        <div  v-show="showForm">
+          <div class="q-gutter-md" >
+            <div class="row">
 
-              <q-input outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" />
-          </div>
+                <q-input outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" />
 
-          <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
+                <q-input outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" />
+            </div>
 
-          <q-input outlined v-model="personal.dob" mask="date" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="personal.dob">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
+            <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
 
-          <div class="q-pa-sm rounded-borders">
-            Itaiga:
-            <q-option-group
-              :options="gender_opt"
-              type="radio"
-              v-model="personal.gender"
-            />
-          </div>
-
-          <div>
-            <q-select
-              outlined
-              v-model="personal.village"
-              use-input
-              hide-selected
-              fill-input
-              input-debounce="0"
-              :options="village_opt"
-              hint="Nuu / Afioaga"
-              label="Village"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey">
-                    No results
-                  </q-item-section>
-                </q-item>
+            <q-input outlined v-model="personal.dob" mask="date" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="personal.dob">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
               </template>
-            </q-select>
-          </div>
+            </q-input>
 
-          <div class="q-pa-sm rounded-borders">
-            Do you have any underlying conditions?
-            <div class="q-pa-md">
+            <div class="q-pa-sm rounded-borders">
+              Itaiga:
               <q-option-group
-                :options="condition_opt"
-                type="checkbox"
-                v-model="personal.conditions"
+                :options="gender_opt"
+                type="radio"
+                v-model="personal.gender"
               />
             </div>
+
+            <div>
+              <q-select
+                outlined
+                v-model="personal.village"
+                use-input
+                hide-selected
+                fill-input
+                input-debounce="0"
+                :options="village_opt"
+                hint="Nuu / Afioaga"
+                label="Village"
+              >
+                <template v-slot:no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      No results
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+            </div>
+
+            <div class="q-pa-sm rounded-borders">
+              Do you have any underlying conditions?
+              <div class="q-pa-md">
+                <q-option-group
+                  :options="condition_opt"
+                  type="checkbox"
+                  v-model="personal.conditions"
+                />
+              </div>
+            </div>
+
+            <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
+
+            <q-input outlined v-model="personal.email" label="Email" hint="Imeli" />
+
           </div>
-
-          <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
-
-          <q-input outlined v-model="personal.email" label="Email" hint="Imeli" />
-
         </div>
+        <!-- Test Result -->
+        <!-- TODO create component to display test -->
+        <div>{{ test }}</div>
 
       </q-card-section>
 
@@ -136,22 +144,30 @@ export default defineComponent({
         email: this.store.personal.email,
       },
       test: {},
+      showForm: false,
     }
   },
   methods: {
     submitForm() {
-      this.store.updatePersonal(this.personal)
+      if (this.showForm) {
+        this.store.updatePersonal(this.personal)
+      }
       this.test.isSubmitted = true
+      Object.assign(this.test.personal, this.personal)
       this.store.updateResult(this.resultId, this.test)
 
       // TODO - post results to Google Form
       alert('TODO submit to MOH now....')
     },
     submitLater() {
-      this.store.updatePersonal(this.personal)
+      if (this.showForm) {
+        this.store.updatePersonal(this.personal)
+      }
     },
     markSubmitted() {
-      this.store.updatePersonal(this.personal)
+      if (this.showForm) {
+        this.store.updatePersonal(this.personal)
+      }
       this.test.isSubmitted = true
       this.store.updateResult(this.resultId, this.test)
     }

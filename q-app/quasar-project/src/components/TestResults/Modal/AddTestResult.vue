@@ -92,6 +92,7 @@ export default defineComponent({
         date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
         result: 'Negative / E lei aafia',
         isSubmitted: false,
+        personal: {},
       }
 		  this.test = Object.assign({}, defaultTest)
     }
