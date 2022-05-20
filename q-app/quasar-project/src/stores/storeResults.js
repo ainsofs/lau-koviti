@@ -3,24 +3,22 @@ import { uid } from 'quasar'
 
 export const useStoreResults = defineStore('storeResults', {
   state: () => ({
-    tests: [
-      {
-        id: 'ID1',
+    tests: {
+      'ID1': {
         date: '2022-05-13',
         result: 'Negative / E lei aafia',
         isSubmitted: false,
         dateSubmitted: '',
         personal: {}
       },
-      {
-        id: 'ID2',
+      'ID2': {
         date: '2022-05-10',
         result: 'Negative / E lei aafia',
         isSubmitted: true,
         dateSubmitted: '',
         personal: {}
       },
-    ],
+    },
     personal: {
       firstName: 'Ainsof',
       lastName: "So'o",
@@ -42,12 +40,15 @@ export const useStoreResults = defineStore('storeResults', {
 
   actions: {
     addResult(testResult) {
-      testResult.id = uid()
-
-      this.tests.unshift(testResult)
+      console.log(testResult)
+      let id = uid()
+      this.tests[id] = testResult
+    },
+    updateResult(id, testResult) {
+      Object.assign(this.tests[id], testResult)
     },
     updatePersonal(payload) {
-      this.personal = payload
+      Object.assign(this.personal, payload)
     }
   }
 })

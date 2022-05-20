@@ -61,7 +61,7 @@ export default defineComponent({
       store
     }
   },
-  props: ['testResult', 'formMode'],
+  props: ['testResult', 'formMode', 'resultId'],
   data() {
     return {
       options: [
@@ -69,22 +69,31 @@ export default defineComponent({
         { label: 'Negative / E lei aafia', value: 'Negative / E lei aafia' },
         { label: 'Inconclusive / Le mautinoa', value: 'Inconclusive / Le mautinoa' },
       ],
-      test: {
-        date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
-        result: 'Negative / E lei aafia',
-        isSubmitted: false,
-      },
+      test: {},
     }
   },
   methods: {
     submitForm() {
-      this.store.addResult(this.test)
+      if (this.formMode === 'edit') {
+        this.store.updateResult(this.resultId, this.test)
+      }
+      else {
+        this.store.addResult(this.test)
+      }
     }
   },
   created() {
     if (this.formMode === 'edit') {
       Object.assign(this.test, this.testResult)
 		  this.test = Object.assign({}, this.testResult)
+    }
+    else {
+      let defaultTest = {
+        date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
+        result: 'Negative / E lei aafia',
+        isSubmitted: false,
+      }
+		  this.test = Object.assign({}, defaultTest)
     }
   }
 })
