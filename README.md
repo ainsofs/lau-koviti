@@ -1,4 +1,4 @@
-# Quasar App Research
+# My COVID19 Test Results Research
 
 Repo for learning Quasar.
 

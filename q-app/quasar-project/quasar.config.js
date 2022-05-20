@@ -152,8 +152,8 @@ module.exports = configure(function (ctx) {
 
 
       manifest: {
-        name: `Quasar App`,
-        short_name: `Quasar App`,
+        name: `My COVID19 Test Results`,
+        short_name: `My COVID19 Test Results`,
         description: `A Quasar Project`,
         display: 'standalone',
         orientation: 'portrait',

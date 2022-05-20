@@ -5,7 +5,7 @@
       <div class="q-gutter-md">
         <q-list v-for="t in store.tests" :key="t.id" bordered class="rounded-borders">
 
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple @click="editTest(t)">
 
             <q-item-section>
               <q-item-label>{{ t.result }}</q-item-label>
@@ -23,6 +23,7 @@
           </q-item>
 
         </q-list>
+
       </div>
 
       <!-- button -->
@@ -31,7 +32,7 @@
 
       <!-- Add Modal -->
       <q-dialog v-model="showAddModal">
-        <add-results />
+        <add-results :testResult="testResult" :formMode="formMode" />
       </q-dialog>
 
       <!-- Submit Modal -->
@@ -61,10 +62,18 @@ export default defineComponent({
   data() {
     return {
       showAddModal: false,
-      showSubmitModal: true,
+      showSubmitModal: false,
+      testResult: {},
+      formMode: 'add',
     }
   },
   methods: {
+    editTest(testResult) {
+      // console.log(testResult)
+      this.testResult = testResult
+      this.formMode = 'edit'
+      this.showAddModal = true
+    },
     submitTest(id) {
       this.showSubmitModal = true
       console.log(id)

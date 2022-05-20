@@ -25,7 +25,7 @@ export const useStoreResults = defineStore('storeResults', {
       firstName: 'Ainsof',
       lastName: "So'o",
       vaccinationId: 'ABCDE',
-      dob: '1',
+      dob: '2022/05/01',
       gender: 'm',
       village: 'Siusega',
       conditions: [],

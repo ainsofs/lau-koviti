@@ -36,11 +36,11 @@
           </div>
 
         </div>
-
+        {{ test }}
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn icon="save" type="submit" outline color="primary" label="Save" class="q-ma-md" v-close-popup />
+        <q-btn type="submit" color="primary" label="Save" class="q-ma-md btn-submit" v-close-popup />
       </q-card-actions>
 
     </form>
@@ -61,6 +61,7 @@ export default defineComponent({
       store
     }
   },
+  props: ['testResult', 'formMode'],
   data() {
     return {
       options: [
@@ -78,6 +79,12 @@ export default defineComponent({
   methods: {
     submitForm() {
       this.store.addResult(this.test)
+    }
+  },
+  created() {
+    if (this.formMode === 'edit') {
+      Object.assign(this.test, this.testResult)
+		  this.test = Object.assign({}, this.testResult)
     }
   }
 })
