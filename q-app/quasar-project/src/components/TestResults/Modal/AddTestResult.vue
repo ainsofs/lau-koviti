@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section class="row items-center">
-      <div class="text-h6">Add Test Result</div>
+      <div class="text-h6">{{ formHeading }}</div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
@@ -24,8 +24,8 @@
             </template>
           </q-input>
 
-          <div class="q-pa-sm rounded-borders">
-            Test result / Faaiuga ole suesuega
+          <div>
+            <span class="text-grey">Test result</span>
             <div>
               <q-option-group
                 :options="options"
@@ -33,6 +33,7 @@
                 v-model="test.result"
               />
             </div>
+            <span class="q-field__bottom">Faaiuga ole suesuega</span>
           </div>
 
         </div>
@@ -40,7 +41,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn type="submit" color="primary" label="Save" class="q-ma-md btn-submit" v-close-popup />
+        <q-btn type="submit" flat dense color="primary" label="Save" class="btn-submit" v-close-popup />
       </q-card-actions>
 
     </form>
@@ -72,6 +73,17 @@ export default defineComponent({
       test: {},
     }
   },
+  computed: {
+    formHeading() {
+      if (this.formMode === 'edit') {
+        return 'Edit Test Result'
+      }
+      else {
+        return 'Add Test Result'
+      }
+
+    }
+  },
   methods: {
     submitForm() {
       if (this.formMode === 'edit') {
@@ -92,6 +104,7 @@ export default defineComponent({
         date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
         result: 'Negative / E lei aafia',
         isSubmitted: false,
+        dateSubmitted: '',
         personal: {},
       }
 		  this.test = Object.assign({}, defaultTest)

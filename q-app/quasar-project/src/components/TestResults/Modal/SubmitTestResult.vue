@@ -9,11 +9,10 @@
     <form @submit.prevent="submitForm">
 
       <q-card-section class="q-pt-none">
-
-        <q-checkbox v-model="showForm" label="Review Personal Details" class="q-pb-md" />
+        <q-checkbox v-model="showForm" v-if="!isPersonalEmpty" label="Review Personal Details" class="q-pb-md" />
 
         <div  v-show="showForm">
-          <div class="q-gutter-md" >
+          <div class="q-gutter-md q-pb-md" >
             <div class="row">
 
                 <q-input outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" />
@@ -38,12 +37,13 @@
             </q-input>
 
             <div class="q-pa-sm rounded-borders">
-              Itaiga:
+              <span class="text-grey">Gender</span>
               <q-option-group
                 :options="gender_opt"
                 type="radio"
                 v-model="personal.gender"
               />
+              <span class="q-field__bottom">Ituaiga</span>
             </div>
 
             <div>
@@ -69,7 +69,7 @@
             </div>
 
             <div class="q-pa-sm rounded-borders">
-              Do you have any underlying conditions?
+              <span class="text-grey">Do you have any underlying conditions?</span>
               <div class="q-pa-md">
                 <q-option-group
                   :options="condition_opt"
@@ -77,6 +77,7 @@
                   v-model="personal.conditions"
                 />
               </div>
+              <span class="q-field__bottom">O e a’afia i fa’amai o lo’o taua i lalo?</span>
             </div>
 
             <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
@@ -86,15 +87,30 @@
           </div>
         </div>
         <!-- Test Result -->
-        <!-- TODO create component to display test -->
-        <div>{{ test }}</div>
+         <q-card flat bordered class="my-card">
+          <q-card-section>
+            <div class="text-weight-medium">Test Results</div>
+          </q-card-section>
 
+          <q-card-section class="q-pt-none">
+            <div class="row">
+              <div class="col-5">Date:</div>
+              <div class="col">{{ formatDate(test.date) }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5">Test Result:</div>
+              <div class="col">{{ test.result }}</div>
+            </div>
+          </q-card-section>
+        </q-card>
       </q-card-section>
 
       <q-card-actions align="right">
+      <!--
         <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
         <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
-        <q-btn type="submit" color="primary" label="Submit" class="btn-submit" v-close-popup />
+        -->
+        <q-btn type="submit" flat dense color="primary" label="Submit" class="btn-submit" v-close-popup />
       </q-card-actions>
 
     </form>
@@ -153,6 +169,8 @@ export default defineComponent({
         this.store.updatePersonal(this.personal)
       }
       this.test.isSubmitted = true
+      this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
+
       Object.assign(this.test.personal, this.personal)
       this.store.updateResult(this.resultId, this.test)
 
@@ -170,10 +188,25 @@ export default defineComponent({
       }
       this.test.isSubmitted = true
       this.store.updateResult(this.resultId, this.test)
+    },
+    formatDate(timeStamp) {
+      return date.formatDate(timeStamp, 'D MMMM')
+    }
+  },
+  computed: {
+    isPersonalEmpty() {
+      let personal = this.store.personal
+      let firstName = personal.firstName
+      let lastName = personal.lastName
+      return firstName === '' && lastName === ''
     }
   },
   created() {
     Object.assign(this.test, this.testResult)
+
+    if(this.isPersonalEmpty) {
+      this.showForm = true
+    }
   }
 })
 </script>

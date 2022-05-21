@@ -22,6 +22,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      width="220"
     >
       <q-list>
         <q-item-label
@@ -51,23 +52,23 @@ import EssentialLink from 'components/EssentialLink.vue'
 const linksList = [
   {
     title: 'Home',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    icon: 'home',
+    link: '/'
   },
   {
-    title: 'Personal',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Personal Details',
+    icon: 'person',
+    link: '/personal'
   },
   {
     title: 'Settings',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    icon: 'settings',
+    link: '/settings'
   },
   {
     title: 'Help',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    icon: 'help',
+    link: '/help'
   },
 ]
 

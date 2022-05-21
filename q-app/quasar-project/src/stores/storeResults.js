@@ -5,14 +5,14 @@ export const useStoreResults = defineStore('storeResults', {
   state: () => ({
     tests: {
       'ID1': {
-        date: '2022-05-13',
+        date: '2022/05/13',
         result: 'Negative / E lei aafia',
         isSubmitted: false,
         dateSubmitted: '',
         personal: {}
       },
       'ID2': {
-        date: '2022-05-10',
+        date: '2022/05/10',
         result: 'Negative / E lei aafia',
         isSubmitted: true,
         dateSubmitted: '',

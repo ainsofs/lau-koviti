@@ -29,7 +29,7 @@
       <!-- button -->
       <div class="q-pa-md"></div>
       <q-btn @click="addTest" rounded  icon="add" color="primary" label="Add Test Result" />
-
+      <div class="q-pb-md"></div>
       <!-- Add Modal -->
       <q-dialog v-model="showAddModal">
         <add-results :testResult="testResult" :formMode="formMode" :resultId="resultId" />
@@ -55,7 +55,6 @@ export default defineComponent({
     const store = useStoreResults()
 
     return {
-      // you can return the whole store instance to use it in the template
       store
     }
   },
