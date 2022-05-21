@@ -10,7 +10,7 @@
       <q-card-section class="q-pt-none">
         <div class="q-gutter-md">
 
-          <q-input outlined v-model="test.date" :disable="test.isSubmitted" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
+          <q-input outlined autofocus v-model="test.date" :disable="test.isSubmitted" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -77,10 +77,13 @@ export default defineComponent({
   computed: {
     formHeading() {
       if (this.formMode === 'edit') {
-        return 'Edit Test Result'
+        if(this.test.isSubmitted) {
+          return 'Test result'
+        }
+        return 'Edit test result'
       }
       else {
-        return 'Add Test Result'
+        return 'Add test result'
       }
 
     }

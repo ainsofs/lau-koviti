@@ -18,6 +18,20 @@ export const useStoreResults = defineStore('storeResults', {
         dateSubmitted: '',
         personal: {}
       },
+      'ID3': {
+        date: '2022/03/30',
+        result: 'Positive / Ua aafia',
+        isSubmitted: false,
+        dateSubmitted: '',
+        personal: {}
+      },
+      'ID4': {
+        date: '2022/04/11',
+        result: 'Inconclusive / Le mautinoa',
+        isSubmitted: false,
+        dateSubmitted: '',
+        personal: {}
+      },
     },
     personal: {
       firstName: '',
@@ -67,11 +81,11 @@ export const useStoreResults = defineStore('storeResults', {
     addResult(testResult) {
       let id = uid()
       this.tests[id] = testResult
-      Notify.create('Test Result added')
+      Notify.create({ message: 'Added', icon: 'announcement' })
     },
     updateResult(id, testResult) {
       Object.assign(this.tests[id], testResult)
-      // Notify.create('Test Result updated')
+      Notify.create({ message: 'Updated', icon: 'announcement' })
     },
     updatePersonal(personalDetails) {
       Object.assign(this.personal, personalDetails)

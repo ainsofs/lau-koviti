@@ -1,7 +1,7 @@
 <template>
   <q-card style="width: 600px">
     <q-card-section class="row items-center">
-      <div class="text-h6">Submit Test Result</div>
+      <div class="text-h6">Send test result</div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
@@ -9,100 +9,107 @@
     <form @submit.prevent="submitForm">
 
       <q-card-section class="q-pt-none">
-        <q-checkbox v-model="showForm" v-if="!isPersonalEmpty" label="Review Personal Details" class="q-pb-md" />
+        <q-list bordered>
+          <q-expansion-item :default-opened="isPersonalEmpty" icon="person" label="Personal details" >
+            <q-separator />
+            <q-card>
+              <q-card-section>
 
-        <div  v-show="showForm">
-          <div class="q-gutter-md q-pb-md" >
-            <div class="row">
+                <div class="q-gutter-md q-pb-md" >
+                  <div class="row">
 
-                <q-input ref="firstName" autofocus outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your name.' ]" />
+                      <q-input ref="firstName" autofocus outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your name.' ]" />
 
-                <q-input ref="lastName" outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" :rules="[ val => val.length || 'Please enter your name.' ]" />
-            </div>
+                      <q-input ref="lastName" outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" :rules="[ val => val.length || 'Please enter your name.' ]" />
+                  </div>
 
-            <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
+                  <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
 
-            <q-input outlined v-model="personal.dob" mask="date" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="personal.dob">
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+                  <q-input outlined v-model="personal.dob" mask="date" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
+                    <template v-slot:append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="personal.dob">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
 
-            <div class="q-pa-sm rounded-borders">
-              <span class="text-grey">Gender</span>
-              <q-option-group
-                :options="gender_opt"
-                type="radio"
-                v-model="personal.gender"
-              />
-              <span class="q-field__bottom">Ituaiga</span>
-            </div>
+                  <div class="q-pa-sm rounded-borders">
+                    <span class="text-grey">Gender</span>
+                    <q-option-group
+                      :options="gender_opt"
+                      type="radio"
+                      v-model="personal.gender"
+                    />
+                    <span class="q-field__bottom">Ituaiga</span>
+                  </div>
 
-            <div>
-              <q-select
-                outlined
-                v-model="personal.village"
-                use-input
-                hide-selected
-                fill-input
-                input-debounce="0"
-                :options="village_opt"
-                hint="Nuu / Afioaga"
-                label="Village"
-              >
-                <template v-slot:no-option>
-                  <q-item>
-                    <q-item-section class="text-grey">
-                      No results
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
-            </div>
+                  <div>
+                    <q-select
+                      outlined
+                      v-model="personal.village"
+                      use-input
+                      hide-selected
+                      fill-input
+                      input-debounce="0"
+                      :options="village_opt"
+                      hint="Nuu / Afioaga"
+                      label="Village"
+                    >
+                      <template v-slot:no-option>
+                        <q-item>
+                          <q-item-section class="text-grey">
+                            No results
+                          </q-item-section>
+                        </q-item>
+                      </template>
+                    </q-select>
+                  </div>
 
-            <div class="q-pa-sm rounded-borders">
-              <span class="text-grey">Do you have any underlying conditions?</span>
-              <div class="q-pa-md">
-                <q-option-group
-                  :options="condition_opt"
-                  type="checkbox"
-                  v-model="personal.conditions"
-                />
-              </div>
-              <span class="q-field__bottom">O e a’afia i fa’amai o lo’o taua i lalo?</span>
-            </div>
+                  <div class="q-pa-sm rounded-borders">
+                    <span class="text-grey">Do you have any underlying conditions?</span>
+                    <div class="q-pa-md">
+                      <q-option-group
+                        :options="condition_opt"
+                        type="checkbox"
+                        v-model="personal.conditions"
+                      />
+                    </div>
+                    <span class="q-field__bottom">O e a’afia i fa’amai o lo’o taua i lalo?</span>
+                  </div>
 
-            <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
+                  <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
 
-            <q-input outlined v-model="personal.email" type="email" label="Email" hint="Imeli" />
+                  <q-input outlined v-model="personal.email" type="email" label="Email" hint="Imeli" />
 
-          </div>
-        </div>
-        <!-- Test Result -->
-         <q-card flat bordered class="my-card">
-          <q-card-section>
-            <div class="text-weight-medium">Test Results</div>
-          </q-card-section>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
 
-          <q-card-section class="q-pt-none">
-            <div class="row">
-              <div class="col-5">Date:</div>
-              <div class="col">{{ formatDate(test.date) }}</div>
-            </div>
-            <div class="row">
-              <div class="col-5">Test Result:</div>
-              <div class="col">{{ test.result }}</div>
-            </div>
-          </q-card-section>
-        </q-card>
+          <q-separator />
+
+          <q-expansion-item :default-opened="!isPersonalEmpty" icon="vaccines" label="Test result" >
+            <q-separator />
+            <q-card>
+              <q-card-section>
+                <div class="row">
+                  <div class="col-5">Date:</div>
+                  <div class="col">{{ formatDate(test.date) }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-5">Test Result:</div>
+                  <div class="col">{{ test.result }}</div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </q-list>
       </q-card-section>
 
       <q-card-actions align="right">
@@ -110,7 +117,7 @@
         <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
         <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
         -->
-        <q-btn type="submit" flat dense color="primary" label="Submit" class="btn-submit" />
+        <q-btn type="submit" flat dense color="primary" label="Send" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -160,7 +167,6 @@ export default defineComponent({
         email: this.store.personal.email,
       },
       test: {},
-      showForm: false,
     }
   },
   methods: {
@@ -170,9 +176,7 @@ export default defineComponent({
       if (!this.$refs.firstName.hasError &&
           !this.$refs.lastName.hasError) {
         // no error
-        if (this.showForm) {
-          this.store.updatePersonal(this.personal)
-        }
+        this.store.updatePersonal(this.personal)
         this.test.isSubmitted = true
         this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
 
@@ -180,24 +184,30 @@ export default defineComponent({
         this.store.updateResult(this.resultId, this.test)
 
         // TODO - post results to Google Form
-        alert('TODO submit to MOH now....')
+        console.log('TODO submit to MOH now....')
 
         this.$emit('close')
-        this.$q.notify('Test Result Submitted')
+
+        let alert = {
+          message: 'Sent',
+          icon: 'send',
+        }
+        this.$q.notify(alert)
       }
       else {
-        this.$q.notify('Please check your form and re-submit')
+        let alert = {
+          message: 'Please check your form and re-submit',
+          icon: 'warning',
+          color: 'amber-10',
+        }
+        this.$q.notify(alert)
       }
     },
     submitLater() {
-      if (this.showForm) {
-        this.store.updatePersonal(this.personal)
-      }
+      this.store.updatePersonal(this.personal)
     },
     markSubmitted() {
-      if (this.showForm) {
-        this.store.updatePersonal(this.personal)
-      }
+      this.store.updatePersonal(this.personal)
       this.test.isSubmitted = true
       this.store.updateResult(this.resultId, this.test)
     },
@@ -215,10 +225,6 @@ export default defineComponent({
   },
   created() {
     Object.assign(this.test, this.testResult)
-
-    if(this.isPersonalEmpty) {
-      this.showForm = true
-    }
   },
   // emits: ['close'],
 })
