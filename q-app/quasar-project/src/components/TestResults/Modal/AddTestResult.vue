@@ -10,7 +10,7 @@
       <q-card-section class="q-pt-none">
         <div class="q-gutter-md">
 
-          <q-input outlined v-model="test.date" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
+          <q-input outlined v-model="test.date" :disable="test.isSubmitted" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -31,6 +31,7 @@
                 :options="options"
                 type="radio"
                 v-model="test.result"
+                :disable="test.isSubmitted"
               />
             </div>
             <span class="q-field__bottom">Faaiuga ole suesuega</span>
@@ -41,7 +42,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn type="submit" flat dense color="primary" label="Save" class="btn-submit" v-close-popup />
+        <q-btn type="submit" flat dense color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" v-close-popup />
       </q-card-actions>
 
     </form>
