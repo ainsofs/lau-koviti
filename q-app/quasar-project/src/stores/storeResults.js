@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { uid } from 'quasar'
+import { uid, Notify } from 'quasar'
 
 export const useStoreResults = defineStore('storeResults', {
   state: () => ({
@@ -42,12 +42,15 @@ export const useStoreResults = defineStore('storeResults', {
     addResult(testResult) {
       let id = uid()
       this.tests[id] = testResult
+      Notify.create('Test Result added')
     },
     updateResult(id, testResult) {
       Object.assign(this.tests[id], testResult)
+      Notify.create('Test Result updated')
     },
     updatePersonal(personalDetails) {
       Object.assign(this.personal, personalDetails)
+      // Notify.create('Personal details updated')
     }
   }
 })
