@@ -15,9 +15,9 @@
           <div class="q-gutter-md q-pb-md" >
             <div class="row">
 
-                <q-input outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" />
+                <q-input ref="firstName" autofocus outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your name.' ]" />
 
-                <q-input outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" />
+                <q-input ref="lastName" outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" :rules="[ val => val.length || 'Please enter your name.' ]" />
             </div>
 
             <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
@@ -82,7 +82,7 @@
 
             <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
 
-            <q-input outlined v-model="personal.email" label="Email" hint="Imeli" />
+            <q-input outlined v-model="personal.email" type="email" label="Email" hint="Imeli" />
 
           </div>
         </div>
@@ -110,7 +110,7 @@
         <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
         <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
         -->
-        <q-btn type="submit" flat dense color="primary" label="Submit" class="btn-submit" v-close-popup />
+        <q-btn type="submit" flat dense color="primary" label="Submit" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -165,17 +165,25 @@ export default defineComponent({
   },
   methods: {
     submitForm() {
-      if (this.showForm) {
-        this.store.updatePersonal(this.personal)
+      this.$refs.firstName.validate()
+      this.$refs.lastName.validate()
+      if (!this.$refs.firstName.hasError &&
+          !this.$refs.lastName.hasError) {
+        // no error
+        if (this.showForm) {
+          this.store.updatePersonal(this.personal)
+        }
+        this.test.isSubmitted = true
+        this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
+
+        Object.assign(this.test.personal, this.personal)
+        this.store.updateResult(this.resultId, this.test)
+
+        // TODO - post results to Google Form
+        alert('TODO submit to MOH now....')
+
+        this.$emit('close')
       }
-      this.test.isSubmitted = true
-      this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
-
-      Object.assign(this.test.personal, this.personal)
-      this.store.updateResult(this.resultId, this.test)
-
-      // TODO - post results to Google Form
-      alert('TODO submit to MOH now....')
     },
     submitLater() {
       if (this.showForm) {
@@ -207,6 +215,7 @@ export default defineComponent({
     if(this.isPersonalEmpty) {
       this.showForm = true
     }
-  }
+  },
+  // emits: ['close'],
 })
 </script>

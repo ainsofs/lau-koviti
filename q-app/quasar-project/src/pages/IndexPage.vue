@@ -37,7 +37,7 @@
 
       <!-- Submit Modal -->
       <q-dialog v-model="showSubmitModal">
-        <submit-results :testResult="testResult" :resultId="resultId" />
+        <submit-results :testResult="testResult" :resultId="resultId" @close="showSubmitModal = false" />
       </q-dialog>
 
     </template>
