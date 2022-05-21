@@ -183,6 +183,10 @@ export default defineComponent({
         alert('TODO submit to MOH now....')
 
         this.$emit('close')
+        this.$q.notify('Test Result Submitted')
+      }
+      else {
+        this.$q.notify('Please check your form and re-submit')
       }
     },
     submitLater() {

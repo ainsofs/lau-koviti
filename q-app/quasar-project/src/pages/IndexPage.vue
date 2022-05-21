@@ -3,7 +3,7 @@
     <template class="column">
       <!-- list -->
       <div class="q-gutter-md">
-        <q-list v-for="(t, key) in store.tests" :key="key" bordered class="rounded-borders">
+        <q-list v-for="(t, key) in store.sortedTestResults" :key="key" bordered class="rounded-borders">
 
           <q-item clickable v-ripple @click="editTest(key, t)">
 
