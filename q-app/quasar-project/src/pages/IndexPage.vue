@@ -12,7 +12,7 @@
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>Record your COVID-19 test results. <span class="font-weight-bold">Click to begin!</span></q-item-label>
+                  <q-item-label>No test results to display.</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
