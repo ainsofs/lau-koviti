@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section class="row items-center">
-      <div class="text-h6">Add Result Result</div>
+      <div class="text-h6">{{ formHeading }}</div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
@@ -10,7 +10,7 @@
       <q-card-section class="q-pt-none">
         <div class="q-gutter-md">
 
-          <q-input outlined v-model="test.date" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
+          <q-input outlined autofocus v-model="test.date" :disable="test.isSubmitted" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -24,15 +24,17 @@
             </template>
           </q-input>
 
-          <div class="q-pa-sm rounded-borders">
-            Test result / Faaiuga ole suesuega
+          <div>
+            <span class="text-grey">Test result</span>
             <div>
               <q-option-group
                 :options="options"
                 type="radio"
                 v-model="test.result"
+                :disable="test.isSubmitted"
               />
             </div>
+            <span class="q-field__bottom">Faaiuga ole suesuega</span>
           </div>
 
         </div>
@@ -40,7 +42,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn icon="save" type="submit" outline color="primary" label="Save" class="q-ma-md" v-close-popup />
+        <q-btn type="submit" flat dense color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" v-close-popup />
       </q-card-actions>
 
     </form>
@@ -58,10 +60,10 @@ export default defineComponent({
     const store = useStoreResults()
 
     return {
-      // you can return the whole store instance to use it in the template
       store
     }
   },
+  props: ['testResult', 'formMode', 'resultId'],
   data() {
     return {
       options: [
@@ -69,16 +71,47 @@ export default defineComponent({
         { label: 'Negative / E lei aafia', value: 'Negative / E lei aafia' },
         { label: 'Inconclusive / Le mautinoa', value: 'Inconclusive / Le mautinoa' },
       ],
-      test: {
-        date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
-        result: 'Negative / E lei aafia',
-        isSubmitted: false,
-      },
+      test: {},
+    }
+  },
+  computed: {
+    formHeading() {
+      if (this.formMode === 'edit') {
+        if(this.test.isSubmitted) {
+          return 'Test result'
+        }
+        return 'Edit test result'
+      }
+      else {
+        return 'Add test result'
+      }
+
     }
   },
   methods: {
     submitForm() {
-      this.store.addResult(this.test)
+      if (this.formMode === 'edit') {
+        this.store.updateResult(this.resultId, this.test)
+      }
+      else {
+        this.store.addResult(this.test)
+      }
+    }
+  },
+  created() {
+    if (this.formMode === 'edit') {
+      Object.assign(this.test, this.testResult)
+		  this.test = Object.assign({}, this.testResult)
+    }
+    else {
+      let defaultTest = {
+        date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
+        result: 'Negative / E lei aafia',
+        isSubmitted: false,
+        dateSubmitted: '',
+        personal: {},
+      }
+		  this.test = Object.assign({}, defaultTest)
     }
   }
 })

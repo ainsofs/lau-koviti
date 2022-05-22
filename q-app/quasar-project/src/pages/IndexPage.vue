@@ -1,38 +1,73 @@
 <template>
   <q-page class="q-pa-md absolute full-width full-height column">
     <template class="column">
-      <!-- list -->
-      <div class="q-gutter-md">
-        <q-list v-for="t in store.tests" :key="t.id" bordered class="rounded-borders">
+      <!-- empty message -->
+      <q-card v-if="showEmptyMessage">
+        <q-card-section>
+          <a @click="addTest">
+            <q-list>
+              <q-item clickable>
+                <q-item-section avatar>
+                  <q-icon color="primary" name="vaccines" />
+                </q-item-section>
 
-          <q-item clickable v-ripple>
+                <q-item-section>
+                  <q-item-label>Record your COVID-19 test results. <span class="font-weight-bold">Click to begin!</span></q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </a>
+        </q-card-section>
+      </q-card>
+
+      <!-- list -->
+      <div class="q-gutter-md" v-if="!showEmptyMessage">
+        <q-list bordered padding class="rounded-borders q-card">
+
+          <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
+
+            <q-item-section avatar top>
+              <q-avatar v-if="t.result === 'Positive / Ua aafia'" icon="vaccines" color="negative" text-color="white" />
+              <q-avatar v-if="t.result === 'Negative / E lei aafia'" icon="vaccines" color="positive" text-color="white" />
+              <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" icon="vaccines" color="grey" text-color="white" />
+            </q-item-section>
 
             <q-item-section>
-              <q-item-label>{{ t.result }}</q-item-label>
-              <q-item-label>{{ formatDate(t.date) }}</q-item-label>
+              <q-item-label lines="1">{{ t.result }}</q-item-label>
+              <q-item-label caption>{{ formatDate(t.date) }}</q-item-label>
             </q-item-section>
 
             <q-item-section side>
-              <div v-if="!t.isSubmitted">
-                <q-btn @click="submitTest" outline round color="primary" icon="send" />
-              </div>
-              <span v-else>
-                <q-icon name="check_circle" color="green" size="3rem" />
-              </span>
+              <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
+              <q-icon v-else name="task_alt" color="grey" />
             </q-item-section>
+
           </q-item>
 
         </q-list>
+
       </div>
 
       <!-- button -->
-      <div class="q-pa-md"></div>
-      <q-btn @click="showModal = true" rounded  icon="add" color="primary" label="Add Test Result" />
-
-
-      <q-dialog v-model="showModal">
-        <add-results />
+      <q-page-sticky position="bottom-right" :offset="fabPos">
+        <q-btn
+          fab
+          icon="add"
+          color="primary"
+          :disable="draggingFab"
+          v-touch-pan.prevent.mouse="moveFab"
+          @click="addTest" />
+      </q-page-sticky>
+      <!-- Add Modal -->
+      <q-dialog v-model="showAddModal">
+        <add-results :testResult="testResult" :formMode="formMode" :resultId="resultId" />
       </q-dialog>
+
+      <!-- Submit Modal -->
+      <q-dialog v-model="showSubmitModal">
+        <submit-results :testResult="testResult" :resultId="resultId" @close="showSubmitModal = false" />
+      </q-dialog>
+
     </template>
   </q-page>
 </template>
@@ -48,25 +83,57 @@ export default defineComponent({
     const store = useStoreResults()
 
     return {
-      // you can return the whole store instance to use it in the template
       store
     }
   },
   data() {
     return {
-      showModal: false,
+      showAddModal: false,
+      showSubmitModal: false,
+      testResult: {},
+      formMode: 'add',
+      resultId: 0,
+      fabPos: [ 18, 18 ],
+      draggingFab: false,
+    }
+  },
+  computed: {
+    showEmptyMessage() {
+      return Object.keys(this.store.sortedTestResults).length === 0
     }
   },
   methods: {
-    submitTest() {
-      console.log('submitTest')
+    editTest(id, testResult) {
+      this.resultId = id
+      this.testResult = testResult
+      this.formMode = 'edit'
+      this.showAddModal = true
+    },
+    addTest() {
+      this.formMode = 'add'
+      this.showAddModal = true
+    },
+    submitTest(id, testResult) {
+      this.resultId = id
+      this.testResult = testResult
+      this.showSubmitModal = true
     },
     formatDate(timeStamp) {
-      return date.formatDate(timeStamp, 'D MMMM')
+      return date.formatDate(timeStamp, 'D MMMM, YYYY')
+    },
+    moveFab (ev) {
+      this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
+
+      this.fabPos = [
+        this.fabPos[ 0 ] - ev.delta.x,
+        this.fabPos[ 1 ] - ev.delta.y
+      ]
     }
   },
   components: {
-    'add-results': require('components/TestResults/Modal/AddTestResult.vue').default
+    'add-results': require('components/TestResults/Modal/AddTestResult.vue').default,
+    'submit-results': require('components/TestResults/Modal/SubmitTestResult.vue').default,
   }
 })
 </script>
+
