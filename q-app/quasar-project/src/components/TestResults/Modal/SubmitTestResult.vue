@@ -94,7 +94,7 @@
 
           <q-separator />
 
-          <q-expansion-item :default-opened="!isPersonalEmpty" icon="vaccines" label="Test result" >
+          <q-expansion-item :default-opened="!isPersonalEmpty" icon="medication_liquid" label="Test result" >
             <q-separator />
             <q-card>
               <q-card-section>
@@ -185,6 +185,11 @@ export default defineComponent({
 
         // TODO - post results to Google Form
         console.log('TODO submit to MOH now....')
+
+        fetch('')
+
+
+
 
         this.$emit('close')
 

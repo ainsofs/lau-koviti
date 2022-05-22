@@ -8,7 +8,7 @@
             <q-list>
               <q-item clickable>
                 <q-item-section avatar>
-                  <q-icon color="primary" name="vaccines" />
+                  <q-icon color="primary" name="medication_liquid" />
                 </q-item-section>
 
                 <q-item-section>
@@ -27,9 +27,15 @@
           <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
 
             <q-item-section avatar top>
-              <q-avatar v-if="t.result === 'Positive / Ua aafia'" icon="vaccines" color="negative" text-color="white" />
-              <q-avatar v-if="t.result === 'Negative / E lei aafia'" icon="vaccines" color="positive" text-color="white" />
-              <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" icon="vaccines" color="grey" text-color="white" />
+              <q-avatar v-if="t.result === 'Positive / Ua aafia'" color="negative" text-color="white">
+                {{ firstLetter(t.result) }}
+              </q-avatar>
+              <q-avatar v-if="t.result === 'Negative / E lei aafia'" color="positive" text-color="white" >
+                {{ firstLetter(t.result) }}
+              </q-avatar>
+              <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" color="grey" text-color="white" >
+                {{ firstLetter(t.result) }}
+              </q-avatar>
             </q-item-section>
 
             <q-item-section>
@@ -120,6 +126,9 @@ export default defineComponent({
     },
     formatDate(timeStamp) {
       return date.formatDate(timeStamp, 'D MMMM, YYYY')
+    },
+    firstLetter(stVal) {
+      return stVal.substr(0,1)
     },
     moveFab (ev) {
       this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
