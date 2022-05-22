@@ -4,34 +4,34 @@ import { uid, Notify } from 'quasar'
 export const useStoreResults = defineStore('storeResults', {
   state: () => ({
     tests: {
-      'ID1': {
-        date: '2022/05/13',
-        result: 'Negative / E lei aafia',
-        isSubmitted: false,
-        dateSubmitted: '',
-        personal: {}
-      },
-      'ID2': {
-        date: '2022/05/10',
-        result: 'Negative / E lei aafia',
-        isSubmitted: true,
-        dateSubmitted: '',
-        personal: {}
-      },
-      'ID3': {
-        date: '2022/03/30',
-        result: 'Positive / Ua aafia',
-        isSubmitted: false,
-        dateSubmitted: '',
-        personal: {}
-      },
-      'ID4': {
-        date: '2022/04/11',
-        result: 'Inconclusive / Le mautinoa',
-        isSubmitted: false,
-        dateSubmitted: '',
-        personal: {}
-      },
+      // 'ID1': {
+      //   date: '2022/05/13',
+      //   result: 'Negative / E lei aafia',
+      //   isSubmitted: false,
+      //   dateSubmitted: '',
+      //   personal: {}
+      // },
+      // 'ID2': {
+      //   date: '2022/05/10',
+      //   result: 'Negative / E lei aafia',
+      //   isSubmitted: true,
+      //   dateSubmitted: '',
+      //   personal: {}
+      // },
+      // 'ID3': {
+      //   date: '2022/03/30',
+      //   result: 'Positive / Ua aafia',
+      //   isSubmitted: false,
+      //   dateSubmitted: '',
+      //   personal: {}
+      // },
+      // 'ID4': {
+      //   date: '2022/04/11',
+      //   result: 'Inconclusive / Le mautinoa',
+      //   isSubmitted: false,
+      //   dateSubmitted: '',
+      //   personal: {}
+      // },
     },
     personal: {
       firstName: '',
