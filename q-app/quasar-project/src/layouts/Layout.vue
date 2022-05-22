@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          My COVID-19 Tests
+          My COVID-19 Test Results
         </q-toolbar-title>
 
       </q-toolbar>
@@ -55,16 +55,16 @@ const linksList = [
     icon: 'home',
     link: '/'
   },
-  {
-    title: 'Personal Details',
-    icon: 'person',
-    link: '/personal'
-  },
-  {
-    title: 'Settings',
-    icon: 'settings',
-    link: '/settings'
-  },
+  // {
+  //   title: 'Personal Details',
+  //   icon: 'person',
+  //   link: '/personal'
+  // },
+  // {
+  //   title: 'Settings',
+  //   icon: 'settings',
+  //   link: '/settings'
+  // },
   {
     title: 'Help',
     icon: 'help',

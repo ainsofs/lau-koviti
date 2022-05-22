@@ -1,5 +1,5 @@
 <template>
-  <q-card style="width: 600px">
+  <q-card >
     <q-card-section class="row items-center">
       <div class="text-h6">Send test result</div>
       <q-space />
@@ -9,6 +9,11 @@
     <form @submit.prevent="submitForm">
 
       <q-card-section class="q-pt-none">
+        <p v-if="isPersonalEmpty">Fill in the details below and press send to send your reuslts to
+            Samoa MOH.</p>
+        <p v-else>Review your details and press send to send your reuslts to
+            Samoa MOH.</p>
+
         <q-list bordered>
           <q-expansion-item :default-opened="isPersonalEmpty" icon="person" label="Personal details" >
             <q-separator />
@@ -194,7 +199,7 @@ export default defineComponent({
         this.$emit('close')
 
         let alert = {
-          message: 'Sent',
+          message: 'Sent! Not really...',
           icon: 'send',
         }
         this.$q.notify(alert)

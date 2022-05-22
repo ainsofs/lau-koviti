@@ -70,7 +70,9 @@
       </q-dialog>
 
       <!-- Submit Modal -->
-      <q-dialog v-model="showSubmitModal">
+      <q-dialog
+        v-model="showSubmitModal"
+        maximized>
         <submit-results :testResult="testResult" :resultId="resultId" @close="showSubmitModal = false" />
       </q-dialog>
 
