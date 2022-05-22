@@ -5,6 +5,7 @@
     <p>
       <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform">Official Form</a>
     </p>
+    <p>This app is in development.</p>
   </q-page>
 </template>
 
