@@ -125,7 +125,6 @@
         <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
         -->
         <q-btn type="submit" flat dense color="primary" label="Send" class="btn-submit" />
-        <div> {{ personal }} </div>
       </q-card-actions>
 
     </form>
