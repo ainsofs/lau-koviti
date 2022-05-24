@@ -1,5 +1,7 @@
 import { store } from 'quasar/wrappers'
 import { createPinia } from 'pinia'
+import { LocalStorage } from "quasar"
+import { watch } from "vue";
 
 /*
  * If not building with SSR mode, you can
@@ -13,8 +15,18 @@ import { createPinia } from 'pinia'
 export default store((/* { ssrContext } */) => {
   const pinia = createPinia()
 
-  // You can add Pinia plugins here
-  // pinia.use(SomePiniaPlugin)
+  // persist pinia storage
+  // if (LocalStorage.getItem("state")) {
+  //   pinia.state.value = LocalStorage.getItem("state")
+  // }
 
-  return pinia
+  // watch (
+  //   pinia.state,
+  //   (state) => {
+  //     LocalStorage.set("state", state)
+  //   },
+  //   { deep: true }
+  // )
+
+  return pinia;
 })
