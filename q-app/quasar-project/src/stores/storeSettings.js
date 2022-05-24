@@ -10,12 +10,6 @@ export const useStoreSettings = defineStore("storeSettings", {
     },
   }),
 
-  getters: {
-    getSettings() {
-      return state.settings;
-    },
-  },
-
   actions: {
     toggleSetting(key) {
       if (key in this.settings) {
