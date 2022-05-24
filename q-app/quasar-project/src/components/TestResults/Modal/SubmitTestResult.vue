@@ -537,6 +537,8 @@ export default defineComponent({
 
         let requestOptions = {
           method: 'POST',
+          'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS'
         }
 
         let mapping = {
