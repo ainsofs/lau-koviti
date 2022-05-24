@@ -5,33 +5,27 @@ post: https://docs.google.com/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Cz
 
 mapping:
   tests:
-    date: ''
-    result: ''
+    date: entry.1915046253
+    result: entry.699482213
     isSubmitted: ''
     dateSubmitted: ''
     personal:
       firstName: entry.1278994752
       lastName: entry.1285649044
       vaccinationId: entry.992834568
-      dob:
-        year: entry.556991948_year
-        month: entry.556991948_month
-        day: entry.556991948_day
+      dob: entry.556991948
       gender: entry.1224698774
-      village: ''
-      conditions: ''
-      phone: ''
-      email: ''
+      village: entry.682058042
+      conditions: entry.389107404
+      phone: entry.1810101260
+      email: entry.1016446264
 
 form2: https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform
 post2: https://docs.google.com/forms/u/0/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/formResponse
 
 mapping2:
   tests:
-    date:
-      year: entry.1283207881_year
-      month: entry.1283207881_month
-      day: entry.1283207881_day
+    date: entry.1283207881
     result: entry.1395453298
     isSubmitted: ''
     dateSubmitted: ''
@@ -39,10 +33,7 @@ mapping2:
       firstName: 	entry.590404003
       lastName: entry.1886925018
       vaccinationId: entry.1454131097
-      dob:
-        year: entry.1984486821_year
-        month: entry.1984486821_month
-        day: entry.1984486821_day
+      dob: entry.1984486821
       gender: entry.1660490641
       village: entry.359444209
       conditions: entry.41058729
