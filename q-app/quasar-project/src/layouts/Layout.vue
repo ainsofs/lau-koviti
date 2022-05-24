@@ -60,11 +60,11 @@ const linksList = [
   //   icon: 'person',
   //   link: '/personal'
   // },
-  // {
-  //   title: 'Settings',
-  //   icon: 'settings',
-  //   link: '/settings'
-  // },
+  {
+    title: 'Settings',
+    icon: 'settings',
+    link: '/settings'
+  },
   {
     title: 'Help',
     icon: 'help',
