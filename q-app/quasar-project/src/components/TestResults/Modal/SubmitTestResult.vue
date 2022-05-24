@@ -527,10 +527,11 @@ export default defineComponent({
         this.store.updatePersonal(this.personal)
 
         // Post results to Google Form
+        let endpoint = 'https://docs.google.com'
 
-        let endpoint = '/api'
-        // let endpoint = 'https://docs.google.com'
-        // let googleForm = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
+        if (process.env.DEV) {
+          endpoint = '/api'
+        }
 
         let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
 
@@ -594,7 +595,6 @@ export default defineComponent({
 
         if (params) {
           params = params.substring(0,params.length-1)
-          console.log(params)
         }
 
         fetch(googleForm + '?' + params, requestOptions)
@@ -627,9 +627,7 @@ export default defineComponent({
           .catch(error => {
             console.log('error')
             console.log(error)
-          });
-
-
+          })
       }
       else {
         this.$q.notify({
