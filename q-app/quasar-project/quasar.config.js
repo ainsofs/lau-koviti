@@ -84,7 +84,7 @@ module.exports = configure(function (ctx) {
       open: true, // opens browser window automatically
 
       proxy: {
-        // proxy all requests starting with /api to jsonplaceholder
+        // proxy requests to fix cors error. also update public/_redirects file
         "/api": {
           target: "https://docs.google.com/",
           changeOrigin: true,

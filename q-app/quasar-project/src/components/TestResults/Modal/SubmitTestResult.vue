@@ -526,20 +526,18 @@ export default defineComponent({
         // validation passed
         this.store.updatePersonal(this.personal)
 
-        // Post results to Google Form
-        // let endpoint = 'https://docs.google.com'
-        let endpoint = '/api'
+        // Post results to Google Form. Using a proxy to prevent CORS error
 
+        // TODO - remove in final version if not needed
         // if (process.env.DEV) {
         //   endpoint = '/api'
         // }
+        let endpoint = '/api'
 
         let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
 
         let requestOptions = {
           method: 'POST',
-          // 'Access-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS'
         }
 
         let mapping = {
