@@ -498,7 +498,7 @@ export default defineComponent({
   data() {
     return {
       gender_opt: [
-        { label: "Male/ Ali'i", value: "Male/ Ali'i'" },
+        { label: "Male/ Ali'i", value: "Male/ Ali'i" },
         { label: "Female/ Tama'ita'i", value: "Female/ Tama'ita'i" },
       ],
       village_opt: villageOptions,
@@ -520,45 +520,131 @@ export default defineComponent({
     submitForm() {
       this.$refs.firstName.validate()
       this.$refs.lastName.validate()
+
       if (!this.$refs.firstName.hasError &&
           !this.$refs.lastName.hasError) {
-        // no error
+        // validation passed
         this.store.updatePersonal(this.personal)
-        this.test.isSubmitted = true
-        this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
 
-        Object.assign(this.test.personal, this.personal)
-        this.store.updateResult(this.resultId, this.test)
+        // Post results to Google Form
 
-        // TODO - post results to Google Form
-        console.log('TODO submit to MOH now....')
+        let endpoint = '/api'
+        // let endpoint = 'https://docs.google.com'
+        // let googleForm = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
 
-        fetch('')
+        let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
 
-
-
-
-        this.$emit('close')
-
-        let alert = {
-          message: 'Sent! Not really...',
-          icon: 'send',
+        let requestOptions = {
+          method: 'POST',
         }
-        this.$q.notify(alert)
+
+        let mapping = {
+          tests: {
+            date: 'entry.1915046253',
+            result: 'entry.699482213',
+            isSubmitted: '',
+            dateSubmitted: '',
+            personal: {
+              firstName: 'entry.1278994752',
+              lastName: 'entry.1285649044',
+              vaccinationId: 'entry.992834568',
+              dob: 'entry.556991948',
+              gender: 'entry.1224698774',
+              village: 'entry.682058042',
+              conditions: 'entry.389107404',
+              phone: 'entry.1810101260',
+              email: 'entry.1016446264',
+            }
+          }
+        }
+
+        let params = ''
+        let personalKeys = Object.keys(this.personal)
+
+        let personMap = mapping['tests']['personal']
+
+        personalKeys.forEach((key) => {
+          if(personMap[key] && this.personal[key]) {
+            if (key === 'conditions') {
+              this.personal[key].forEach((condition) => {
+                params += personMap[key] + '=' + condition + '&'
+              })
+            }
+            else if (key === 'dob') {
+              params += personMap[key] + '=' + date.formatDate(this.personal[key], 'YYYY-MM-DD') + '&'
+            }
+            else {
+              params += personMap[key] + '=' + this.personal[key] + '&'
+            }
+          }
+        })
+
+        let testKeys = ['date', 'result']
+        let testMap = mapping['tests']
+        testKeys.forEach((key) => {
+          if(testMap[key] && this.test[key]) {
+            if (key === 'date') {
+              params += testMap[key] + '=' + date.formatDate(this.test[key], 'YYYY-MM-DD') + '&'
+            }
+            else {
+              params += testMap[key] + '=' + this.test[key] + '&'
+            }
+          }
+        })
+
+        if (params) {
+          params = params.substring(0,params.length-1)
+          console.log(params)
+        }
+
+        fetch(googleForm + '?' + params, requestOptions)
+          .then(async response => {
+            if (response.ok) {
+              // form sent!
+              this.test.isSubmitted = true
+              this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
+
+              Object.assign(this.test.personal, this.personal)
+              this.store.updateResult(this.resultId, this.test)
+
+              this.$q.notify({
+                message: 'Sent!',
+                icon: 'send',
+              })
+
+              this.$emit('close')
+            }
+            else {
+              // form error
+              console.log(response, 'error')
+              this.$q.notify({
+                message: 'An error occured: Please contact the developer.',
+                icon: 'warning',
+                color: 'amber-10',
+              })
+            }
+          })
+          .catch(error => {
+            console.log('error')
+            console.log(error)
+          });
+
+
       }
       else {
-        let alert = {
+        this.$q.notify({
           message: 'Please check your form and re-submit',
           icon: 'warning',
           color: 'amber-10',
-        }
-        this.$q.notify(alert)
+        })
       }
     },
     submitLater() {
+      // TODO - implement in UI
       this.store.updatePersonal(this.personal)
     },
     markSubmitted() {
+      // TODO - implement in UI
       this.store.updatePersonal(this.personal)
       this.test.isSubmitted = true
       this.store.updateResult(this.resultId, this.test)
