@@ -105,7 +105,7 @@ export default defineComponent({
     }
     else {
       let defaultTest = {
-        date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
+        date: date.formatDate(Date.now(), 'DD/MM/YYYY'),
         result: 'Negative / E lei aafia',
         isSubmitted: false,
         dateSubmitted: '',
