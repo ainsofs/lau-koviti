@@ -34,19 +34,6 @@ export const useStoreResults = defineStore("storeResults", {
       // },
     },
     personal: {
-      // firstName: "Ainsof",
-      // lastName: "So'o",
-      // vaccinationId: "VAXX123",
-      // dob: "1985/08/14",
-      // gender: "Male/ Ali'i",
-      // village: "Siusega",
-      // conditions: [
-      //   "Cerebrovascular disease / Gasegase punitia o alatoto",
-      //   "Dementia / Valevale matua",
-      // ],
-      // phone: "776 1098",
-      // email: "ainsof.soo@gmail.com",
-
       firstName: "",
       lastName: "",
       vaccinationId: "",
