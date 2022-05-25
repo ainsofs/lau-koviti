@@ -1,8 +1,14 @@
 <template>
+
   <q-card>
-    <q-card-section class="row items-center">
-      <q-icon name="warning" color="red" text-color="white" />
-      <span class="q-ml-sm">Really delete?</span>
+    <q-card-section class="row items-center q-pb-none">
+      <div class="text-h6">Really delete?</div>
+      <q-space />
+      <q-btn icon="close" flat round dense v-close-popup />
+    </q-card-section>
+
+    <q-card-section>
+      Please be sure. This cannot be undone.
     </q-card-section>
 
     <q-card-actions align="right">
@@ -10,6 +16,7 @@
       <q-btn @click="confirmDelete" flat label="Delete" color="red" />
     </q-card-actions>
   </q-card>
+
 </template>
 
 <script>
