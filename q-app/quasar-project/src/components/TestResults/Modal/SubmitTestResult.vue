@@ -30,11 +30,11 @@
 
                   <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
 
-                  <q-input outlined v-model="personal.dob" mask="date" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
+                  <q-input outlined v-model="personal.dob" mask="##/##/####" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="personal.dob">
+                          <q-date v-model="personal.dob" mask="DD/MM/YYYY">
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat />
                             </div>
