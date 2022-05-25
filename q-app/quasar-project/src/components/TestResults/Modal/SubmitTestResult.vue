@@ -655,15 +655,13 @@ export default defineComponent({
       this.store.updateResult(this.resultId, this.test)
     },
     formatDate(timeStamp) {
-      return date.formatDate(timeStamp, 'D MMMM')
+      const someDate = date.extractDate(timeStamp, 'DD/MM/YYYY')
+      return date.formatDate(someDate, 'D MMMM, YYYY')
     },
     filterFn (val, update) {
       if (val === '') {
         update(() => {
           this.village_opt = villageOptions
-
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
         })
         return
       }
