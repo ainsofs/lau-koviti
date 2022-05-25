@@ -10,11 +10,11 @@
       <q-card-section class="q-pt-none">
         <div class="q-gutter-md">
 
-          <q-input outlined v-model="test.date" :disable="test.isSubmitted" mask="date" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
+          <q-input outlined v-model="test.date" :disable="test.isSubmitted" mask="##/##/####" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="test.date">
+                  <q-date v-model="test.date" mask="DD/MM/YYYY">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
                     </div>
