@@ -80,6 +80,11 @@
         <submit-results :testResult="testResult" :resultId="resultId" @close="showSubmitModal = false" />
       </q-dialog>
 
+      <!-- Delete Modal -->
+      <q-dialog v-model="showDeleteModal">
+        <delete-alert @delete="doDelete" />
+      </q-dialog>
+
     </template>
   </q-page>
 </template>
@@ -102,6 +107,7 @@ export default defineComponent({
     return {
       showAddModal: false,
       showSubmitModal: false,
+      showDeleteModal: false,
       testResult: {},
       formMode: 'add',
       resultId: 0,
@@ -115,8 +121,13 @@ export default defineComponent({
     }
   },
   methods: {
+    doDelete() {
+      this.store.deleteResult(this.resultId)
+      this.showDeleteModal = false
+    },
     deleteTest(id) {
-      this.store.deleteResult(id)
+      this.resultId = id
+      this.showDeleteModal = true
     },
     editTest(id, testResult) {
       this.resultId = id
@@ -151,6 +162,7 @@ export default defineComponent({
   components: {
     'add-results': require('components/TestResults/Modal/AddTestResult.vue').default,
     'submit-results': require('components/TestResults/Modal/SubmitTestResult.vue').default,
+    'delete-alert': require('components/TestResults/Modal/DeleteAlert.vue').default,
   }
 })
 </script>
