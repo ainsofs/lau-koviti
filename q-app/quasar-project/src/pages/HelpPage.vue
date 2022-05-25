@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md absolute full-width full-height column">
+  <q-page class="q-pa-md col">
     <div class="text-weight-medium q-pb-md">Help Page</div>
 
     <p>This app is in development.</p>
