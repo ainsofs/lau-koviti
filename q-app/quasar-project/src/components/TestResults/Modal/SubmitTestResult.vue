@@ -30,11 +30,22 @@
 
                   <q-input outlined v-model="personal.vaccinationId" label="Vaccination ID (Patient ID in Tamanu system)" hint="Numera o le pepa tui" placeholder="e.g. ABCD654321" />
 
-                  <q-input outlined v-model="personal.dob" mask="##/##/####" :rules="['date']" label="Date of Birth" hint="Aso Fanau" >
+                  <q-input
+                    outlined
+                    v-model="personal.dob"
+                    mask="##/##/####"
+                    label="Date of Birth"
+                    hint="Aso Fanau">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="personal.dob" mask="DD/MM/YYYY">
+                          <q-date
+                            v-model="personal.dob"
+                            mask="DD/MM/YYYY"
+                            :options="optionsFn"
+                            :navigation-min-year-month="navMin"
+                            :navigation-max-year-month="navMax"
+                            >
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat />
                             </div>
@@ -527,11 +538,6 @@ export default defineComponent({
         this.store.updatePersonal(this.personal)
 
         // Post results to Google Form. Using a proxy to prevent CORS error
-
-        // TODO - remove in final version if not needed
-        // if (process.env.DEV) {
-        //   endpoint = '/api'
-        // }
         let endpoint = '/api'
 
         let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
@@ -666,7 +672,11 @@ export default defineComponent({
         const needle = val.toLowerCase()
         this.village_opt = villageOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
       })
-    }
+    },
+    optionsFn (date1) {
+      let newDate = date.subtractFromDate(Date.now(), { years: 200 })
+      return date1 >= date.formatDate(newDate, 'YYYY/MM/DD') && date1 <= date.formatDate(Date.now(), 'YYYY/MM/DD')
+    },
   },
   computed: {
     isPersonalEmpty() {
@@ -674,6 +684,13 @@ export default defineComponent({
       let firstName = personal.firstName
       let lastName = personal.lastName
       return firstName === '' && lastName === ''
+    },
+    navMin() {
+      let newDate = date.subtractFromDate(Date.now(), { years: 200 })
+      return date.formatDate(newDate, 'YYYY/MM')
+    },
+    navMax() {
+      return date.formatDate(Date.now(), 'YYYY/MM')
     },
     sortedConditions() {
       let options = [

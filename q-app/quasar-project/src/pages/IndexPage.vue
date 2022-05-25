@@ -70,7 +70,7 @@
       </q-page-sticky>
       <!-- Add Modal -->
       <q-dialog v-model="showAddModal">
-        <add-results :testResult="testResult" :formMode="formMode" :resultId="resultId" />
+        <add-results :testResult="testResult" :formMode="formMode" :resultId="resultId" @close="showAddModal = false" />
       </q-dialog>
 
       <!-- Submit Modal -->
@@ -145,7 +145,8 @@ export default defineComponent({
       this.showSubmitModal = true
     },
     formatDate(timeStamp) {
-      return date.formatDate(timeStamp, 'D MMMM, YYYY')
+      const someDate = date.extractDate(timeStamp, 'DD/MM/YYYY')
+      return date.formatDate(someDate, 'D MMMM, YYYY')
     },
     firstLetter(stVal) {
       return stVal.substr(0,1)

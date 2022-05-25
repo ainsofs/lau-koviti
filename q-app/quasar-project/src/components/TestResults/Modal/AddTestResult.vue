@@ -10,11 +10,27 @@
       <q-card-section class="q-pt-none">
         <div class="q-gutter-md">
 
-          <q-input outlined v-model="test.date" :disable="test.isSubmitted" mask="##/##/####" :rules="['date']" label="Date of the test" hint="Aso sa fa’atinoina ai le su’esu’ega">
+          <q-input
+            ref="date"
+            outlined
+            v-model="test.date"
+            :disable="test.isSubmitted"
+            lazy-rules
+            mask="##/##/####"
+            :rules="[ val => /^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$/.test(val) || 'Please enter date in DD/MM/YYYY format.' ]"
+            label="Date of the test"
+            hint="Aso sa fa’atinoina ai le su’esu’ega">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="test.date" mask="DD/MM/YYYY">
+                  <q-date
+                    v-model="test.date"
+                    mask="DD/MM/YYYY"
+                    :options="optionsFn"
+                    :events="eventsFn"
+                    event-color="primary"
+                    navigation-min-year-month="2020/01"
+                    :navigation-max-year-month="navMaxMonth">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
                     </div>
@@ -42,7 +58,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn type="submit" flat dense color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" v-close-popup />
+        <q-btn type="submit" flat dense color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -56,6 +72,8 @@ import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
 
 export default defineComponent({
+  emits: ['close'],
+  props: ['testResult', 'formMode', 'resultId'],
   setup() {
     const store = useStoreResults()
 
@@ -63,7 +81,6 @@ export default defineComponent({
       store
     }
   },
-  props: ['testResult', 'formMode', 'resultId'],
   data() {
     return {
       options: [
@@ -86,16 +103,52 @@ export default defineComponent({
         return 'Add test result'
       }
 
+    },
+    navMaxMonth() {
+      return date.formatDate(Date.now(), 'YYYY/MM')
     }
   },
   methods: {
     submitForm() {
-      if (this.formMode === 'edit') {
-        this.store.updateResult(this.resultId, this.test)
+      this.$refs.date.validate()
+
+      if (!this.$refs.date.hasError) {
+        // validation passed!.
+        if (this.formMode === 'edit') {
+          this.store.updateResult(this.resultId, this.test)
+        }
+        else {
+          this.store.addResult(this.test)
+        }
+
+        this.$emit('close')
       }
       else {
-        this.store.addResult(this.test)
+        this.$q.notify({
+          message: 'Please check your form',
+          icon: 'warning',
+          color: 'amber-10',
+        })
       }
+    },
+    optionsFn (date1) {
+      return date1 <= date.formatDate(Date.now(), 'YYYY/MM/DD')
+    },
+    eventsFn (date1) {
+      const list = this.store.tests
+      const keys = Object.keys(list)
+      let isEvent = false
+
+      keys.forEach((key) => {
+        let someDate = date.extractDate(this.store.tests[key].date, 'DD/MM/YYYY')
+        someDate = date.formatDate(someDate, 'YYYY/MM/DD')
+        if (someDate === date1) {
+          isEvent = true
+          return
+        }
+      })
+
+      return isEvent
     }
   },
   created() {
@@ -113,6 +166,6 @@ export default defineComponent({
       }
 		  this.test = Object.assign({}, defaultTest)
     }
-  }
+  },
 })
 </script>
