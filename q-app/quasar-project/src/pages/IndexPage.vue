@@ -44,6 +44,10 @@
             </q-item-section>
 
             <q-item-section side>
+              <q-icon @click.stop="deleteTest(key)" name="delete" color="red" />
+            </q-item-section>
+
+            <q-item-section side>
               <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
               <q-icon v-else name="task_alt" color="grey" />
             </q-item-section>
@@ -111,6 +115,9 @@ export default defineComponent({
     }
   },
   methods: {
+    deleteTest(id) {
+      this.store.deleteResult(id)
+    },
     editTest(id, testResult) {
       this.resultId = id
       this.testResult = testResult

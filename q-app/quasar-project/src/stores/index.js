@@ -16,17 +16,17 @@ export default store((/* { ssrContext } */) => {
   const pinia = createPinia()
 
   // persist pinia storage
-  // if (LocalStorage.getItem("state")) {
-  //   pinia.state.value = LocalStorage.getItem("state")
-  // }
+  if (LocalStorage.getItem("state")) {
+    pinia.state.value = LocalStorage.getItem("state")
+  }
 
-  // watch (
-  //   pinia.state,
-  //   (state) => {
-  //     LocalStorage.set("state", state)
-  //   },
-  //   { deep: true }
-  // )
+  watch (
+    pinia.state,
+    (state) => {
+      LocalStorage.set("state", state)
+    },
+    { deep: true }
+  )
 
   return pinia;
 })
