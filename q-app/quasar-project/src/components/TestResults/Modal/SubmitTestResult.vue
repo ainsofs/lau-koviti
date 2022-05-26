@@ -629,7 +629,7 @@ export default defineComponent({
               this.$q.notify({
                 message: 'An error occured: Please contact the developer.',
                 icon: 'warning',
-                color: 'amber-10',
+                color: 'warning',
               })
             }
           })
@@ -642,7 +642,7 @@ export default defineComponent({
         this.$q.notify({
           message: 'Please check your form and re-submit',
           icon: 'warning',
-          color: 'amber-10',
+          color: 'warning',
         })
       }
     },

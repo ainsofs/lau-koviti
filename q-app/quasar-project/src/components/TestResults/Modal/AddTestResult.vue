@@ -28,7 +28,7 @@
                     mask="DD/MM/YYYY"
                     :options="optionsFn"
                     :events="eventsFn"
-                    event-color="primary"
+                    event-color="accent"
                     navigation-min-year-month="2020/01"
                     :navigation-max-year-month="navMaxMonth">
                     <div class="row items-center justify-end">
@@ -127,7 +127,7 @@ export default defineComponent({
         this.$q.notify({
           message: 'Please check your form',
           icon: 'warning',
-          color: 'amber-10',
+          color: 'warning',
         })
       }
     },
