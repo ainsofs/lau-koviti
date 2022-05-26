@@ -26,15 +26,30 @@
 
         <!-- filter and sort -->
         <div class="filter-and-sort">
-        <p>
-          Malo lava! You've recorded {{ totalTestResults }} {{ pluralText }}.
-        </p>
+          <div class="row items-center no-wrap">
+            <div class="col"><p>Malo lava! You've recorded {{ totalTestResults }} {{ pluralText }}.</p>
+              <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
+                <div class="absolute-full flex flex-center">
+                  <q-badge color="white" text-color="primary" :label="progressLabel" />
+                </div>
+              </q-linear-progress>
+            </div>
+            <div class="col-auto">
+              <q-btn color="grey-7" round flat icon="more_vert" class="absolute-top-right q-pt-md">
+                <q-menu cover auto-close>
+                  <q-list>
+                    <q-item clickable @click="toggleSort(true)" >
+                      <q-item-section >Sort newest to oldest</q-item-section>
+                    </q-item>
+                    <q-item clickable @click="toggleSort(false)">
+                      <q-item-section>Sort oldest to newest</q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </div>
+          </div>
 
-        <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
-          <div class="absolute-full flex flex-center">
-            <q-badge color="white" text-color="primary" :label="progressLabel" />
-      </div>
-    </q-linear-progress>
         </div>
 
         <q-list bordered padding class="rounded-borders">
@@ -172,6 +187,9 @@ export default defineComponent({
     }
   },
   methods: {
+    toggleSort(sortDesc) {
+      this.store.sortDesc = sortDesc
+    },
     doDelete() {
       this.store.deleteResult(this.resultId)
       this.showDeleteModal = false
