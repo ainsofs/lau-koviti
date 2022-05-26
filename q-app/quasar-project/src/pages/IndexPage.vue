@@ -1,8 +1,15 @@
 <template>
   <q-page class="q-pa-md col">
-    <template class="column">
+    <div class="column">
       <!-- empty message -->
-      <q-card v-if="showEmptyMessage">
+      <div v-if="showEmptyMessage">
+      <p><strong>You're here!</strong> That means you want to record some test
+      results and maybe share them with Samoa Ministry of Health.</p>
+      <p>If you prefer to use the official form, no worries you can
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank">find it here</a>.
+      But if you're testing regularly, you may find it repetitive.</p>
+
+      <q-card>
         <q-card-section>
           <a @click="addTest">
             <q-list>
@@ -13,15 +20,17 @@
 
                 <q-item-section>
                   <q-item-label>
-                  No test results to display. <br /><br />Press this <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to get started!</q-item-label>
+                    Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong>
+                  </q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
           </a>
         </q-card-section>
       </q-card>
+      </div>
 
-      <!-- list -->
+      <!-- list container -->
       <div class="q-gutter-md" v-if="!showEmptyMessage">
 
         <!-- filter and sort -->
@@ -35,7 +44,7 @@
               </q-linear-progress>
             </div>
             <div class="col-auto">
-              <q-btn color="grey-7" round flat icon="more_vert" class="absolute-top-right q-pt-md">
+              <q-btn color="grey-7" round flat icon="more_vert" class="absolute-top-right q-mt-sm">
                 <q-menu cover auto-close>
                   <q-list>
                     <q-item clickable @click="toggleSort(true)" >
@@ -52,8 +61,14 @@
 
         </div>
 
+        <!-- list -->
         <q-list bordered padding class="rounded-borders">
 
+        <transition-group
+  appear
+  enter-active-class="animated fadeIn"
+  leave-active-class="animated fadeOut"
+>
           <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
 
             <q-item-section avatar top>
@@ -83,9 +98,9 @@
             </q-item-section>
 
           </q-item>
+</transition-group>
 
         </q-list>
-
       </div>
 
       <!-- button -->
@@ -98,6 +113,7 @@
           v-touch-pan.prevent.mouse="moveFab"
           @click="addTest" />
       </q-page-sticky>
+
       <!-- Add Modal -->
       <q-dialog v-model="showAddModal">
         <add-results :testResult="testResult" :formMode="formMode" :resultId="resultId" @close="showAddModal = false" />
@@ -115,7 +131,7 @@
         <delete-alert @delete="doDelete" />
       </q-dialog>
 
-    </template>
+    </div>
   </q-page>
 </template>
 
@@ -164,7 +180,7 @@ export default defineComponent({
     },
     progressLabel() {
       if (this.progress === 1) {
-        return "All tests sent! Seki oe"
+        return "Seki! All test results sent!"
       }
 
       let a = this.totalSubmitted
@@ -174,10 +190,10 @@ export default defineComponent({
     },
     progressColour() {
       if (this.progress === 1) {
-        return "green"
+        return "positive"
       }
 
-      return "primary"
+      return "accent"
     },
     totalSubmitted() {
       return this.store.totalSubmitted
