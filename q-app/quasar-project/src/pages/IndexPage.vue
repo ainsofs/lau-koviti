@@ -22,7 +22,21 @@
 
       <!-- list -->
       <div class="q-gutter-md" v-if="!showEmptyMessage">
-        <q-list bordered padding class="rounded-borders q-card">
+
+        <!-- filter and sort -->
+        <div class="filter-and-sort">
+        <p>
+          Malo lava! You've recorded {{ totalTestResults }} tests.
+        </p>
+
+        <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" color="primary" rounded >
+          <div class="absolute-full flex flex-center">
+            <q-badge color="white" text-color="primary" :label="progressLabel" />
+      </div>
+    </q-linear-progress>
+        </div>
+
+        <q-list bordered padding class="rounded-borders">
 
           <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
 
@@ -117,7 +131,25 @@ export default defineComponent({
   },
   computed: {
     showEmptyMessage() {
-      return Object.keys(this.store.sortedTestResults).length === 0
+      return this.totalTestResults === 0
+    },
+    progress() {
+      let a = this.totalSubmitted
+      let b = this.totalTestResults
+
+      return a/b
+    },
+    progressLabel() {
+      let a = this.totalSubmitted
+      let b = this.totalTestResults
+
+      return a + " of " + b + " tests submitted"
+    },
+    totalSubmitted() {
+      return this.store.totalSubmitted
+    },
+    totalTestResults() {
+      return this.store.totalTestResults
     }
   },
   methods: {

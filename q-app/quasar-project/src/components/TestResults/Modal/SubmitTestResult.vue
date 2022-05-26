@@ -579,7 +579,8 @@ export default defineComponent({
               })
             }
             else if (key === 'dob') {
-              params += personMap[key] + '=' + date.formatDate(this.personal[key], 'YYYY-MM-DD') + '&'
+              let someDate = date.extractDate(this.personal[key], 'DD/MM/YYYY')
+              params += personMap[key] + '=' + date.formatDate(someDate, 'YYYY-MM-DD') + '&'
             }
             else {
               params += personMap[key] + '=' + this.personal[key] + '&'
@@ -592,7 +593,8 @@ export default defineComponent({
         testKeys.forEach((key) => {
           if(testMap[key] && this.test[key]) {
             if (key === 'date') {
-              params += testMap[key] + '=' + date.formatDate(this.test[key], 'YYYY-MM-DD') + '&'
+              let someDate = date.extractDate(this.test[key], 'DD/MM/YYYY')
+              params += testMap[key] + '=' + date.formatDate(someDate, 'YYYY-MM-DD') + '&'
             }
             else {
               params += testMap[key] + '=' + this.test[key] + '&'
