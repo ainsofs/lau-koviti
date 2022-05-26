@@ -20,7 +20,7 @@
 
                 <q-item-section>
                   <q-item-label>
-                    Press this <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong>
+                    Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong>
                   </q-item-label>
                 </q-item-section>
               </q-item>
@@ -64,6 +64,11 @@
         <!-- list -->
         <q-list bordered padding class="rounded-borders">
 
+        <transition-group
+  appear
+  enter-active-class="animated fadeIn"
+  leave-active-class="animated fadeOut"
+>
           <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
 
             <q-item-section avatar top>
@@ -93,9 +98,9 @@
             </q-item-section>
 
           </q-item>
+</transition-group>
 
         </q-list>
-
       </div>
 
       <!-- button -->
@@ -175,7 +180,7 @@ export default defineComponent({
     },
     progressLabel() {
       if (this.progress === 1) {
-        return "All tests sent! Seki oe"
+        return "Seki! All test results sent!"
       }
 
       let a = this.totalSubmitted
