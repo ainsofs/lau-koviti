@@ -1,5 +1,5 @@
 <template>
-  <q-card>
+  <q-card class="col">
     <q-card-section class="row items-center">
       <div class="text-h6">{{ formHeading }}</div>
       <q-space />
@@ -58,7 +58,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn type="submit" flat dense color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" />
+        <q-btn type="submit" flat color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" />
       </q-card-actions>
 
     </form>

@@ -15,7 +15,11 @@
             Samoa MOH.</p>
 
         <q-list bordered>
-          <q-expansion-item :default-opened="isPersonalEmpty" icon="person" label="Personal details" >
+          <q-expansion-item
+            :default-opened="isPersonalEmpty"
+            icon="person"
+            label="Personal details"
+            header-class="text-primary">
             <q-separator />
             <q-card>
               <q-card-section>
@@ -112,7 +116,11 @@
 
           <q-separator />
 
-          <q-expansion-item :default-opened="!isPersonalEmpty" icon="medication_liquid" label="Test result" >
+          <q-expansion-item
+            :default-opened="!isPersonalEmpty"
+            icon="medication_liquid"
+            label="Test result"
+            header-class="text-primary">
             <q-separator />
             <q-card>
               <q-card-section>
@@ -135,7 +143,7 @@
         <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
         <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
         -->
-        <q-btn type="submit" flat dense color="primary" label="Send" class="btn-submit" />
+        <q-btn type="submit" flat color="primary" label="Send" class="btn-submit" />
       </q-card-actions>
 
     </form>
