@@ -157,9 +157,9 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `My COVID19 Test Results`,
-        short_name: `My COVID19 Test Results`,
-        description: `A Quasar Project`,
+        name: `La'u Koviti`,
+        short_name: `La'u Koviti`,
+        description: `Make recording and sharing your COVID-19 self tests easier`,
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",

@@ -1,6 +1,6 @@
-# My COVID19 Test Results (quasar-project)
+# La'u Koviti ((quasar-project)
 
-A Quasar Project
+Make recording and sharing your COVID-19 self tests easier
 
 ## Install the dependencies
 ```bash
