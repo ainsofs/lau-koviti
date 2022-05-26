@@ -2,13 +2,13 @@
 
   <q-card>
     <q-card-section class="row items-center q-pb-none">
-      <div class="text-h6">Really delete?</div>
+      <div class="text-h6">Koe sau kasi a...</div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
 
     <q-card-section>
-      Please be sure. This cannot be undone.
+      Really delete? This cannot be undone.
     </q-card-section>
 
     <q-card-actions align="right">

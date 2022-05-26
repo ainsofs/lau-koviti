@@ -7,12 +7,13 @@
           <a @click="addTest">
             <q-list>
               <q-item clickable>
-                <q-item-section avatar>
-                  <q-icon color="primary" name="medication_liquid" />
+                <q-item-section side>
+                  <q-icon color="primary" name="medication_liquid" size="lg" />
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>No test results to display.</q-item-label>
+                  <q-item-label>
+                  No test results to display. <br /><br />Press this <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to get started!</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -26,10 +27,10 @@
         <!-- filter and sort -->
         <div class="filter-and-sort">
         <p>
-          Malo lava! You've recorded {{ totalTestResults }} tests.
+          Malo lava! You've recorded {{ totalTestResults }} {{ pluralText }}.
         </p>
 
-        <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" color="primary" rounded >
+        <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
           <div class="absolute-full flex flex-center">
             <q-badge color="white" text-color="primary" :label="progressLabel" />
       </div>
@@ -130,6 +131,13 @@ export default defineComponent({
     }
   },
   computed: {
+    pluralText() {
+      if (this.totalTestResults === 1) {
+        return "test result"
+      }
+
+      return "test results"
+    },
     showEmptyMessage() {
       return this.totalTestResults === 0
     },
@@ -140,10 +148,21 @@ export default defineComponent({
       return a/b
     },
     progressLabel() {
+      if (this.progress === 1) {
+        return "All tests sent! Seki oe"
+      }
+
       let a = this.totalSubmitted
       let b = this.totalTestResults
 
       return a + " of " + b + " tests submitted"
+    },
+    progressColour() {
+      if (this.progress === 1) {
+        return "green"
+      }
+
+      return "primary"
     },
     totalSubmitted() {
       return this.store.totalSubmitted
