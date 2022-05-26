@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-btn
           flat
@@ -10,12 +10,13 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
-        <q-toolbar-title>
-          My COVID-19 Test Results
-        </q-toolbar-title>
-
       </q-toolbar>
+
+      <div class="q-pa-md">
+        <div class="text-h4">La'u Koviti</div>
+        <div class="text-subtitle1">{{ todaysDate }}</div>
+      </div>
+      <q-img src="statics/beach.jpg" class="absolute-top header-image" />
     </q-header>
 
     <q-drawer
@@ -48,6 +49,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { date } from 'quasar'
 
 const linksList = [
   {
@@ -89,6 +91,22 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }
+  },
+
+  computed: {
+    todaysDate() {
+      return date.formatDate(Date.now(), 'dddd D MMMM, YYYY')
+    }
   }
 })
 </script>
+
+<style lang="scss">
+.header-image {
+  height: 100%;
+  z-index: -1;
+  opacity: 0.7;
+  filter: grayscale(100%)
+
+}
+</style>

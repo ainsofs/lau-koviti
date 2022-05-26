@@ -7,12 +7,13 @@
           <a @click="addTest">
             <q-list>
               <q-item clickable>
-                <q-item-section avatar>
-                  <q-icon color="primary" name="medication_liquid" />
+                <q-item-section side>
+                  <q-icon color="primary" name="medication_liquid" size="lg" />
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>No test results to display.</q-item-label>
+                  <q-item-label>
+                  No test results to display. <br /><br />Press this <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to get started!</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -22,7 +23,36 @@
 
       <!-- list -->
       <div class="q-gutter-md" v-if="!showEmptyMessage">
-        <q-list bordered padding class="rounded-borders q-card">
+
+        <!-- filter and sort -->
+        <div class="filter-and-sort">
+          <div class="row items-center no-wrap">
+            <div class="col"><p>Malo lava! You've recorded {{ totalTestResults }} {{ pluralText }}.</p>
+              <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
+                <div class="absolute-full flex flex-center">
+                  <q-badge color="white" text-color="primary" :label="progressLabel" />
+                </div>
+              </q-linear-progress>
+            </div>
+            <div class="col-auto">
+              <q-btn color="grey-7" round flat icon="more_vert" class="absolute-top-right q-pt-md">
+                <q-menu cover auto-close>
+                  <q-list>
+                    <q-item clickable @click="toggleSort(true)" >
+                      <q-item-section >Sort newest to oldest</q-item-section>
+                    </q-item>
+                    <q-item clickable @click="toggleSort(false)">
+                      <q-item-section>Sort oldest to newest</q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </div>
+          </div>
+
+        </div>
+
+        <q-list bordered padding class="rounded-borders">
 
           <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
 
@@ -116,11 +146,50 @@ export default defineComponent({
     }
   },
   computed: {
+    pluralText() {
+      if (this.totalTestResults === 1) {
+        return "test result"
+      }
+
+      return "test results"
+    },
     showEmptyMessage() {
-      return Object.keys(this.store.sortedTestResults).length === 0
+      return this.totalTestResults === 0
+    },
+    progress() {
+      let a = this.totalSubmitted
+      let b = this.totalTestResults
+
+      return a/b
+    },
+    progressLabel() {
+      if (this.progress === 1) {
+        return "All tests sent! Seki oe"
+      }
+
+      let a = this.totalSubmitted
+      let b = this.totalTestResults
+
+      return a + " of " + b + " tests submitted"
+    },
+    progressColour() {
+      if (this.progress === 1) {
+        return "green"
+      }
+
+      return "primary"
+    },
+    totalSubmitted() {
+      return this.store.totalSubmitted
+    },
+    totalTestResults() {
+      return this.store.totalTestResults
     }
   },
   methods: {
+    toggleSort(sortDesc) {
+      this.store.sortDesc = sortDesc
+    },
     doDelete() {
       this.store.deleteResult(this.resultId)
       this.showDeleteModal = false

@@ -74,6 +74,23 @@ export const useStoreResults = defineStore("storeResults", {
 
       return testsSorted
     },
+    totalSubmitted(state) {
+        let keys = Object.keys(state.tests), count = 0
+        keys.forEach((key) => {
+          let status = state.tests[key].isSubmitted
+          if (status) {
+            count ++
+          }
+        })
+
+        return count
+    },
+    totalNotSubmitted(state) {
+      return state.totalTestResults - this.totalSubmitted
+    },
+    totalTestResults(state) {
+      return Object.keys(state.sortedTestResults).length
+    }
   },
 
   actions: {
