@@ -10,13 +10,53 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
+
+        <q-space />
+        <!-- guest -->
+        <q-btn dense flat no-wrap to="user">
+          <q-avatar size="26px">
+            <q-icon name="account_circle" size="md" />
+          </q-avatar>
+        </q-btn>
+
+        <!-- authenticated -->
+        <q-btn dense flat no-wrap>
+          <q-avatar size="26px" color="white" text-color="dark">
+            Ai
+          </q-avatar>
+          <q-icon name="arrow_drop_down" size="16px" />
+
+          <q-menu auto-close>
+            <q-list dense>
+              <q-item clickable class="GL__menu-link">
+                <q-item-section>Profile 1</q-item-section>
+              </q-item>
+              <q-item clickable class="GL__menu-link">
+                <q-item-section>Profile 2</q-item-section>
+              </q-item>
+              <q-item clickable class="GL__menu-link">
+                <q-item-section>Manage Profiles</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable class="GL__menu-link">
+                <q-item-section>Sign out</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
 
       <div class="q-pa-md">
-        <div class="text-h4">La'u Koviti</div>
-        <div class="text-subtitle1">{{ todaysDate }}</div>
+        <q-item to="/" class="text-white">
+          <q-item-section>
+            <div class="text-h4">La'u Koviti</div>
+            <div class="text-subtitle1">{{ todaysDate }}</div>
+          </q-item-section>
+        </q-item>
       </div>
+
       <q-img src="statics/beach.jpg" class="absolute-top header-image" />
+
     </q-header>
 
     <q-drawer
