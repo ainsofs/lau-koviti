@@ -3,7 +3,8 @@ import { firebaseAuth } from 'boot/firebase'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "firebase/auth"
 import { Notify } from "quasar"
 
@@ -92,6 +93,9 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.loggedIn = false
         }
       })
+    },
+    logoutUser() {
+      signOut(firebaseAuth)
     }
   },
 })

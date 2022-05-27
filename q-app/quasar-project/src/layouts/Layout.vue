@@ -13,14 +13,14 @@
 
         <q-space />
         <!-- guest -->
-        <q-btn dense flat no-wrap to="user">
+        <q-btn v-if="!store.loggedIn" dense flat no-wrap to="user">
           <q-avatar size="26px">
             <q-icon name="account_circle" size="md" />
           </q-avatar>
         </q-btn>
 
         <!-- authenticated -->
-        <q-btn dense flat no-wrap>
+        <q-btn v-else dense flat no-wrap>
           <q-avatar size="26px" color="white" text-color="dark">
             Ai
           </q-avatar>
@@ -38,7 +38,7 @@
                 <q-item-section>Manage Profiles</q-item-section>
               </q-item>
               <q-separator />
-              <q-item clickable class="GL__menu-link">
+              <q-item clickable class="GL__menu-link" @click="logoutUser" >
                 <q-item-section>Sign out</q-item-section>
               </q-item>
             </q-list>
@@ -90,6 +90,7 @@
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { date } from 'quasar'
+import { useStoreAuth } from 'stores/storeAuth'
 
 const linksList = [
   {
@@ -123,13 +124,21 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const store = useStoreAuth()
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      store,
+    }
+  },
+
+  methods: {
+    logoutUser() {
+      this.store.logoutUser()
     }
   },
 
