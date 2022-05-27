@@ -77,7 +77,7 @@ export default defineComponent({
   },
   methods: {
     loginUser() {
-      console.log('login')
+      this.store.loginUser(this.formDetails)
     },
     registerUser() {
       this.store.registerUser(this.formDetails)

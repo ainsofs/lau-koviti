@@ -36,8 +36,8 @@ export const useStoreAuth = defineStore("storeAuth", {
           })
         })
     },
-    increment() {
-      this.counter++
-    },
+    loginUser(userDetails) {
+      console.log('loginUser: ', userDetails)
+    }
   },
 })
