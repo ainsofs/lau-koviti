@@ -22,7 +22,7 @@
         <!-- authenticated -->
         <q-btn v-else dense flat no-wrap>
           <q-avatar size="26px" color="white" text-color="dark">
-            Ai
+            {{ alias }}
           </q-avatar>
           <q-icon name="arrow_drop_down" size="16px" />
 
@@ -91,6 +91,7 @@ import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { date } from 'quasar'
 import { useStoreAuth } from 'stores/storeAuth'
+import { useStoreResults } from 'stores/storeResults'
 
 const linksList = [
   {
@@ -125,6 +126,7 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const store = useStoreAuth()
+    const storeResults = useStoreResults()
 
     return {
       essentialLinks: linksList,
@@ -133,6 +135,7 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       store,
+      storeResults,
     }
   },
 
@@ -145,6 +148,12 @@ export default defineComponent({
   computed: {
     todaysDate() {
       return date.formatDate(Date.now(), 'dddd D MMMM, YYYY')
+    },
+    alias() {
+      if (this.storeResults.personal.firstName.length)
+        return this.storeResults.personal.firstName.substring(0,2)
+
+      return "?"
     }
   }
 })
