@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { uid, Notify } from 'quasar'
+import { firebaseDB } from 'boot/firebase'
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -43,6 +44,21 @@ export const useStoreResults = defineStore("storeResults", {
       conditions: [],
       phone: "",
       email: "",
+    },
+    profiles: {
+      "1234": {
+        personal: {
+          firstName: "",
+          lastName: "",
+          vaccinationId: "",
+          dob: "",
+          gender: "",
+          village: "",
+          conditions: [],
+          phone: "",
+          email: "",
+        },
+      }
     },
     sort: "date",
     sortDesc: true,
@@ -111,5 +127,8 @@ export const useStoreResults = defineStore("storeResults", {
       Object.assign(this.personal, personalDetails)
       // Notify.create('Personal details updated')
     },
+    fbReadDate() {
+      console.log('reading from firebase')
+    }
   },
 })

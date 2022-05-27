@@ -163,6 +163,7 @@ export default defineComponent({
         isSubmitted: false,
         dateSubmitted: '',
         personal: {},
+        profileId: "",
       }
 		  this.test = Object.assign({}, defaultTest)
     }

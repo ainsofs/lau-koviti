@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth"
+import { useStoreResults } from './storeResults'
 import { Notify, Loading } from "quasar"
 
 export const useStoreAuth = defineStore("storeAuth", {
@@ -100,6 +101,9 @@ export const useStoreAuth = defineStore("storeAuth", {
           //logged in
           this.loggedIn = true
           this.router.push("/")
+
+          const storeResults = useStoreResults()
+          storeResults.fbReadDate()
         }
         else {
           //logged out
