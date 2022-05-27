@@ -3,19 +3,20 @@ import { firebaseAuth } from 'boot/firebase'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged
 } from "firebase/auth"
 import { Notify } from "quasar"
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => ({
-    counter: 0,
+    loggedIn: false,
   }),
 
-  getters: {
-    doubleCount(state) {
-      return state.counter * 2
-    },
-  },
+  // getters: {
+  //   doubleCount(state) {
+  //     return state.counter * 2
+  //   },
+  // },
 
   actions: {
     registerUser(userDetails) {
@@ -44,6 +45,7 @@ export const useStoreAuth = defineStore("storeAuth", {
             color: "warning",
           })
           console.log(error)
+          console.log(errorCode);
         })
     },
     loginUser(userDetails) {
@@ -66,6 +68,9 @@ export const useStoreAuth = defineStore("storeAuth", {
           if (errorCode === "auth/wrong-password") {
             errorMessage = "Wrong password."
           }
+          else if (errorCode === "auth/user not found") {
+            errorMessage = "User not found."
+          }
 
           Notify.create({
             message: errorMessage,
@@ -73,7 +78,20 @@ export const useStoreAuth = defineStore("storeAuth", {
             color: "warning",
           })
           console.log(error)
+          console.log(errorCode)
         })
+    },
+    handleAuthStateChange() {
+      onAuthStateChanged(firebaseAuth, (user) => {
+        if (user) {
+          //logged in
+          this.loggedIn = true
+        }
+        else {
+          //logged out
+          this.loggedIn = false
+        }
+      })
     }
   },
 })

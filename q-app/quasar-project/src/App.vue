@@ -4,8 +4,19 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useStoreAuth } from 'stores/storeAuth'
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  setup() {
+    const store = useStoreAuth()
+
+    return {
+      store
+    }
+  },
+  mounted() {
+    this.store.handleAuthStateChange()
+  }
 })
 </script>
