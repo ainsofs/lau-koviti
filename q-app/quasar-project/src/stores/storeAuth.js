@@ -96,6 +96,11 @@ export const useStoreAuth = defineStore("storeAuth", {
     },
     logoutUser() {
       signOut(firebaseAuth)
+
+      Notify.create({
+        message: "Logged out",
+        icon: "announcement",
+      });
     }
   },
 })
