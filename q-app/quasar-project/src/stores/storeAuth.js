@@ -6,7 +6,7 @@ import {
   onAuthStateChanged,
   signOut
 } from "firebase/auth"
-import { Notify } from "quasar"
+import { Notify, Loading } from "quasar"
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => ({
@@ -21,6 +21,8 @@ export const useStoreAuth = defineStore("storeAuth", {
 
   actions: {
     registerUser(userDetails) {
+      Loading.show()
+
       createUserWithEmailAndPassword(
         firebaseAuth,
         userDetails.email,
@@ -34,8 +36,10 @@ export const useStoreAuth = defineStore("storeAuth", {
             icon: "announcement" })
         })
         .catch((error) => {
-          var errorCode = error.code
-          var errorMessage = error.message
+          Loading.hide()
+
+          let errorCode = error.code
+          let errorMessage = error.message
           if (errorCode === "auth/email-already-in-use") {
             errorMessage = "Email already in use."
           }
@@ -50,6 +54,8 @@ export const useStoreAuth = defineStore("storeAuth", {
         })
     },
     loginUser(userDetails) {
+      Loading.show()
+
       signInWithEmailAndPassword(
         firebaseAuth,
         userDetails.email,
@@ -64,8 +70,11 @@ export const useStoreAuth = defineStore("storeAuth", {
           })
         })
         .catch((error) => {
-          var errorCode = error.code
-          var errorMessage = error.message
+
+          Loading.hide()
+
+          let errorCode = error.code
+          let errorMessage = error.message
           if (errorCode === "auth/wrong-password") {
             errorMessage = "Wrong password."
           }
@@ -84,6 +93,9 @@ export const useStoreAuth = defineStore("storeAuth", {
     },
     handleAuthStateChange() {
       onAuthStateChanged(firebaseAuth, (user) => {
+
+        Loading.hide()
+
         if (user) {
           //logged in
           this.loggedIn = true
