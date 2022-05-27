@@ -21,9 +21,9 @@
           <q-tab-panel name="login">
 
             <div class="q-gutter-md q-pb-md" >
-              <q-input outlined label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
+              <q-input outlined v-model="email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
 
-              <q-input outlined label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
+              <q-input outlined v-model="password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
 
               <!-- TODO add forgot password -->
               <div class="text-right">
@@ -38,9 +38,9 @@
 
               <p>Register to access your test results from any device!
               </p>
-              <q-input outlined label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
+              <q-input outlined v-model="email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
 
-              <q-input outlined label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
+              <q-input outlined v-model="password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
 
               <div class="text-right">
                 <q-btn type="submit" flat color="primary" label="Register" class="btn-submit" />
@@ -68,7 +68,9 @@ export default defineComponent({
   },
   data() {
     return {
-      tab: "login"
+      tab: "login",
+      email: '',
+      password: '',
     }
   }
 })
