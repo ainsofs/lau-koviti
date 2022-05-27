@@ -21,13 +21,13 @@
           <q-tab-panel name="login">
 
             <div class="q-gutter-md q-pb-md" >
-              <q-input outlined v-model="email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
+              <q-input outlined v-model="formDetails.email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
 
-              <q-input outlined v-model="password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
+              <q-input outlined v-model="formDetails.password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
 
               <!-- TODO add forgot password -->
               <div class="text-right">
-                <q-btn type="submit" flat color="primary" label="Login" class="btn-submit" />
+                <q-btn type="submit" @click.prevent="loginUser" flat color="primary" label="Login" class="btn-submit" />
               </div>
             </div>
 
@@ -38,12 +38,12 @@
 
               <p>Register to access your test results from any device!
               </p>
-              <q-input outlined v-model="email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
+              <q-input outlined v-model="formDetails.email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
 
-              <q-input outlined v-model="password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
+              <q-input outlined v-model="formDetails.password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
 
               <div class="text-right">
-                <q-btn type="submit" flat color="primary" label="Register" class="btn-submit" />
+                <q-btn type="submit" @click.prevent="registerUser" flat color="primary" label="Register" class="btn-submit" />
               </div>
             </div>
           </q-tab-panel>
@@ -55,12 +55,12 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useStoreSettings } from 'stores/storeSettings'
+import { useStoreAuth } from 'stores/storeAuth'
 
 export default defineComponent({
-  name: 'SettingsPage',
+  name: 'AuthPage',
   setup() {
-    const store = useStoreSettings()
+    const store = useStoreAuth()
 
     return {
       store
@@ -69,8 +69,18 @@ export default defineComponent({
   data() {
     return {
       tab: "login",
-      email: '',
-      password: '',
+      formDetails: {
+        email: '',
+        password: '',
+      }
+    }
+  },
+  methods: {
+    loginUser() {
+      console.log('login')
+    },
+    registerUser() {
+      this.store.registerUser(this.formDetails)
     }
   }
 })

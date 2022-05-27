@@ -11,9 +11,9 @@ export const useStoreSettings = defineStore("storeSettings", {
   }),
 
   actions: {
-    toggleSetting(key) {
+    toggleSetting(key, keyVal) {
       if (key in this.settings) {
-        this.settings[key] = !state.settings[key];
+        this.state.settings[key] = keyVal;
       }
     },
   },
