@@ -46,7 +46,7 @@ export const useStoreAuth = defineStore("storeAuth", {
             color: "warning",
           })
           console.log(error)
-          console.log(errorCode);
+          console.log(errorCode)
         })
     },
     loginUser(userDetails) {
@@ -87,6 +87,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         if (user) {
           //logged in
           this.loggedIn = true
+          this.router.push("/")
         }
         else {
           //logged out
@@ -100,7 +101,7 @@ export const useStoreAuth = defineStore("storeAuth", {
       Notify.create({
         message: "Logged out",
         icon: "announcement",
-      });
+      })
     }
   },
 })
