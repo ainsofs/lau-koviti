@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { firebaseAuth } from 'boot/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { Notify } from "quasar"
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => ({
@@ -21,11 +22,19 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          console.log("response: ", response);
+          console.log(response)
+
+          Notify.create({
+            message: "Registered",
+            icon: "announcement" })
         })
         .catch((error) => {
-          console.log("error.message: ", error.message);
-        });
+          Notify.create({
+            message: error.message,
+            icon: "warning",
+            color: "warning",
+          })
+        })
     },
     increment() {
       this.counter++

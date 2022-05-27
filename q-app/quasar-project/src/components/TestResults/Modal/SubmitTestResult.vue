@@ -635,7 +635,7 @@ export default defineComponent({
               // form error
               console.log(response, 'error')
               this.$q.notify({
-                message: 'An error occured: Please contact the developer.',
+                message: 'Somethings wrong, please contact the developer.',
                 icon: 'warning',
                 color: 'warning',
               })
