@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { uid, Notify } from 'quasar'
-import { firebaseDB } from 'boot/firebase'
+import { firebaseAuth, firebaseDb } from "boot/firebase"
+import { ref, onChildAdded } from "firebase/database"
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -46,19 +47,19 @@ export const useStoreResults = defineStore("storeResults", {
       email: "",
     },
     profiles: {
-      "1234": {
-        personal: {
-          firstName: "",
-          lastName: "",
-          vaccinationId: "",
-          dob: "",
-          gender: "",
-          village: "",
-          conditions: [],
-          phone: "",
-          email: "",
-        },
-      }
+      // 1234: {
+      //   personal: {
+      //     firstName: "",
+      //     lastName: "",
+      //     vaccinationId: "",
+      //     dob: "",
+      //     gender: "",
+      //     village: "",
+      //     conditions: [],
+      //     phone: "",
+      //     email: "",
+      //   },
+      // },
     },
     sort: "date",
     sortDesc: true,
@@ -91,22 +92,23 @@ export const useStoreResults = defineStore("storeResults", {
       return testsSorted
     },
     totalSubmitted(state) {
-        let keys = Object.keys(state.tests), count = 0
-        keys.forEach((key) => {
-          let status = state.tests[key].isSubmitted
-          if (status) {
-            count ++
-          }
-        })
+      let keys = Object.keys(state.tests),
+        count = 0
+      keys.forEach((key) => {
+        let status = state.tests[key].isSubmitted
+        if (status) {
+          count++
+        }
+      })
 
-        return count
+      return count
     },
     totalNotSubmitted(state) {
       return state.totalTestResults - this.totalSubmitted
     },
     totalTestResults(state) {
       return Object.keys(state.sortedTestResults).length
-    }
+    },
   },
 
   actions: {
@@ -114,9 +116,14 @@ export const useStoreResults = defineStore("storeResults", {
       let id = uid()
       this.tests[id] = testResult
       Notify.create({ message: "Added", icon: "announcement" })
+      return id
     },
     updateResult(id, testResult) {
-      Object.assign(this.tests[id], testResult)
+      if (id in Object.keys(this.tests)) {
+        Object.assign(this.tests[id], testResult)
+      } else {
+        this.tests[id] = testResult
+      }
       Notify.create({ message: "Updated", icon: "announcement" })
     },
     deleteResult(id) {
@@ -127,8 +134,46 @@ export const useStoreResults = defineStore("storeResults", {
       Object.assign(this.personal, personalDetails)
       // Notify.create('Personal details updated')
     },
+    updateProfile(id, profile) {
+      if (id in Object.keys(this.profiles)) {
+        Object.assign(this.profiles[id], testResult)
+      } else {
+        this.profiles[id] = profile
+      }
+      // Notify.create({ message: "Updated", icon: "announcement" })
+    },
     fbReadDate() {
-      console.log('reading from firebase')
-    }
+      let userId = firebaseAuth.currentUser.uid
+      let userDataRef = ref(firebaseDb, userId)
+
+      onChildAdded(userDataRef, (snapshot) => {
+        let key = snapshot.key
+
+        if (key === "personal") {
+          //load personal details
+          let personal = snapshot.val()
+          this.updatePersonal(personal)
+
+        } else if (key === "profiles") {
+          //load profiles
+          let profiles = snapshot.val()
+          const keys = Object.keys(profiles)
+          keys.forEach((testKey) => {
+            this.updateProfile(testKey, profiles[testKey])
+          })
+
+        } else if (key === "tests") {
+          //load test results
+          let testResults = snapshot.val()
+          const keys = Object.keys(testResults)
+          keys.forEach((testKey) => {
+            this.updateResult(testKey, testResults[testKey])
+          })
+
+        } else {
+          console.log("unhandled: ", snapshot)
+        }
+      })
+    },
   },
 })
