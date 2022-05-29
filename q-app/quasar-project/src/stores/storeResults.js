@@ -1,7 +1,12 @@
 import { defineStore } from 'pinia'
 import { uid, Notify } from 'quasar'
 import { firebaseAuth, firebaseDb } from "boot/firebase"
-import { ref, onChildAdded } from "firebase/database"
+import {
+  ref,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+} from "firebase/database"
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -146,6 +151,7 @@ export const useStoreResults = defineStore("storeResults", {
       let userId = firebaseAuth.currentUser.uid
       let userDataRef = ref(firebaseDb, userId)
 
+      // data added
       onChildAdded(userDataRef, (snapshot) => {
         let key = snapshot.key
 
@@ -153,7 +159,6 @@ export const useStoreResults = defineStore("storeResults", {
           //load personal details
           let personal = snapshot.val()
           this.updatePersonal(personal)
-
         } else if (key === "profiles") {
           //load profiles
           let profiles = snapshot.val()
@@ -161,7 +166,6 @@ export const useStoreResults = defineStore("storeResults", {
           keys.forEach((testKey) => {
             this.updateProfile(testKey, profiles[testKey])
           })
-
         } else if (key === "tests") {
           //load test results
           let testResults = snapshot.val()
@@ -169,10 +173,45 @@ export const useStoreResults = defineStore("storeResults", {
           keys.forEach((testKey) => {
             this.updateResult(testKey, testResults[testKey])
           })
-
         } else {
           console.log("unhandled: ", snapshot)
         }
+      })
+
+      // data updated
+      onChildChanged(userDataRef, (snapshot) => {
+        let key = snapshot.key
+
+        if (key === "personal") {
+          //load personal details
+          let personal = snapshot.val()
+          this.updatePersonal(personal)
+        } else if (key === "profiles") {
+          //load profiles
+          let profiles = snapshot.val()
+          const keys = Object.keys(profiles)
+          keys.forEach((testKey) => {
+            this.updateProfile(testKey, profiles[testKey])
+          })
+        } else if (key === "tests") {
+          //load test results
+          let testResults = snapshot.val()
+          const keys = Object.keys(testResults)
+          keys.forEach((testKey) => {
+            this.updateResult(testKey, testResults[testKey])
+          })
+        } else {
+          console.log("unhandled: ", snapshot)
+        }
+      })
+
+      // data deleted
+
+      let testRef = ref(firebaseDb, userId + '/tests')
+      onChildRemoved(testRef, (snapshot) => {
+        let key = snapshot.key
+        // console.log(key)
+        this.deleteResult(key)
       })
     },
   },
