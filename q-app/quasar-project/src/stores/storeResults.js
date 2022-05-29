@@ -4,6 +4,7 @@ import { firebaseAuth, firebaseDb } from "boot/firebase"
 import {
   ref,
   set,
+  update,
   onChildAdded,
   onChildChanged,
   onChildRemoved,
@@ -132,7 +133,8 @@ export const useStoreResults = defineStore("storeResults", {
       } else {
         this.tests[id] = testResult
       }
-      Notify.create({ message: "Updated", icon: "announcement" })
+      this.fbUpdateTask({id: id, updates: testResult})
+      // Notify.create({ message: "Updated", icon: "announcement" })
     },
     deleteResult(id) {
       delete this.tests[id]
@@ -228,21 +230,24 @@ export const useStoreResults = defineStore("storeResults", {
           console.log(error)
         } else {
           // Notify.create("Task added!")
-          Notify.create({ message: "Added", icon: "announcement" });
+          Notify.create({ message: "Added", icon: "announcement" })
         }
       })
     },
     fbUpdateTask(payload) {
       let userId = firebaseAuth.currentUser.uid
-      let taskRef = firebaseDb.ref("tasks/" + userId + "/" + payload.id)
-      taskRef.update(payload.updates, (error) => {
+      let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
+      update(testRef, payload.updates, (error) => {
         if (error) {
-          showErrorMessage(error.message)
+          // showErrorMessage(error.message)
+          console.log(error)
         } else {
-          let keys = Object.keys(payload.updates)
-          if (!(keys.includes("completed") && keys.length === 1)) {
-            Notify.create("Task updated!")
-          }
+          // let keys = Object.keys(payload.updates)
+          // if (!(keys.includes("completed") && keys.length === 1)) {
+          //   Notify.create("Task updated!")
+          // }
+
+          Notify.create({ message: "Updated", icon: "announcement" })
         }
       })
     },
