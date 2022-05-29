@@ -148,71 +148,73 @@ export const useStoreResults = defineStore("storeResults", {
       // Notify.create({ message: "Updated", icon: "announcement" })
     },
     fbReadDate() {
-      let userId = firebaseAuth.currentUser.uid
-      let userDataRef = ref(firebaseDb, userId)
+      let userId = firebaseAuth.currentUser.uid;
+      let userDataRef = ref(firebaseDb, userId);
 
       // data added
       onChildAdded(userDataRef, (snapshot) => {
-        let key = snapshot.key
+        let key = snapshot.key;
 
         if (key === "personal") {
           //load personal details
-          let personal = snapshot.val()
-          this.updatePersonal(personal)
+          let personal = snapshot.val();
+          this.updatePersonal(personal);
         } else if (key === "profiles") {
           //load profiles
-          let profiles = snapshot.val()
-          const keys = Object.keys(profiles)
+          let profiles = snapshot.val();
+          const keys = Object.keys(profiles);
           keys.forEach((testKey) => {
-            this.updateProfile(testKey, profiles[testKey])
-          })
+            this.updateProfile(testKey, profiles[testKey]);
+          });
         } else if (key === "tests") {
           //load test results
-          let testResults = snapshot.val()
-          const keys = Object.keys(testResults)
+          let testResults = snapshot.val();
+          const keys = Object.keys(testResults);
           keys.forEach((testKey) => {
-            this.updateResult(testKey, testResults[testKey])
-          })
+            this.updateResult(testKey, testResults[testKey]);
+          });
         } else {
-          console.log("unhandled: ", snapshot)
+          console.log("unhandled: ", snapshot);
         }
-      })
+      });
 
       // data updated
       onChildChanged(userDataRef, (snapshot) => {
-        let key = snapshot.key
+        let key = snapshot.key;
 
         if (key === "personal") {
-          //load personal details
-          let personal = snapshot.val()
-          this.updatePersonal(personal)
+          //update personal details
+          let personal = snapshot.val();
+          this.updatePersonal(personal);
         } else if (key === "profiles") {
-          //load profiles
-          let profiles = snapshot.val()
-          const keys = Object.keys(profiles)
+          //update profiles
+          let profiles = snapshot.val();
+          const keys = Object.keys(profiles);
           keys.forEach((testKey) => {
-            this.updateProfile(testKey, profiles[testKey])
-          })
+            this.updateProfile(testKey, profiles[testKey]);
+          });
         } else if (key === "tests") {
-          //load test results
-          let testResults = snapshot.val()
-          const keys = Object.keys(testResults)
-          keys.forEach((testKey) => {
-            this.updateResult(testKey, testResults[testKey])
-          })
+          // do nothing. covered in other event
         } else {
-          console.log("unhandled: ", snapshot)
+          console.log("unhandled: ", snapshot);
         }
-      })
+      });
+
+      let testRef = ref(firebaseDb, userId + "/tests");
+      // TODO - monitor profiles
+      onChildChanged(testRef, (snapshot) => {
+        let key = snapshot.key;
+        let testResult = snapshot.val();
+
+        this.updateResult(key, testResult);
+      });
 
       // data deleted
-
-      let testRef = ref(firebaseDb, userId + '/tests')
+      // TODO - delete profiles
       onChildRemoved(testRef, (snapshot) => {
-        let key = snapshot.key
-        // console.log(key)
-        this.deleteResult(key)
-      })
+        let key = snapshot.key;
+        this.deleteResult(key);
+      });
     },
   },
 })
