@@ -226,6 +226,7 @@ export const useStoreResults = defineStore("storeResults", {
     fbAddTask(payload) {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
+
       set(testRef, payload.testResult)
         .then(() => {
           Notify.create({ message: "Added", icon: "announcement" })
@@ -238,13 +239,13 @@ export const useStoreResults = defineStore("storeResults", {
     fbUpdateTask(payload) {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
+
       update(testRef, payload.updates)
         .then(() => {
           // let keys = Object.keys(payload.updates)
           // if (!(keys.includes("completed") && keys.length === 1)) {
           //   Notify.create("Task updated!")
           // }
-
           Notify.create({ message: "Updated", icon: "announcement" })
         })
         .catch((error) => {
