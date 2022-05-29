@@ -3,6 +3,7 @@ import { uid, Notify } from 'quasar'
 import { firebaseAuth, firebaseDb } from "boot/firebase"
 import {
   ref,
+  set,
   onChildAdded,
   onChildChanged,
   onChildRemoved,
@@ -120,8 +121,10 @@ export const useStoreResults = defineStore("storeResults", {
     addResult(testResult) {
       let id = uid()
       this.tests[id] = testResult
-      Notify.create({ message: "Added", icon: "announcement" })
-      return id
+
+      this.fbAddTask({ id: id, testResult: testResult })
+      // TODO - cater for offline use
+      // Notify.create({ message: "Added", icon: "announcement" })
     },
     updateResult(id, testResult) {
       if (id in Object.keys(this.tests)) {
@@ -148,73 +151,111 @@ export const useStoreResults = defineStore("storeResults", {
       // Notify.create({ message: "Updated", icon: "announcement" })
     },
     fbReadDate() {
-      let userId = firebaseAuth.currentUser.uid;
-      let userDataRef = ref(firebaseDb, userId);
+      let userId = firebaseAuth.currentUser.uid
+      let userDataRef = ref(firebaseDb, userId)
 
       // data added
       onChildAdded(userDataRef, (snapshot) => {
-        let key = snapshot.key;
+        let key = snapshot.key
 
         if (key === "personal") {
           //load personal details
-          let personal = snapshot.val();
-          this.updatePersonal(personal);
+          let personal = snapshot.val()
+          this.updatePersonal(personal)
         } else if (key === "profiles") {
           //load profiles
-          let profiles = snapshot.val();
-          const keys = Object.keys(profiles);
+          let profiles = snapshot.val()
+          const keys = Object.keys(profiles)
           keys.forEach((testKey) => {
-            this.updateProfile(testKey, profiles[testKey]);
-          });
+            this.updateProfile(testKey, profiles[testKey])
+          })
         } else if (key === "tests") {
           //load test results
-          let testResults = snapshot.val();
-          const keys = Object.keys(testResults);
+          let testResults = snapshot.val()
+          const keys = Object.keys(testResults)
           keys.forEach((testKey) => {
-            this.updateResult(testKey, testResults[testKey]);
-          });
+            this.updateResult(testKey, testResults[testKey])
+          })
         } else {
-          console.log("unhandled: ", snapshot);
+          console.log("unhandled: ", snapshot)
         }
-      });
+      })
 
       // data updated
       onChildChanged(userDataRef, (snapshot) => {
-        let key = snapshot.key;
+        let key = snapshot.key
 
         if (key === "personal") {
           //update personal details
-          let personal = snapshot.val();
-          this.updatePersonal(personal);
+          let personal = snapshot.val()
+          this.updatePersonal(personal)
         } else if (key === "profiles") {
           //update profiles
-          let profiles = snapshot.val();
-          const keys = Object.keys(profiles);
+          let profiles = snapshot.val()
+          const keys = Object.keys(profiles)
           keys.forEach((testKey) => {
-            this.updateProfile(testKey, profiles[testKey]);
-          });
+            this.updateProfile(testKey, profiles[testKey])
+          })
         } else if (key === "tests") {
           // do nothing. covered in other event
         } else {
-          console.log("unhandled: ", snapshot);
+          console.log("unhandled: ", snapshot)
         }
-      });
+      })
 
-      let testRef = ref(firebaseDb, userId + "/tests");
+      let testRef = ref(firebaseDb, userId + "/tests")
       // TODO - monitor profiles
       onChildChanged(testRef, (snapshot) => {
-        let key = snapshot.key;
-        let testResult = snapshot.val();
+        let key = snapshot.key
+        let testResult = snapshot.val()
 
-        this.updateResult(key, testResult);
-      });
+        this.updateResult(key, testResult)
+      })
 
       // data deleted
       // TODO - delete profiles
       onChildRemoved(testRef, (snapshot) => {
-        let key = snapshot.key;
-        this.deleteResult(key);
-      });
+        let key = snapshot.key
+        this.deleteResult(key)
+      })
+    },
+    fbAddTask(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
+      set(testRef, payload.testResult, (error) => {
+        if (error) {
+          // showErrorMessage(error.message)
+          console.log(error)
+        } else {
+          // Notify.create("Task added!")
+          Notify.create({ message: "Added", icon: "announcement" });
+        }
+      })
+    },
+    fbUpdateTask(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let taskRef = firebaseDb.ref("tasks/" + userId + "/" + payload.id)
+      taskRef.update(payload.updates, (error) => {
+        if (error) {
+          showErrorMessage(error.message)
+        } else {
+          let keys = Object.keys(payload.updates)
+          if (!(keys.includes("completed") && keys.length === 1)) {
+            Notify.create("Task updated!")
+          }
+        }
+      })
+    },
+    fbDeleteTask(taskId) {
+      let userId = firebaseAuth.currentUser.uid
+      let taskRef = firebaseDb.ref("tasks/" + userId + "/" + taskId)
+      taskRef.remove((error) => {
+        if (error) {
+          showErrorMessage(error.message)
+        } else {
+          Notify.create("Task deleted!")
+        }
+      })
     },
   },
 })
