@@ -30,8 +30,6 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          console.log(response)
-
           Notify.create({
             message: "Registered",
             icon: "announcement" })
@@ -63,8 +61,6 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          console.log(response)
-
           Notify.create({
             message: "Logged in",
             icon: "announcement",
@@ -108,7 +104,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         else {
           //logged out
           this.loggedIn = false
-          this.router.push("user")
+          // this.router.push("user")
         }
       })
     },

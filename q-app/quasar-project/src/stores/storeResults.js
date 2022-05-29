@@ -10,6 +10,8 @@ import {
   onChildChanged,
   onChildRemoved,
 } from "firebase/database"
+import { useStoreAuth } from "./storeAuth"
+import { store } from 'quasar/wrappers'
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -127,9 +129,13 @@ export const useStoreResults = defineStore("storeResults", {
       let id = uid()
       this.tests[id] = testResult
 
-      this.fbAddTask({ id: id, testResult: testResult })
-      // TODO - cater for offline use
-      // Notify.create({ message: "Added", icon: "announcement" })
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbAddTask({ id: id, testResult: testResult })
+      }
+      else {
+        Notify.create({ message: "Added", icon: "announcement" })
+      }
     },
     updateResult(id, testResult) {
       if (id in Object.keys(this.tests)) {
@@ -137,13 +143,25 @@ export const useStoreResults = defineStore("storeResults", {
       } else {
         this.tests[id] = testResult
       }
-      this.fbUpdateTask({id: id, updates: testResult})
-      // Notify.create({ message: "Updated", icon: "announcement" })
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbUpdateTask({id: id, updates: testResult})
+      }
+      else {
+        Notify.create({ message: "Updated", icon: "announcement" })
+      }
     },
     deleteResult(id) {
       delete this.tests[id]
-      this.fbDeleteTask(id)
-      // Notify.create({ message: "Deleted", icon: "announcement" })
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbDeleteTask(id)
+      }
+      else {
+        Notify.create({ message: "Deleted", icon: "announcement" })
+      }
     },
     updatePersonal(personalDetails) {
       Object.assign(this.personal, personalDetails)
@@ -157,6 +175,7 @@ export const useStoreResults = defineStore("storeResults", {
       }
       // Notify.create({ message: "Updated", icon: "announcement" })
     },
+
     fbReadDate() {
       let userId = firebaseAuth.currentUser.uid
       let userDataRef = ref(firebaseDb, userId)
