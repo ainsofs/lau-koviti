@@ -108,7 +108,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         else {
           //logged out
           this.loggedIn = false
-          this.router.push("user");
+          this.router.push("user")
         }
       })
     },

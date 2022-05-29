@@ -5,6 +5,7 @@ import {
   ref,
   set,
   update,
+  remove,
   onChildAdded,
   onChildChanged,
   onChildRemoved,
@@ -138,7 +139,8 @@ export const useStoreResults = defineStore("storeResults", {
     },
     deleteResult(id) {
       delete this.tests[id]
-      Notify.create({ message: "Deleted", icon: "announcement" })
+      this.fbDeleteTask(id)
+      // Notify.create({ message: "Deleted", icon: "announcement" })
     },
     updatePersonal(personalDetails) {
       Object.assign(this.personal, personalDetails)
@@ -224,43 +226,42 @@ export const useStoreResults = defineStore("storeResults", {
     fbAddTask(payload) {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
-      set(testRef, payload.testResult, (error) => {
-        if (error) {
-          // showErrorMessage(error.message)
-          console.log(error)
-        } else {
-          // Notify.create("Task added!")
+      set(testRef, payload.testResult)
+        .then(() => {
           Notify.create({ message: "Added", icon: "announcement" })
-        }
-      })
+
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     fbUpdateTask(payload) {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
-      update(testRef, payload.updates, (error) => {
-        if (error) {
-          // showErrorMessage(error.message)
-          console.log(error)
-        } else {
+      update(testRef, payload.updates)
+        .then(() => {
           // let keys = Object.keys(payload.updates)
           // if (!(keys.includes("completed") && keys.length === 1)) {
           //   Notify.create("Task updated!")
           // }
 
           Notify.create({ message: "Updated", icon: "announcement" })
-        }
-      })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
-    fbDeleteTask(taskId) {
+    fbDeleteTask(id) {
       let userId = firebaseAuth.currentUser.uid
-      let taskRef = firebaseDb.ref("tasks/" + userId + "/" + taskId)
-      taskRef.remove((error) => {
-        if (error) {
-          showErrorMessage(error.message)
-        } else {
-          Notify.create("Task deleted!")
-        }
-      })
+      let testRef = ref(firebaseDb, userId + "/tests/" + id)
+      remove(testRef)
+        .then(() => {
+          // Notify.create("Task deleted!")
+          Notify.create({ message: "Deleted", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
   },
 })
