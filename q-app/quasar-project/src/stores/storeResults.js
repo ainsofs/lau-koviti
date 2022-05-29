@@ -120,6 +120,9 @@ export const useStoreResults = defineStore("storeResults", {
   },
 
   actions: {
+    clearResults() {
+      this.tests = {}
+    },
     addResult(testResult) {
       let id = uid()
       this.tests[id] = testResult

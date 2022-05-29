@@ -114,6 +114,8 @@ export const useStoreAuth = defineStore("storeAuth", {
     },
     logoutUser() {
       signOut(firebaseAuth)
+      const storeResults = useStoreResults()
+      storeResults.clearResults()
 
       Notify.create({
         message: "Logged out",
