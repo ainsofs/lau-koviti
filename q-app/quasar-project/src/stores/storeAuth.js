@@ -12,6 +12,8 @@ import { Notify, Loading } from "quasar"
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => ({
     loggedIn: false,
+    email: "",
+    isVerified: false,
   }),
 
   // getters: {
@@ -98,6 +100,9 @@ export const useStoreAuth = defineStore("storeAuth", {
         if (user) {
           //logged in
           this.loggedIn = true
+          this.email = user.email
+          this.isVerified = user.emailVerified
+
           this.router.push("/")
 
           // if user has some tests. send them to the fb before reading
@@ -115,6 +120,8 @@ export const useStoreAuth = defineStore("storeAuth", {
         else {
           //logged out
           this.loggedIn = false
+          this.email = ""
+          this.isVerified = false
           // this.router.push("user")
         }
       })

@@ -155,6 +155,7 @@
 import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
+import { useStoreAuth } from 'stores/storeAuth'
 
 const villageOptions = [
   { label: "Aai o Fiti", value: "Aai o Fiti" },
@@ -509,9 +510,11 @@ export default defineComponent({
   props: ['testResult', 'resultId'],
   setup() {
     const store = useStoreResults()
+    const storeAuth = useStoreAuth()
 
     return {
-      store
+      store,
+      storeAuth
     }
   },
   data() {
@@ -530,7 +533,7 @@ export default defineComponent({
         village: this.store.personal.village,
         conditions: this.store.personal.conditions,
         phone: this.store.personal.phone,
-        email: this.store.personal.email,
+        email: this.store.personal.email || this.storeAuth.email,
       },
       test: {},
     }
