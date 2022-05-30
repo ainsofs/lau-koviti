@@ -103,7 +103,7 @@ export const useStoreAuth = defineStore("storeAuth", {
           if (storeResults.totalTestResults) {
             const keys = Object.keys(storeResults.tests)
             keys.forEach((key) => {
-              storeResults.fbAddTask({id: key, testResult: storeResults.tests[key]})
+              storeResults.fbAddTestResult({id: key, testResult: storeResults.tests[key]})
             })
           }
 

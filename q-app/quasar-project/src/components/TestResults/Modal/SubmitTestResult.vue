@@ -549,7 +549,7 @@ export default defineComponent({
         let endpoint = '/api'
 
         let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
-
+        // forms/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/
         let requestOptions = {
           method: 'POST',
         }
@@ -620,8 +620,8 @@ export default defineComponent({
               // form sent!
               this.test.isSubmitted = true
               this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
+              this.test.personal = Object.assign({}, this.personal)
 
-              Object.assign(this.test.personal, this.personal)
               this.store.updateResult(this.resultId, this.test)
 
               this.$q.notify({
