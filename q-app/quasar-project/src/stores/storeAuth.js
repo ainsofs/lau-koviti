@@ -93,6 +93,8 @@ export const useStoreAuth = defineStore("storeAuth", {
 
         Loading.hide()
 
+        // useful fields: email, emailVerified, isAnonymous, phoneNumber, displayName
+
         if (user) {
           //logged in
           this.loggedIn = true
