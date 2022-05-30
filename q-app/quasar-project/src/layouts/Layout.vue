@@ -27,7 +27,7 @@
           <q-icon name="arrow_drop_down" size="16px" />
 
           <q-menu auto-close>
-            <q-list dense>
+            <q-list dense> <!-- TODO add profiles
               <q-item clickable class="GL__menu-link">
                 <q-item-section>Profile 1</q-item-section>
               </q-item>
@@ -36,7 +36,7 @@
               </q-item>
               <q-item clickable class="GL__menu-link">
                 <q-item-section>Manage Profiles</q-item-section>
-              </q-item>
+              </q-item> -->
               <q-separator />
               <q-item clickable class="GL__menu-link" @click="logoutUser" >
                 <q-item-section>Sign out</q-item-section>
