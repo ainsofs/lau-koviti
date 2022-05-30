@@ -98,8 +98,17 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.loggedIn = true
           this.router.push("/")
 
+          // if user has some tests. send them to the fb before reading
           const storeResults = useStoreResults()
-          storeResults.fbReadDate()
+          if (storeResults.totalTestResults) {
+            const keys = Object.keys(storeResults.tests)
+            keys.forEach((key) => {
+              storeResults.fbAddTask({id: key, testResult: storeResults.tests[key]})
+            })
+          }
+
+          // read data from fb
+          storeResults.fbReadData()
         }
         else {
           //logged out

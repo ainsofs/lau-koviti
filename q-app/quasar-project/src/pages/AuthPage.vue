@@ -19,8 +19,19 @@
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="login">
-
             <div class="q-gutter-md q-pb-md" >
+              <q-card flat bordered v-show="store2.totalTestResults">
+                <q-card-section class="bg-secondary text-white">
+                  <div class="text-h6">Psst...</div>
+                  <div class="q-py-md">
+                    Looks like you have some tests results recorded. We'll save them to your account when you {{ tab }}.
+                  </div>
+                </q-card-section>
+              </q-card>
+
+              <p>Login to download your test results!
+              </p>
+
               <q-input outlined v-model="formDetails.email" label="Email address" hint="I-meli" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your email.' ]" />
 
               <q-input outlined v-model="formDetails.password" label="Password" type="password" hint="Faalilolilo" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your password.' ]" />
@@ -35,6 +46,15 @@
 
           <q-tab-panel name="register">
             <div class="q-gutter-md q-pb-md" >
+
+              <q-card flat bordered v-show="store2.totalTestResults">
+                <q-card-section class="bg-secondary text-white">
+                  <div class="text-h6">Psst...</div>
+                  <div class="q-py-md">
+                    Looks like you have some tests results recorded. We'll save them to your account when you {{ tab }}.
+                  </div>
+                </q-card-section>
+              </q-card>
 
               <p>Register to access your test results from any device!
               </p>
@@ -56,14 +76,17 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStoreAuth } from 'stores/storeAuth'
+import { useStoreResults } from 'stores/storeResults'
 
 export default defineComponent({
   name: 'AuthPage',
   setup() {
     const store = useStoreAuth()
+    const store2 = useStoreResults()
 
     return {
-      store
+      store,
+      store2
     }
   },
   data() {
@@ -77,9 +100,15 @@ export default defineComponent({
   },
   methods: {
     loginUser() {
+      // TODO: check if there are any tests. warn user that tests
+      //    will be sent to fb
       this.store.loginUser(this.formDetails)
     },
     registerUser() {
+      // TODO: check if there are any tests. warn user that tests
+      //    will be sent to fb
+
+      // Require email verification
       this.store.registerUser(this.formDetails)
     }
   }

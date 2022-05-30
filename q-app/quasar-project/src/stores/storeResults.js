@@ -176,7 +176,7 @@ export const useStoreResults = defineStore("storeResults", {
       // Notify.create({ message: "Updated", icon: "announcement" })
     },
 
-    fbReadDate() {
+    fbReadData() {
       let userId = firebaseAuth.currentUser.uid
       let userDataRef = ref(firebaseDb, userId)
 
