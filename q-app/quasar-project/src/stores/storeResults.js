@@ -123,7 +123,17 @@ export const useStoreResults = defineStore("storeResults", {
 
   actions: {
     clearResults() {
+      // clear test restuls
       this.tests = {}
+
+      // clear personal information
+      let keys = Object.keys(this.personal)
+      keys.forEach((key) => {
+        this.personal[key] = ""
+      })
+
+      // todo: clear profiles
+      this.profiles = {}
     },
     addResult(testResult) {
       let id = uid()
