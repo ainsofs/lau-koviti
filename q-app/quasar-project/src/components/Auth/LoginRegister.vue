@@ -37,6 +37,7 @@ import { useStoreAuth } from 'stores/storeAuth'
 
 export default defineComponent({
   name: 'AuthPage',
+  props: ['tab'],
   setup() {
     const store = useStoreAuth()
 
@@ -46,7 +47,6 @@ export default defineComponent({
   },
   data() {
     return {
-      tab: "login",
       formDetails: {
         email: '',
         password: '',
