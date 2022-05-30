@@ -8,7 +8,7 @@
       label="Email address"
       hint="I-meli"
       class="col q-pr-md"
-      :rules="[ val => val.length >= 6 || 'Please enter an email.']"
+      :rules="[ val => (val.length >= 6 && isValidEmailAddress(val)) || 'Please enter a valid email.']"
       type="email" />
 
     <q-input
@@ -54,8 +54,11 @@ export default defineComponent({
     }
   },
   methods: {
+    isValidEmailAddress(email) {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(String(email).toLowerCase())
+    },
     submitForm() {
-
       this.$refs.email.validate()
       this.$refs.password.validate()
 
