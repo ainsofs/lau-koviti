@@ -130,7 +130,12 @@ export const useStoreResults = defineStore("storeResults", {
       // clear personal information
       let keys = Object.keys(this.personal)
       keys.forEach((key) => {
-        this.personal[key] = ""
+        if (key === 'conditions') {
+          this.personal[key] = []
+        }
+        else {
+          this.personal[key] = ""
+        }
       })
 
       // todo: clear profiles
