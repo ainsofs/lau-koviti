@@ -1,5 +1,17 @@
 import { defineStore } from 'pinia'
 import { uid, Notify } from 'quasar'
+import { firebaseAuth, firebaseDb } from "boot/firebase"
+import {
+  ref,
+  set,
+  update,
+  remove,
+  onChildAdded,
+  onChildChanged,
+  onChildRemoved,
+  onValue,
+} from "firebase/database"
+import { useStoreAuth } from "./storeAuth"
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -44,8 +56,24 @@ export const useStoreResults = defineStore("storeResults", {
       phone: "",
       email: "",
     },
+    profiles: {
+      // 1234: {
+      //   personal: {
+      //     firstName: "",
+      //     lastName: "",
+      //     vaccinationId: "",
+      //     dob: "",
+      //     gender: "",
+      //     village: "",
+      //     conditions: [],
+      //     phone: "",
+      //     email: "",
+      //   },
+      // },
+    },
     sort: "date",
     sortDesc: true,
+    testsDownloaded: false,
   }),
 
   getters: {
@@ -75,41 +103,252 @@ export const useStoreResults = defineStore("storeResults", {
       return testsSorted
     },
     totalSubmitted(state) {
-        let keys = Object.keys(state.tests), count = 0
-        keys.forEach((key) => {
-          let status = state.tests[key].isSubmitted
-          if (status) {
-            count ++
-          }
-        })
+      let keys = Object.keys(state.tests),
+        count = 0
+      keys.forEach((key) => {
+        let status = state.tests[key].isSubmitted
+        if (status) {
+          count++
+        }
+      })
 
-        return count
+      return count
     },
     totalNotSubmitted(state) {
       return state.totalTestResults - this.totalSubmitted
     },
     totalTestResults(state) {
       return Object.keys(state.sortedTestResults).length
-    }
+    },
   },
 
   actions: {
+    clearResults() {
+      // clear test restuls
+      this.tests = {}
+
+      // clear personal information
+      let keys = Object.keys(this.personal)
+      keys.forEach((key) => {
+        if (key === 'conditions') {
+          this.personal[key] = []
+        }
+        else {
+          this.personal[key] = ""
+        }
+      })
+
+      // todo: clear profiles
+      this.profiles = {}
+    },
     addResult(testResult) {
       let id = uid()
       this.tests[id] = testResult
-      Notify.create({ message: "Added", icon: "announcement" })
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbAddTestResult({ id: id, testResult: testResult })
+      }
+      else {
+        Notify.create({ message: "Added", icon: "announcement" })
+      }
     },
     updateResult(id, testResult) {
-      Object.assign(this.tests[id], testResult)
-      Notify.create({ message: "Updated", icon: "announcement" })
+      if (id in Object.keys(this.tests)) {
+        Object.assign(this.tests[id], testResult)
+      } else {
+        this.tests[id] = testResult
+      }
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbUpdateTestResult({id: id, updates: testResult})
+      }
+      else {
+        Notify.create({ message: "Updated", icon: "announcement" })
+      }
     },
     deleteResult(id) {
       delete this.tests[id]
-      Notify.create({ message: "Deleted", icon: "announcement" })
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbDeleteTestResult(id)
+      }
+      else {
+        Notify.create({ message: "Deleted", icon: "announcement" })
+      }
     },
     updatePersonal(personalDetails) {
       Object.assign(this.personal, personalDetails)
-      // Notify.create('Personal details updated')
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbUpdatePersonalDetail(personalDetails)
+      }
+      else {
+
+      }
+
+    },
+
+    // TODO update profiles
+    updateProfile(id, profile) {
+      if (id in Object.keys(this.profiles)) {
+        Object.assign(this.profiles[id], testResult)
+      } else {
+        this.profiles[id] = profile
+      }
+      // Notify.create({ message: "Updated", icon: "announcement" })
+    },
+
+    fbReadData() {
+      let userId = firebaseAuth.currentUser.uid
+      let userDataRef = ref(firebaseDb, userId)
+
+      // initial check for data
+      onValue(userDataRef,
+        (snapshot) => {
+          this.testsDownloaded = true
+        },
+        (error) => {
+          if (error) {
+            // showErrorMessage(error.message)
+            console.log(error)
+            this.$router.replace("/")
+          }
+        },
+        {
+          onlyOnce: true,
+        }
+      )
+
+      // data added
+      onChildAdded(userDataRef, (snapshot) => {
+        let key = snapshot.key
+
+        if (key === "personal") {
+          //load personal details
+          let personal = snapshot.val()
+          this.updatePersonal(personal)
+        } else if (key === "profiles") {
+          //load profiles
+          // let profiles = snapshot.val()
+          // const keys = Object.keys(profiles)
+          // keys.forEach((testKey) => {
+          //   this.updateProfile(testKey, profiles[testKey])
+          // })
+        } else if (key === "tests") {
+          //load test results
+          let testResults = snapshot.val()
+          const keys = Object.keys(testResults)
+          keys.forEach((testKey) => {
+            this.updateResult(testKey, testResults[testKey])
+          })
+        } else {
+          console.log("unhandled: ", snapshot)
+        }
+      })
+
+      // data updated
+      onChildChanged(userDataRef, (snapshot) => {
+        let key = snapshot.key
+
+        if (key === "personal") {
+          //update personal details
+          let personal = snapshot.val()
+          this.updatePersonal(personal)
+        } else if (key === "profiles") {
+          //update profiles
+          // let profiles = snapshot.val()
+          // const keys = Object.keys(profiles)
+          // keys.forEach((testKey) => {
+          //   this.updateProfile(testKey, profiles[testKey])
+          // })
+        } else if (key === "tests") {
+          // do nothing. covered in other event
+        } else {
+          console.log("unhandled: ", snapshot)
+        }
+      })
+
+      let testRef = ref(firebaseDb, userId + "/tests")
+      // TODO - monitor profiles
+      onChildChanged(testRef, (snapshot) => {
+        let key = snapshot.key
+        let testResult = snapshot.val()
+
+        this.updateResult(key, testResult)
+      })
+
+      // data deleted
+      // TODO - delete profiles
+      onChildRemoved(testRef, (snapshot) => {
+        let key = snapshot.key
+        this.deleteResult(key)
+      })
+    },
+
+    // Test Results
+    fbAddTestResult(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
+
+      set(testRef, payload.testResult)
+        .then(() => {
+          Notify.create({ message: "Added", icon: "announcement" })
+
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    fbUpdateTestResult(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
+
+      update(testRef, payload.updates)
+        .then(() => {
+          // let keys = Object.keys(payload.updates)
+          // if (!(keys.includes("completed") && keys.length === 1)) {
+          //   Notify.create("Task updated!")
+          // }
+          Notify.create({ message: "Updated", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    fbDeleteTestResult(id) {
+      let userId = firebaseAuth.currentUser.uid
+      let testRef = ref(firebaseDb, userId + "/tests/" + id)
+      remove(testRef)
+        .then(() => {
+          // Notify.create("Task deleted!")
+          Notify.create({ message: "Deleted", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+
+
+    // Personal Details
+    fbUpdatePersonalDetail(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let dbRef = ref(firebaseDb, userId + "/personal")
+
+      update(dbRef, payload)
+        .then(() => {
+          // let keys = Object.keys(payload.updates)
+          // if (!(keys.includes("completed") && keys.length === 1)) {
+          //   Notify.create("Task updated!")
+          // }
+          // Notify.create({ message: "Updated", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
   },
 })

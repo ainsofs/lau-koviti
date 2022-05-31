@@ -1,4 +1,4 @@
-# My COVID19 Test Results Research
+# La'u Koviti
 
 Repo for learning Quasar.
 

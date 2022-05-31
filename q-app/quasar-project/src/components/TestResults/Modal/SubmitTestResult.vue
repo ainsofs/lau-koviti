@@ -107,7 +107,12 @@
 
                   <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
 
-                  <q-input outlined v-model="personal.email" type="email" label="Email" hint="Imeli" />
+                  <q-input
+                    outlined
+                    v-model="personal.email"
+                    type="email"
+                    label="Email"
+                    hint="Imeli" />
 
                 </div>
               </q-card-section>
@@ -155,6 +160,7 @@
 import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
+import { useStoreAuth } from 'stores/storeAuth'
 
 const villageOptions = [
   { label: "Aai o Fiti", value: "Aai o Fiti" },
@@ -509,9 +515,11 @@ export default defineComponent({
   props: ['testResult', 'resultId'],
   setup() {
     const store = useStoreResults()
+    const storeAuth = useStoreAuth()
 
     return {
-      store
+      store,
+      storeAuth
     }
   },
   data() {
@@ -530,7 +538,7 @@ export default defineComponent({
         village: this.store.personal.village,
         conditions: this.store.personal.conditions,
         phone: this.store.personal.phone,
-        email: this.store.personal.email,
+        email: this.store.personal.email || this.storeAuth.email,
       },
       test: {},
     }
@@ -549,7 +557,7 @@ export default defineComponent({
         let endpoint = '/api'
 
         let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
-
+        // forms/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/
         let requestOptions = {
           method: 'POST',
         }
@@ -620,8 +628,8 @@ export default defineComponent({
               // form sent!
               this.test.isSubmitted = true
               this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
+              this.test.personal = Object.assign({}, this.personal)
 
-              Object.assign(this.test.personal, this.personal)
               this.store.updateResult(this.resultId, this.test)
 
               this.$q.notify({
@@ -635,7 +643,7 @@ export default defineComponent({
               // form error
               console.log(response, 'error')
               this.$q.notify({
-                message: 'An error occured: Please contact the developer.',
+                message: 'Somethings wrong, please contact the developer.',
                 icon: 'warning',
                 color: 'warning',
               })
