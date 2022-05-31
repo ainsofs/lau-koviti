@@ -107,7 +107,12 @@
 
                   <q-input outlined v-model="personal.phone" label="Phone number" hint="Numera telefogi" />
 
-                  <q-input outlined v-model="personal.email" type="email" label="Email" hint="Imeli" />
+                  <q-input
+                    outlined
+                    v-model="personal.email"
+                    type="email"
+                    label="Email"
+                    hint="Imeli" />
 
                 </div>
               </q-card-section>

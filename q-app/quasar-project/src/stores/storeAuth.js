@@ -7,7 +7,7 @@ import {
   signOut
 } from "firebase/auth"
 import { useStoreResults } from './storeResults'
-import { Notify, Loading } from "quasar"
+import { Notify, Loading, LocalStorage } from "quasar"
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => ({
@@ -100,6 +100,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         if (user) {
           //logged in
           this.loggedIn = true
+          LocalStorage.set("loggedIn", true)
           this.email = user.email
           this.isVerified = user.emailVerified
 
@@ -120,6 +121,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         else {
           //logged out
           this.loggedIn = false
+          LocalStorage.set("loggedIn", false)
           this.email = ""
           this.isVerified = false
           // this.router.push("user")
