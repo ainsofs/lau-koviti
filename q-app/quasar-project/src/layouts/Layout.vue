@@ -36,8 +36,8 @@
               </q-item>
               <q-item clickable class="GL__menu-link">
                 <q-item-section>Manage Profiles</q-item-section>
-              </q-item> -->
-              <q-separator />
+              </q-item>
+              <q-separator /> -->
               <q-item clickable class="GL__menu-link" @click="logoutUser" >
                 <q-item-section>Sign out</q-item-section>
               </q-item>
