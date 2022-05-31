@@ -9,9 +9,9 @@ import {
   onChildAdded,
   onChildChanged,
   onChildRemoved,
+  onValue,
 } from "firebase/database"
 import { useStoreAuth } from "./storeAuth"
-import { store } from 'quasar/wrappers'
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -73,6 +73,7 @@ export const useStoreResults = defineStore("storeResults", {
     },
     sort: "date",
     sortDesc: true,
+    testsDownloaded: false,
   }),
 
   getters: {
@@ -199,6 +200,23 @@ export const useStoreResults = defineStore("storeResults", {
     fbReadData() {
       let userId = firebaseAuth.currentUser.uid
       let userDataRef = ref(firebaseDb, userId)
+
+      // initial check for data
+      onValue(userDataRef,
+        (snapshot) => {
+          this.testsDownloaded = true
+        },
+        (error) => {
+          if (error) {
+            // showErrorMessage(error.message)
+            console.log(error)
+            this.$router.replace("/")
+          }
+        },
+        {
+          onlyOnce: true,
+        }
+      )
 
       // data added
       onChildAdded(userDataRef, (snapshot) => {

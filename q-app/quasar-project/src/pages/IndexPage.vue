@@ -1,37 +1,38 @@
 <template>
   <q-page class="q-pa-md col">
     <div class="column">
+
       <!-- empty message -->
       <div v-if="showEmptyMessage">
-      <p><strong>You're here!</strong> That means you want to record some test
-      results and maybe share them with Samoa Ministry of Health.</p>
-      <p>If you prefer to use the official form, no worries you can
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank">find it here</a>.
-      But if you're testing regularly, you may find it repetitive.</p>
+        <p><strong>You're here!</strong> That means you want to record some test
+        results and maybe share them with Samoa Ministry of Health.</p>
+        <p>If you prefer to use the official form, no worries you can
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank">find it here</a>.
+        But if you're testing regularly, you may find it repetitive.</p>
 
-      <q-card>
-        <q-card-section>
-          <a @click="addTest">
-            <q-list>
-              <q-item clickable>
-                <q-item-section side>
-                  <q-icon color="primary" name="medication_liquid" size="lg" />
-                </q-item-section>
+        <q-card>
+          <q-card-section>
+            <a @click="addTest">
+              <q-list>
+                <q-item clickable>
+                  <q-item-section side>
+                    <q-icon color="primary" name="medication_liquid" size="lg" />
+                  </q-item-section>
 
-                <q-item-section>
-                  <q-item-label>
-                    Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </a>
-        </q-card-section>
-      </q-card>
+                  <q-item-section>
+                    <q-item-label>
+                      Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong>
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </a>
+          </q-card-section>
+        </q-card>
       </div>
 
       <!-- list container -->
-      <div class="q-gutter-md" v-if="!showEmptyMessage">
+      <div class="q-gutter-md" v-else>
 
         <!-- filter and sort -->
         <div class="filter-and-sort">
@@ -64,44 +65,52 @@
         <!-- list -->
         <q-list bordered padding class="rounded-borders">
 
-        <transition-group
-  appear
-  enter-active-class="animated fadeIn"
-  leave-active-class="animated fadeOut"
->
-          <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
+          <transition-group
+            appear
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut">
+            <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
 
-            <q-item-section avatar top>
-              <q-avatar v-if="t.result === 'Positive / Ua aafia'" color="negative" text-color="white">
-                {{ firstLetter(t.result) }}
-              </q-avatar>
-              <q-avatar v-if="t.result === 'Negative / E lei aafia'" color="positive" text-color="white" >
-                {{ firstLetter(t.result) }}
-              </q-avatar>
-              <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" color="grey" text-color="white" >
-                {{ firstLetter(t.result) }}
-              </q-avatar>
-            </q-item-section>
+              <q-item-section avatar top>
+                <q-avatar v-if="t.result === 'Positive / Ua aafia'" color="negative" text-color="white">
+                  {{ firstLetter(t.result) }}
+                </q-avatar>
+                <q-avatar v-if="t.result === 'Negative / E lei aafia'" color="positive" text-color="white" >
+                  {{ firstLetter(t.result) }}
+                </q-avatar>
+                <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" color="grey" text-color="white" >
+                  {{ firstLetter(t.result) }}
+                </q-avatar>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">{{ t.result }}</q-item-label>
-              <q-item-label caption>{{ formatDate(t.date) }}</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label lines="1">{{ t.result }}</q-item-label>
+                <q-item-label caption>{{ formatDate(t.date) }}</q-item-label>
+              </q-item-section>
 
-            <q-item-section side>
-              <q-icon @click.stop="deleteTest(key)" name="delete" color="red" />
-            </q-item-section>
+              <q-item-section side>
+                <q-icon @click.stop="deleteTest(key)" name="delete" color="red" />
+              </q-item-section>
 
-            <q-item-section side>
-              <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
-              <q-icon v-else name="task_alt" color="grey" />
-            </q-item-section>
+              <q-item-section side>
+                <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
+                <q-icon v-else name="task_alt" color="grey" />
+              </q-item-section>
 
-          </q-item>
-</transition-group>
+            </q-item>
+          </transition-group>
 
         </q-list>
       </div>
+
+      <template v-if="!store.testsDownloaded && store2.loggedIn">
+        <span class="absolute-center">
+          <q-spinner
+            color="primary"
+            size="3em"
+          />
+        </span>
+      </template>
 
       <!-- button -->
       <q-page-sticky position="bottom-right" :offset="fabPos">
@@ -139,14 +148,17 @@
 import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
+import { useStoreAuth } from 'stores/storeAuth'
 
 export default defineComponent({
   name: 'IndexPage',
   setup() {
     const store = useStoreResults()
+    const store2 = useStoreAuth()
 
     return {
-      store
+      store,
+      store2
     }
   },
   data() {

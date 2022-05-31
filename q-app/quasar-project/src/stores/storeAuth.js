@@ -63,10 +63,10 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          Notify.create({
-            message: "Logged in",
-            icon: "announcement",
-          })
+          // Notify.create({
+          //   message: "Logged in",
+          //   icon: "announcement",
+          // })
         })
         .catch((error) => {
 
@@ -125,6 +125,8 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.email = ""
           this.isVerified = false
           // this.router.push("user")
+          const storeResults = useStoreResults()
+          storeResults.testsDownloaded = false
         }
       })
     },
@@ -133,10 +135,10 @@ export const useStoreAuth = defineStore("storeAuth", {
       const storeResults = useStoreResults()
       storeResults.clearResults()
 
-      Notify.create({
-        message: "Logged out",
-        icon: "announcement",
-      })
+      // Notify.create({
+      //   message: "Logged out",
+      //   icon: "announcement",
+      // })
     }
   },
 })
