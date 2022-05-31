@@ -1,31 +1,33 @@
 <template>
   <form @submit.prevent="submitForm">
-    <q-input
-      ref="email"
-      outlined
-      lazy-rules
-      v-model="formDetails.email"
-      label="Email address"
-      hint="I-meli"
-      class="col q-pr-md"
-      :rules="[ val => (val.length >= 6 && isValidEmailAddress(val)) || 'Please enter a valid email.']"
-      type="email" />
+    <div class="q-gutter-md">
+      <q-input
+        ref="email"
+        outlined
+        lazy-rules
+        v-model="formDetails.email"
+        label="Email address"
+        hint="I-meli"
+        class="col q-pr-md"
+        :rules="[ val => (val.length >= 6 && isValidEmailAddress(val)) || 'Please enter a valid email.']"
+        type="email" />
 
-    <q-input
-      ref="password"
-      outlined
-      lazy-rules
-      v-model="formDetails.password"
-      label="Password"
-      type="password"
-      hint="Faalilolilo"
-      class="col q-pr-md"
-      :rules="[ val => val.length >= 6 || 'Please enter a password.']"
-      />
+      <q-input
+        ref="password"
+        outlined
+        lazy-rules
+        v-model="formDetails.password"
+        label="Password"
+        type="password"
+        hint="Faalilolilo"
+        class="col q-pr-md"
+        :rules="[ val => val.length >= 6 || 'Please enter a password.']"
+        />
 
-    <!-- TODO add forgot password -->
-    <div class="text-right">
-      <q-btn type="submit" flat color="primary" :label="tab" class="btn-submit" />
+      <!-- TODO add forgot password -->
+      <div class="text-right">
+        <q-btn type="submit" flat color="primary" :label="tab" class="btn-submit" />
+      </div>
     </div>
   </form>
 </template>

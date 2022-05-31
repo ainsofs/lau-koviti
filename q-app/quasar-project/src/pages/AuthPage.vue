@@ -29,8 +29,8 @@
                 </q-card-section>
               </q-card>
 
-              <p>Login to download your test results!
-              </p>
+              <div class="q-pb-md">Login to download your test results!
+              </div>
 
               <login-register tab="login" />
             </div>
@@ -49,8 +49,8 @@
                 </q-card-section>
               </q-card>
 
-              <p>Register to access your test results from any device!
-              </p>
+              <div class="q-pb-md">Register to access your test results from any device!
+              </div>
 
               <login-register tab="register" />
             </div>
