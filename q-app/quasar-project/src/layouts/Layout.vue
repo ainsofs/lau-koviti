@@ -99,11 +99,11 @@ const linksList = [
     icon: 'home',
     link: '/'
   },
-  // {
-  //   title: 'Personal Details',
-  //   icon: 'person',
-  //   link: '/personal'
-  // },
+  {
+    title: 'Profile',
+    icon: 'person',
+    link: '/personal'
+  },
   {
     title: 'Settings',
     icon: 'settings',
