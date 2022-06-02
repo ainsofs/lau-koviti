@@ -279,10 +279,20 @@ export default defineComponent({
               this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
               this.test.personal = Object.assign({}, this.personal)
 
-              this.store.updateResult(this.resultId, this.test)
+              this.store.updateResult(this.resultId, this.test, { updateCloud: false})
+
+              const quotes = [
+                "You rock!",
+                "Seki a oe!",
+                "Faafetai lava",
+                "Malo!",
+                "Best a oe!",
+              ]
+              let randomNumber = Math.floor(Math.random() * quotes.length)
 
               this.$q.notify({
-                message: 'Sent!',
+                message: 'Test Result Sent!',
+                caption: quotes[randomNumber],
                 icon: 'send',
               })
 
