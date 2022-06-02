@@ -1,22 +1,22 @@
 <template>
   <q-page class="q-pa-md col">
-    <div class="text-weight-medium q-pb-xl">Manage Profiles</div>
+    <div class="text-weight-medium q-pb-md">Manage Profiles</div>
 
-    <div class="q-gutter-md q-pb-md">
+    <div class="row q-gutter-md q-pb-md">
 
-      <span v-for="(p, key) in store.profiles" :key="key"
-      class="hover-accent shadow-2 rounded-borders q-pa-lg bg-primary text-white cursor-pointer"
+      <div v-for="(p, key) in store.profiles" :key="key"
+      class="hover-accent shadow-2 rounded-borders q-pa-lg cursor-pointer"
       :class="{'bg-accent text-grey-9': key === store.profileId}"
       @click="setProfile(key)">{{ p.firstName }}
-      </span>
-      <span>
+      </div>
+      <div>
         <q-btn
           padding="md"
           color="secondary"
           icon="add"
           @click="prompt = true"
         />
-      </span>
+      </div>
     </div>
 
 
@@ -86,8 +86,23 @@ export default defineComponent({
     setProfile(id) {
       this.store.setProfileId(id)
       this.store.updatePersonal(this.store.profiles[id])
-      this.$router.push("/personal")
+
+      // delay to show transition
+      setTimeout(() => {
+        this.$router.push("/personal")
+      }, 300)
     }
   }
 })
 </script>
+
+<style lang="scss">
+.hover-accent {
+  transition: $animate-duration;
+}
+
+.hover-accent:hover {
+  background: $accent;
+  color: $grey-9;
+}
+</style>
