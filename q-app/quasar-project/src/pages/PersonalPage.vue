@@ -186,7 +186,6 @@ export default defineComponent({
         this.store.updatePersonal(this.personal)
         let id = this.store.profileId
         this.store.updateProfile(id, this.personal)
-        this.$q.notify({ message: "Updated", icon: "announcement" })
       }
       else {
 

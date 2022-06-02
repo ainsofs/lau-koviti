@@ -138,7 +138,7 @@ export const useStoreResults = defineStore("storeResults", {
         return keys[0]
       }
       return "-1"
-    }
+    },
   },
 
   actions: {
@@ -162,18 +162,20 @@ export const useStoreResults = defineStore("storeResults", {
     },
 
     // test results
-    addResult(testResult) {
+    addResult(testResult, options = { updateCloud: true }) {
       let id = uid()
       this.tests[id] = testResult
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbAddTestResult({ id: id, testResult: testResult })
+        if (options.updateCloud) {
+          this.fbAddTestResult({ id: id, testResult: testResult })
+        }
       } else {
         Notify.create({ message: "Test Result Added", icon: "cloud_off" })
       }
     },
-    updateResult(id, testResult) {
+    updateResult(id, testResult, options = { updateCloud: true }) {
       if (id in Object.keys(this.tests)) {
         Object.assign(this.tests[id], testResult)
       } else {
@@ -182,34 +184,27 @@ export const useStoreResults = defineStore("storeResults", {
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbUpdateTestResult({ id: id, updates: testResult })
+        if (options.updateCloud) {
+          this.fbUpdateTestResult({ id: id, updates: testResult })
+        }
       } else {
         Notify.create({ message: "Test Result Updated", icon: "cloud_off" })
       }
     },
-    deleteResult(id) {
+    deleteResult(id, options = { updateCloud: true }) {
       delete this.tests[id]
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbDeleteTestResult(id)
+        if (options.updateCloud) {
+          this.fbDeleteTestResult(id)
+        }
       } else {
         Notify.create({ message: "Test Result Deleted", icon: "cloud_off" })
       }
     },
 
     // personal details.
-    addResult(testResult) {
-      let id = uid()
-      this.tests[id] = testResult
-
-      const storeAuth = useStoreAuth()
-      if (storeAuth.loggedIn) {
-        this.fbAddTestResult({ id: id, testResult: testResult })
-      } else {
-        Notify.create({ message: "Test Result Added", icon: "cloud_off" })
-      }
-    },
     updatePersonal(personalDetails) {
       this.personal = Object.assign({}, personalDetails)
 
@@ -230,19 +225,21 @@ export const useStoreResults = defineStore("storeResults", {
     },
 
     // profiles
-    addProfile(profile) {
+    addProfile(profile, options = { updateCloud: true }) {
       let id = uid()
       let payload = Object.assign({}, profile)
       this.profiles[id] = payload
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbAddProfile({ id: id, profile: payload })
+        if (options.updateCloud) {
+          this.fbAddProfile({ id: id, profile: payload })
+        }
       } else {
         Notify.create({ message: "Profile Added", icon: "cloud_off" })
       }
     },
-    updateProfile(id, profile) {
+    updateProfile(id, profile, options = { updateCloud: true }) {
       let payload = Object.assign({}, profile)
       if (id in Object.keys(this.profiles)) {
         Object.assign(this.profiles[id], payload)
@@ -252,17 +249,21 @@ export const useStoreResults = defineStore("storeResults", {
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbUpdateProfile({ id: id, updates: payload })
+        if (options.updateCloud) {
+          this.fbUpdateProfile({ id: id, updates: payload })
+        }
       } else {
         Notify.create({ message: "Profile Updated", icon: "cloud_off" })
       }
     },
-    deleteProfile(id) {
+    deleteProfile(id, options = { updateCloud: true }) {
       delete this.profiles[id]
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbDeleteProfile(id)
+        if (options.updateCloud) {
+          this.fbDeleteProfile(id)
+        }
       } else {
         Notify.create({ message: "Profile Deleted", icon: "cloud_off" })
       }
@@ -317,12 +318,12 @@ export const useStoreResults = defineStore("storeResults", {
       onChildAdded(testRef, (snapshot) => {
         let key = snapshot.key
         let payload = snapshot.val()
-        this.updateResult(key, payload)
+        this.updateResult(key, payload, {updateCloud: false})
       })
       onChildAdded(profileRef, (snapshot) => {
         let key = snapshot.key
         let payload = snapshot.val()
-        this.updateProfile(key, payload)
+        this.updateProfile(key, payload, { updateCloud: false })
       })
 
       // data updated
@@ -330,24 +331,24 @@ export const useStoreResults = defineStore("storeResults", {
         let key = snapshot.key
         let testResult = snapshot.val()
 
-        this.updateResult(key, testResult)
+        this.updateResult(key, testResult, { updateCloud: false })
       })
 
       onChildChanged(profileRef, (snapshot) => {
         let key = snapshot.key
         let profile = snapshot.val()
 
-        this.updateProfile(key, profile)
+        this.updateProfile(key, profile, { updateCloud: false })
       })
 
       // data deleted
       onChildRemoved(testRef, (snapshot) => {
         let key = snapshot.key
-        this.deleteResult(key)
+        this.deleteResult(key, { updateCloud: false })
       })
       onChildRemoved(profileRef, (snapshot) => {
         let key = snapshot.key
-        this.deleteProfile(key)
+        this.deleteProfile(key, { updateCloud: false })
       })
     },
 
