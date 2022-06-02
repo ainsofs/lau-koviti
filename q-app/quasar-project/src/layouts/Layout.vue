@@ -150,6 +150,7 @@ export default defineComponent({
     setProfile(id) {
       this.storeResults.setProfileId(id)
       this.storeResults.updatePersonal(this.storeResults.profiles[id])
+      this.$router.push("/")
     }
   },
 
