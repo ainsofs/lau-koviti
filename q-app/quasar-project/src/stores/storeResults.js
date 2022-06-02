@@ -146,6 +146,10 @@ export const useStoreResults = defineStore("storeResults", {
       }
       return "-1"
     },
+    validProfileId(state) {
+      // check if profile Id is valid
+      return state.profileId in state.profiles
+    }
   },
 
   actions: {

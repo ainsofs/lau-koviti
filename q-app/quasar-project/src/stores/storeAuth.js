@@ -63,10 +63,12 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          // Notify.create({
-          //   message: "Logged in",
-          //   icon: "announcement",
-          // })
+          // if there is more than one profile send to manage profiles
+          // page so they can choose one
+          const storeResults = useStoreResults()
+          if (storeResults.totalProfiles > 1) {
+            this.router.push("/manage")
+          }
         })
         .catch((error) => {
 
