@@ -132,6 +132,13 @@ export const useStoreResults = defineStore("storeResults", {
     totalProfiles(state) {
       return Object.keys(state.profiles).length
     },
+    firstProfileId(state) {
+      if (state.totalProfiles) {
+        let keys = Object.keys(state.profiles)
+        return keys[0]
+      }
+      return "-1"
+    }
   },
 
   actions: {
@@ -209,7 +216,7 @@ export const useStoreResults = defineStore("storeResults", {
       // set initial personal details as first profile
       if (this.totalProfiles === 0) {
         this.addProfile(personalDetails)
-        let id = Object.keys(this.profiles)[0]
+        let id = this.firstProfileId
         this.setProfileId(id)
 
         // also link to any existing tests
@@ -232,7 +239,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbAddProfile({ id: id, profile: payload })
       } else {
-        Notify.create({ message: "Added", icon: "announcement" })
+        Notify.create({ message: "Profile Added", icon: "announcement" })
       }
     },
     updateProfile(id, profile) {
@@ -247,7 +254,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbUpdateProfile({ id: id, updates: payload })
       } else {
-        Notify.create({ message: "Updated", icon: "announcement" })
+        Notify.create({ message: "Profile Updated", icon: "announcement" })
       }
     },
     deleteProfile(id) {
@@ -257,11 +264,18 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbDeleteProfile(id)
       } else {
-        Notify.create({ message: "Deleted", icon: "announcement" })
+        Notify.create({ message: "Profile Deleted", icon: "announcement" })
       }
+
+      let newId = this.firstProfileId
+      this.setProfileId(newId)
     },
     setProfileId(id) {
       this.profileId = id
+
+      if (id in this.profiles) {
+        this.updatePersonal(this.profiles[id])
+      }
     },
 
     fbReadData() {
@@ -277,11 +291,8 @@ export const useStoreResults = defineStore("storeResults", {
           // set profile Id
           if (this.profileId === "-1") {
             if (this.totalProfiles) {
-              let keys = Object.keys(this.profiles)
-              let firstKey = keys[0]
+              let firstKey = this.firstProfileId
               this.setProfileId(firstKey)
-
-              this.updatePersonal(this.profiles[firstKey])
             } else {
               this.updatePersonal({ firstName: "", lastName: "" })
             }
@@ -299,48 +310,22 @@ export const useStoreResults = defineStore("storeResults", {
         }
       )
 
-      // data added
-      onChildAdded(userDataRef, (snapshot) => {
-        let key = snapshot.key
+      let testRef = ref(firebaseDb, userId + "/tests")
+      let profileRef = ref(firebaseDb, userId + "/profiles")
 
-        if (key === "profiles") {
-          //load profiles
-          let profiles = snapshot.val()
-          const keys = Object.keys(profiles)
-          keys.forEach((testKey) => {
-            this.updateProfile(testKey, profiles[testKey])
-          })
-        } else if (key === "tests") {
-          //load test results
-          let testResults = snapshot.val()
-          const keys = Object.keys(testResults)
-          keys.forEach((testKey) => {
-            this.updateResult(testKey, testResults[testKey])
-          })
-        } else {
-          console.log("unhandled: ", snapshot)
-        }
+      // data added
+      onChildAdded(testRef, (snapshot) => {
+        let key = snapshot.key
+        let payload = snapshot.val()
+        this.updateResult(key, payload)
+      })
+      onChildAdded(profileRef, (snapshot) => {
+        let key = snapshot.key
+        let payload = snapshot.val()
+        this.updateProfile(key, payload)
       })
 
       // data updated
-      onChildChanged(userDataRef, (snapshot) => {
-        let key = snapshot.key
-
-        if (key === "profiles") {
-          // do nothing. covered in other event
-        } else if (key === "tests") {
-          // do nothing. covered in other event
-        } else if (key === "profileId") {
-          //update profile id
-          let id = snapshot.val()
-          this.setProfileId(id)
-        } else {
-          console.log("unhandled: ", snapshot)
-        }
-      })
-
-      let testRef = ref(firebaseDb, userId + "/tests")
-
       onChildChanged(testRef, (snapshot) => {
         let key = snapshot.key
         let testResult = snapshot.val()
@@ -348,11 +333,10 @@ export const useStoreResults = defineStore("storeResults", {
         this.updateResult(key, testResult)
       })
 
-      let profileRef = ref(firebaseDb, userId + "/profiles")
       onChildChanged(profileRef, (snapshot) => {
         let key = snapshot.key
         let profile = snapshot.val()
-        console.log(profile)
+
         this.updateProfile(key, profile)
       })
 

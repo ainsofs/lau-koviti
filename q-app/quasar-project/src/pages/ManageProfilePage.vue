@@ -85,7 +85,6 @@ export default defineComponent({
     },
     setProfile(id) {
       this.store.setProfileId(id)
-      this.store.updatePersonal(this.store.profiles[id])
 
       // delay to show transition
       setTimeout(() => {

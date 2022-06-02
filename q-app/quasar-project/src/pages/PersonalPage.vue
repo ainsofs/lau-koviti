@@ -227,9 +227,8 @@ export default defineComponent({
       if (canDelete) {
         this.store.deleteProfile(id)
 
-        let keys = Object.keys(this.store.profiles)
-        this.store.setProfileId(keys[0])
-        this.store.updatePersonal(this.store.profiles[keys[0]])
+        let firstKey = this.store.firstProfileId
+        this.store.setProfileId(firstKey)
         this.$router.push("/manage")
       }
       this.showDeleteModal = false
