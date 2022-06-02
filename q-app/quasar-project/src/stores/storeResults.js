@@ -170,7 +170,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbAddTestResult({ id: id, testResult: testResult })
       } else {
-        Notify.create({ message: "Added", icon: "announcement" })
+        Notify.create({ message: "Test Result Added", icon: "cloud_off" })
       }
     },
     updateResult(id, testResult) {
@@ -184,7 +184,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbUpdateTestResult({ id: id, updates: testResult })
       } else {
-        Notify.create({ message: "Updated", icon: "announcement" })
+        Notify.create({ message: "Test Result Updated", icon: "cloud_off" })
       }
     },
     deleteResult(id) {
@@ -194,7 +194,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbDeleteTestResult(id)
       } else {
-        Notify.create({ message: "Deleted", icon: "announcement" })
+        Notify.create({ message: "Test Result Deleted", icon: "cloud_off" })
       }
     },
 
@@ -207,7 +207,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbAddTestResult({ id: id, testResult: testResult })
       } else {
-        Notify.create({ message: "Added", icon: "announcement" })
+        Notify.create({ message: "Test Result Added", icon: "cloud_off" })
       }
     },
     updatePersonal(personalDetails) {
@@ -239,7 +239,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbAddProfile({ id: id, profile: payload })
       } else {
-        Notify.create({ message: "Profile Added", icon: "announcement" })
+        Notify.create({ message: "Profile Added", icon: "cloud_off" })
       }
     },
     updateProfile(id, profile) {
@@ -254,7 +254,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbUpdateProfile({ id: id, updates: payload })
       } else {
-        Notify.create({ message: "Profile Updated", icon: "announcement" })
+        Notify.create({ message: "Profile Updated", icon: "cloud_off" })
       }
     },
     deleteProfile(id) {
@@ -264,7 +264,7 @@ export const useStoreResults = defineStore("storeResults", {
       if (storeAuth.loggedIn) {
         this.fbDeleteProfile(id)
       } else {
-        Notify.create({ message: "Profile Deleted", icon: "announcement" })
+        Notify.create({ message: "Profile Deleted", icon: "cloud_off" })
       }
 
       let newId = this.firstProfileId
@@ -358,7 +358,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       set(testRef, payload.testResult)
         .then(() => {
-          Notify.create({ message: "Added", icon: "announcement" })
+          Notify.create({ message: "Test Result Added", icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -370,11 +370,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       update(testRef, payload.updates)
         .then(() => {
-          // let keys = Object.keys(payload.updates)
-          // if (!(keys.includes("completed") && keys.length === 1)) {
-          //   Notify.create("Task updated!")
-          // }
-          Notify.create({ message: "Updated", icon: "announcement" })
+          Notify.create({ message: "Test Result Updated", icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -386,7 +382,7 @@ export const useStoreResults = defineStore("storeResults", {
       remove(testRef)
         .then(() => {
           // Notify.create("Task deleted!")
-          Notify.create({ message: "Deleted", icon: "announcement" })
+          Notify.create({ message: "Test Result Deleted", icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -400,7 +396,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       set(profileRef, payload.profile)
         .then(() => {
-          Notify.create({ message: "Added", icon: "announcement" })
+          Notify.create({ message: "Profile Added", icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -412,11 +408,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       update(profileRef, payload.updates)
         .then(() => {
-          // let keys = Object.keys(payload.updates)
-          // if (!(keys.includes("completed") && keys.length === 1)) {
-          //   Notify.create("Task updated!")
-          // }
-          Notify.create({ message: "Updated", icon: "announcement" })
+          Notify.create({ message: "Profile Updated", icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -427,8 +419,7 @@ export const useStoreResults = defineStore("storeResults", {
       let profileRef = ref(firebaseDb, userId + "/profiles/" + id)
       remove(profileRef)
         .then(() => {
-          // Notify.create("Task deleted!")
-          Notify.create({ message: "Deleted", icon: "announcement" })
+          Notify.create({ message: "Profile Deleted", icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
