@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { uid, Notify } from 'quasar'
+import { uid, Notify, date } from 'quasar'
 import { firebaseAuth, firebaseDb } from "boot/firebase"
 import {
   ref,
@@ -78,6 +78,13 @@ export const useStoreResults = defineStore("storeResults", {
       keysOrdered.sort((a, b) => {
         let taskAProp = state.tests[a][state.sort].toLowerCase(),
           taskBProp = state.tests[b][state.sort].toLowerCase()
+
+        if (state.sort === "date") {
+          taskAProp = date.extractDate(state.tests[a][state.sort], "DD/MM/YYYY")
+          taskBProp = date.extractDate(state.tests[b][state.sort], "DD/MM/YYYY")
+          taskAProp = date.formatDate(taskAProp, "YYYY-MM-DD")
+          taskBProp = date.formatDate(taskBProp, "YYYY-MM-DD")
+        }
 
         if (state.sortDesc) {
           if (taskAProp < taskBProp) return 1
