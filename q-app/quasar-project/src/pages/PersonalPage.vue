@@ -2,6 +2,7 @@
   <q-page class="q-pa-md col">
     <div class="text-weight-medium q-pb-md">Profile</div>
       <div class="q-pb-md">Update your profile details. They will be submitted with your test results.</div>
+
       <form  @submit.prevent="submitForm">
         <q-card>
           <q-card-section>
@@ -99,15 +100,18 @@
             </div>
           </q-card-section>
           <q-card-actions align="right">
-          <!--
-            <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
-            <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
-            -->
+            <q-btn flat color="negative" label="Delete" @click="showDeleteModal = true" v-show="store.totalProfiles > 1" />
             <q-btn type="submit" flat color="primary" label="Save" class="btn-submit" />
           </q-card-actions>
         </q-card>
       </form>
   </q-page>
+
+
+  <!-- Delete Modal -->
+  <q-dialog v-model="showDeleteModal">
+    <delete-alert @delete="doDelete" />
+  </q-dialog>
 </template>
 
 <script>
@@ -139,10 +143,11 @@ export default defineComponent({
         dob: this.store.personal.dob,
         gender: this.store.personal.gender,
         village: this.store.personal.village,
-        conditions: this.store.personal.conditions,
+        conditions: this.store.personal.conditions || [],
         phone: this.store.personal.phone,
         email: this.store.personal.email || this.storeAuth.email,
       },
+      showDeleteModal: false,
     }
   },
   computed: {
@@ -179,6 +184,8 @@ export default defineComponent({
           !this.$refs.lastName.hasError) {
         // validation passed
         this.store.updatePersonal(this.personal)
+        let id = this.store.profileId
+        this.store.updateProfile(id, this.personal)
         this.$q.notify({ message: "Updated", icon: "announcement" })
       }
       else {
@@ -190,6 +197,40 @@ export default defineComponent({
         })
       }
 
+    },
+    doDelete() {
+      let id = this.store.profileId
+      let canDelete = true
+
+      // check that its not the last profile
+      if (this.store.totalProfiles === 1) {
+        // alert - cannot delete
+        this.$q.notify({
+          message: 'Cannot delete. This is the only profile.',
+          icon: 'warning',
+          color: 'warning',
+        })
+        canDelete = false
+
+      }
+      if (this.store.totalTestResults) {
+        // alert - cannot delete
+        this.$q.notify({
+          message: 'Cannot delete. There are tests associated with this profile.',
+          icon: 'warning',
+          color: 'warning',
+        })
+        canDelete = false
+
+      }
+      // check that no tests exist
+      if (canDelete) {
+        this.store.deleteProfile(id)
+
+        let id = this.store.profiles[0]
+        this.store.profileId = id
+      }
+      this.showDeleteModal = false
     },
     filterFn (val, update) {
       if (val === '') {
@@ -209,6 +250,9 @@ export default defineComponent({
       return date1 >= date.formatDate(newDate, 'YYYY/MM/DD') && date1 <= date.formatDate(Date.now(), 'YYYY/MM/DD')
     },
 
+  },
+  components: {
+    'delete-alert': require('components/TestResults/Modal/DeleteAlert.vue').default,
   }
 })
 </script>

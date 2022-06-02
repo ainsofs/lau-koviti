@@ -21,23 +21,27 @@
 
         <!-- authenticated -->
         <q-btn v-else dense flat no-wrap>
-          <q-avatar size="26px" color="white" text-color="dark">
+          <q-avatar size="26px" color="accent" text-color="dark">
             {{ alias }}
           </q-avatar>
           <q-icon name="arrow_drop_down" size="16px" />
 
           <q-menu auto-close>
-            <q-list dense> <!-- TODO add profiles
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Profile 1</q-item-section>
+            <q-list dense>
+              <q-item clickable class="GL__menu-link" v-for="(p, key) in storeResults.profiles" :key="key" @click="setProfile(key)">
+                <q-item-section side>
+                  <q-avatar size="26px" color="secondary" text-color="white">
+                    {{ p.firstName.substring(0,2).toUpperCase() }}
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>
+                  {{ p.firstName }}
+                </q-item-section>
               </q-item>
-              <q-item clickable class="GL__menu-link">
-                <q-item-section>Profile 2</q-item-section>
-              </q-item>
-              <q-item clickable class="GL__menu-link">
+              <q-item clickable class="GL__menu-link" to="/manage">
                 <q-item-section>Manage Profiles</q-item-section>
               </q-item>
-              <q-separator /> -->
+              <q-separator />
               <q-item clickable class="GL__menu-link" @click="logoutUser" >
                 <q-item-section>Sign out</q-item-section>
               </q-item>
@@ -142,6 +146,10 @@ export default defineComponent({
   methods: {
     logoutUser() {
       this.store.logoutUser()
+    },
+    setProfile(id) {
+      this.storeResults.setProfileId(id)
+      this.storeResults.updatePersonal(this.storeResults.profiles[id])
     }
   },
 

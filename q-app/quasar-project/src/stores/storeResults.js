@@ -74,6 +74,7 @@ export const useStoreResults = defineStore("storeResults", {
     sort: "date",
     sortDesc: true,
     testsDownloaded: false,
+    profileId: "-1",
   }),
 
   getters: {
@@ -102,11 +103,26 @@ export const useStoreResults = defineStore("storeResults", {
 
       return testsSorted
     },
+    testsFiltered(state) {
+      let testsSorted = this.sortedTestResults,
+        testsFiltered = {}
+      if (state.profileId) {
+        Object.keys(testsSorted).forEach(function (key) {
+          let test = testsSorted[key]
+          if (test.profileId == state.profileId) {
+            testsFiltered[key] = test
+          }
+        })
+        return testsFiltered
+      }
+      return testsSorted
+    },
     totalSubmitted(state) {
-      let keys = Object.keys(state.tests),
+      let tests = this.testsFiltered
+      let keys = Object.keys(tests),
         count = 0
       keys.forEach((key) => {
-        let status = state.tests[key].isSubmitted
+        let status = tests[key].isSubmitted
         if (status) {
           count++
         }
@@ -118,7 +134,10 @@ export const useStoreResults = defineStore("storeResults", {
       return state.totalTestResults - this.totalSubmitted
     },
     totalTestResults(state) {
-      return Object.keys(state.sortedTestResults).length
+      return Object.keys(state.testsFiltered).length
+    },
+    totalProfiles(state) {
+      return Object.keys(state.profiles).length
     },
   },
 
@@ -130,17 +149,19 @@ export const useStoreResults = defineStore("storeResults", {
       // clear personal information
       let keys = Object.keys(this.personal)
       keys.forEach((key) => {
-        if (key === 'conditions') {
+        if (key === "conditions") {
           this.personal[key] = []
-        }
-        else {
+        } else {
           this.personal[key] = ""
         }
       })
 
-      // todo: clear profiles
+      // clear profiles
       this.profiles = {}
+      this.profileId = "-1"
     },
+
+    // test results
     addResult(testResult) {
       let id = uid()
       this.tests[id] = testResult
@@ -148,8 +169,7 @@ export const useStoreResults = defineStore("storeResults", {
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
         this.fbAddTestResult({ id: id, testResult: testResult })
-      }
-      else {
+      } else {
         Notify.create({ message: "Added", icon: "announcement" })
       }
     },
@@ -162,9 +182,8 @@ export const useStoreResults = defineStore("storeResults", {
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
-        this.fbUpdateTestResult({id: id, updates: testResult})
-      }
-      else {
+        this.fbUpdateTestResult({ id: id, updates: testResult })
+      } else {
         Notify.create({ message: "Updated", icon: "announcement" })
       }
     },
@@ -174,32 +193,88 @@ export const useStoreResults = defineStore("storeResults", {
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
         this.fbDeleteTestResult(id)
-      }
-      else {
+      } else {
         Notify.create({ message: "Deleted", icon: "announcement" })
       }
     },
+
+    // personal details.
+    addResult(testResult) {
+      let id = uid()
+      this.tests[id] = testResult
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbAddTestResult({ id: id, testResult: testResult })
+      } else {
+        Notify.create({ message: "Added", icon: "announcement" })
+      }
+    },
     updatePersonal(personalDetails) {
-      Object.assign(this.personal, personalDetails)
+      this.personal = Object.assign({}, personalDetails)
 
       const storeAuth = useStoreAuth()
       if (storeAuth.loggedIn) {
         this.fbUpdatePersonalDetail(personalDetails)
-      }
-      else {
-
+      } else {
       }
 
+      // set initial personal details as first profile
+      if (Object.keys(this.profiles).length === 0) {
+        this.addProfile(personalDetails)
+        let id = Object.keys(this.profiles)[0]
+        this.setProfileId(id)
+
+        // also link to any existing tests
+        let keys = Object.keys(this.tests)
+        keys.forEach((key) => {
+          if (this.tests[key].profileId === "-1") {
+            this.tests[key].profileId = id
+          }
+        })
+      }
     },
 
-    // TODO update profiles
-    updateProfile(id, profile) {
-      if (id in Object.keys(this.profiles)) {
-        Object.assign(this.profiles[id], testResult)
+    // profiles
+    addProfile(profile) {
+      let id = uid()
+      let payload = Object.assign({}, profile)
+      this.profiles[id] = payload
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbAddProfile({ id: id, profile: payload })
       } else {
-        this.profiles[id] = profile
+        Notify.create({ message: "Added", icon: "announcement" })
       }
-      // Notify.create({ message: "Updated", icon: "announcement" })
+    },
+    updateProfile(id, profile) {
+      let payload = Object.assign({}, profile)
+      if (id in Object.keys(this.profiles)) {
+        Object.assign(this.profiles[id], payload)
+      } else {
+        this.profiles[id] = payload
+      }
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbUpdateProfile({ id: id, updates: payload })
+      } else {
+        Notify.create({ message: "Updated", icon: "announcement" })
+      }
+    },
+    deleteProfile(id) {
+      delete this.profiles[id]
+
+      const storeAuth = useStoreAuth()
+      if (storeAuth.loggedIn) {
+        this.fbDeleteProfile(id)
+      } else {
+        Notify.create({ message: "Deleted", icon: "announcement" })
+      }
+    },
+    setProfileId(id) {
+      this.profileId = id
     },
 
     fbReadData() {
@@ -207,7 +282,8 @@ export const useStoreResults = defineStore("storeResults", {
       let userDataRef = ref(firebaseDb, userId)
 
       // initial check for data
-      onValue(userDataRef,
+      onValue(
+        userDataRef,
         (snapshot) => {
           this.testsDownloaded = true
         },
@@ -215,7 +291,7 @@ export const useStoreResults = defineStore("storeResults", {
           if (error) {
             // showErrorMessage(error.message)
             console.log(error)
-            this.$router.replace("/")
+            this.router.replace("/")
           }
         },
         {
@@ -233,11 +309,11 @@ export const useStoreResults = defineStore("storeResults", {
           this.updatePersonal(personal)
         } else if (key === "profiles") {
           //load profiles
-          // let profiles = snapshot.val()
-          // const keys = Object.keys(profiles)
-          // keys.forEach((testKey) => {
-          //   this.updateProfile(testKey, profiles[testKey])
-          // })
+          let profiles = snapshot.val()
+          const keys = Object.keys(profiles)
+          keys.forEach((testKey) => {
+            this.updateProfile(testKey, profiles[testKey])
+          })
         } else if (key === "tests") {
           //load test results
           let testResults = snapshot.val()
@@ -245,6 +321,10 @@ export const useStoreResults = defineStore("storeResults", {
           keys.forEach((testKey) => {
             this.updateResult(testKey, testResults[testKey])
           })
+        } else if (key === "profileId") {
+          //load test results
+          let id = snapshot.val()
+          console.log('profileId', id)
         } else {
           console.log("unhandled: ", snapshot)
         }
@@ -259,21 +339,20 @@ export const useStoreResults = defineStore("storeResults", {
           let personal = snapshot.val()
           this.updatePersonal(personal)
         } else if (key === "profiles") {
-          //update profiles
-          // let profiles = snapshot.val()
-          // const keys = Object.keys(profiles)
-          // keys.forEach((testKey) => {
-          //   this.updateProfile(testKey, profiles[testKey])
-          // })
+          // do nothing. covered in other event
         } else if (key === "tests") {
           // do nothing. covered in other event
+        } else if (key === "profileId") {
+          //update profile id
+          let id = snapshot.val()
+          this.setProfileId(id)
         } else {
           console.log("unhandled: ", snapshot)
         }
       })
 
       let testRef = ref(firebaseDb, userId + "/tests")
-      // TODO - monitor profiles
+
       onChildChanged(testRef, (snapshot) => {
         let key = snapshot.key
         let testResult = snapshot.val()
@@ -281,11 +360,22 @@ export const useStoreResults = defineStore("storeResults", {
         this.updateResult(key, testResult)
       })
 
+      let profileRef = ref(firebaseDb, userId + "/profiles")
+      onChildChanged(profileRef, (snapshot) => {
+        let key = snapshot.key
+        let profile = snapshot.val()
+        console.log(profile)
+        this.updateProfile(key, profile)
+      })
+
       // data deleted
-      // TODO - delete profiles
       onChildRemoved(testRef, (snapshot) => {
         let key = snapshot.key
         this.deleteResult(key)
+      })
+      onChildRemoved(profileRef, (snapshot) => {
+        let key = snapshot.key
+        this.deleteProfile(key)
       })
     },
 
@@ -297,7 +387,6 @@ export const useStoreResults = defineStore("storeResults", {
       set(testRef, payload.testResult)
         .then(() => {
           Notify.create({ message: "Added", icon: "announcement" })
-
         })
         .catch((error) => {
           console.log(error)
@@ -332,7 +421,6 @@ export const useStoreResults = defineStore("storeResults", {
         })
     },
 
-
     // Personal Details
     fbUpdatePersonalDetail(payload) {
       let userId = firebaseAuth.currentUser.uid
@@ -345,6 +433,48 @@ export const useStoreResults = defineStore("storeResults", {
           //   Notify.create("Task updated!")
           // }
           // Notify.create({ message: "Updated", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+
+    // Profiles
+    fbAddProfile(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let profileRef = ref(firebaseDb, userId + "/profiles/" + payload.id)
+
+      set(profileRef, payload.profile)
+        .then(() => {
+          Notify.create({ message: "Added", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    fbUpdateProfile(payload) {
+      let userId = firebaseAuth.currentUser.uid
+      let profileRef = ref(firebaseDb, userId + "/profiles/" + payload.id)
+
+      update(profileRef, payload.updates)
+        .then(() => {
+          // let keys = Object.keys(payload.updates)
+          // if (!(keys.includes("completed") && keys.length === 1)) {
+          //   Notify.create("Task updated!")
+          // }
+          Notify.create({ message: "Updated", icon: "announcement" })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    fbDeleteProfile(id) {
+      let userId = firebaseAuth.currentUser.uid
+      let profileRef = ref(firebaseDb, userId + "/profiles/" + id)
+      remove(profileRef)
+        .then(() => {
+          // Notify.create("Task deleted!")
+          Notify.create({ message: "Deleted", icon: "announcement" })
         })
         .catch((error) => {
           console.log(error)

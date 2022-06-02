@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md absolute full-width full-height column">
+  <q-page class="q-pa-md col">
   </q-page>
 </template>
 

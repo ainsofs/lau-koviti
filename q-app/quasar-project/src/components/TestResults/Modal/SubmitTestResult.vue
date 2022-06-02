@@ -185,7 +185,7 @@ export default defineComponent({
         dob: this.store.personal.dob,
         gender: this.store.personal.gender,
         village: this.store.personal.village,
-        conditions: this.store.personal.conditions,
+        conditions: this.store.personal.conditions || [],
         phone: this.store.personal.phone,
         email: this.store.personal.email || this.storeAuth.email,
       },

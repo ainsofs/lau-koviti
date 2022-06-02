@@ -69,7 +69,7 @@
             appear
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut">
-            <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
+            <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.testsFiltered" :key="key" >
 
               <q-item-section avatar top>
                 <q-avatar v-if="t.result === 'Positive / Ua aafia'" color="negative" text-color="white">
