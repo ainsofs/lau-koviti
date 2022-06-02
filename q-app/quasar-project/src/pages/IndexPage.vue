@@ -36,7 +36,7 @@
 
         <!-- filter and sort -->
         <div class="filter-and-sort">
-          <div class="row items-center no-wrap">
+          <div class="">
             <div class="col"><p>Malo lava! You've recorded {{ totalTestResults }} {{ pluralText }}.</p>
               <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
                 <div class="absolute-full flex flex-center">

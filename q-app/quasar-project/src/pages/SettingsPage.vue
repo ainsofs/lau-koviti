@@ -1,8 +1,7 @@
 <template>
   <q-page class="q-pa-md col">
+    <div class="text-weight-medium q-pb-md">Settings</div>
     <q-list bordered padding>
-      <q-item-label header>Settings</q-item-label>
-
       <q-item tag="label" v-ripple>
         <q-item-section>
           <q-item-label>Dark Mode</q-item-label>
@@ -18,7 +17,7 @@
           <q-item-label caption>Submit tests to a Demo form.</q-item-label>
         </q-item-section>
         <q-item-section side top>
-          <q-toggle v-model="isDevMode" />
+          <q-toggle v-model="isDevMode" disable />
         </q-item-section>
       </q-item>
 
