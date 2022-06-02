@@ -145,10 +145,10 @@
 
       <q-card-actions align="right">
       <!--
-        <q-btn @click="markSubmitted" flat color="primary" label="Mark Submitted" v-close-popup />
-        <q-btn @click="submitLater" flat color="primary" label="Submit Later" v-close-popup />
+        <q-btn @click="markSubmitted" flat color="grey-9" label="Mark Submitted" v-close-popup />
+        <q-btn @click="submitLater" flat color="grey-9" label="Submit Later" v-close-popup />
         -->
-        <q-btn type="submit" flat color="primary" label="Send" class="btn-submit" />
+        <q-btn type="submit" :loading="loading" flat color="primary" label="Send" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -190,6 +190,7 @@ export default defineComponent({
         email: this.store.personal.email || this.storeAuth.email,
       },
       test: {},
+      loading: false,
     }
   },
   methods: {
@@ -199,6 +200,8 @@ export default defineComponent({
 
       if (!this.$refs.firstName.hasError &&
           !this.$refs.lastName.hasError) {
+
+        this.loading = true
         // validation passed
         this.store.updatePersonal(this.personal)
 
@@ -279,7 +282,7 @@ export default defineComponent({
               this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
               this.test.personal = Object.assign({}, this.personal)
 
-              this.store.updateResult(this.resultId, this.test, { updateCloud: false})
+              this.store.updateResult(this.resultId, this.test)
 
               const quotes = [
                 "You rock!",
@@ -291,8 +294,7 @@ export default defineComponent({
               let randomNumber = Math.floor(Math.random() * quotes.length)
 
               this.$q.notify({
-                message: 'Test Result Sent!',
-                caption: quotes[randomNumber],
+                message: quotes[randomNumber],
                 icon: 'send',
               })
 
