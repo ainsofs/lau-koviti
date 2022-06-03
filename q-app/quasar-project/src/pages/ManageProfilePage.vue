@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md col">
     <div class="text-weight-medium q-pb-md">Manage Profiles</div>
+    <div class="q-pb-md">Use profiles to record tests for multiple people. Useful for people not who dont have access to this app.</div>
     <div class="q-pb-md" v-if="!store.validProfileId">Which profile would you like to use?</div>
     <div class="row q-gutter-md q-pb-md">
 

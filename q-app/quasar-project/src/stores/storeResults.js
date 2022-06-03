@@ -303,8 +303,13 @@ export const useStoreResults = defineStore("storeResults", {
           // set profile Id
           if (this.profileId === "-1") {
             if (this.totalProfiles) {
-              let firstKey = this.firstProfileId
-              this.setProfileId(firstKey)
+              let firstKey = this.firstProfileId;
+              this.setProfileId(firstKey);
+
+              // allow user to choose an account before continuing
+              if (this.totalProfiles > 1) {
+                this.router.push("/manage");
+              }
             } else {
               this.updatePersonal({ firstName: "", lastName: "" })
             }

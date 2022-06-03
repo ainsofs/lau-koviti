@@ -1,27 +1,32 @@
 <template>
   <q-page class="q-pa-md col">
     <div class="text-weight-medium q-pb-md">Settings</div>
-    <q-list bordered padding>
-      <q-item tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label>Dark Mode</q-item-label>
-          <q-item-label caption>Activate dark mode goodness.</q-item-label>
-        </q-item-section>
-        <q-item-section side top>
-          <q-toggle v-model="isDarkMode" />
-        </q-item-section>
-      </q-item>
-      <q-item tag="label" v-ripple>
-        <q-item-section>
-          <q-item-label>Dev Mode</q-item-label>
-          <q-item-label caption>Submit tests to a Demo form.</q-item-label>
-        </q-item-section>
-        <q-item-section side top>
-          <q-toggle v-model="isDevMode" disable />
-        </q-item-section>
-      </q-item>
+    <q-card>
+      <q-card-section>
 
-    </q-list>
+        <q-list >
+          <q-item tag="label" v-ripple>
+            <q-item-section>
+              <q-item-label>Dark Mode</q-item-label>
+              <q-item-label caption>Activate dark mode goodness.</q-item-label>
+            </q-item-section>
+            <q-item-section side top>
+              <q-toggle v-model="isDarkMode" />
+            </q-item-section>
+          </q-item>
+          <q-item tag="label" v-ripple>
+            <q-item-section>
+              <q-item-label>Dev Mode</q-item-label>
+              <q-item-label caption>Submit tests to a Demo form.</q-item-label>
+            </q-item-section>
+            <q-item-section side top>
+              <q-toggle v-model="isDevMode" disable />
+            </q-item-section>
+          </q-item>
+
+        </q-list>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 

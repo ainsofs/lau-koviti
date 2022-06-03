@@ -63,12 +63,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          // if there is more than one profile send to manage profiles
-          // page so they can choose one
-          const storeResults = useStoreResults()
-          if (storeResults.totalProfiles > 1) {
-            this.router.push("/manage")
-          }
+          // handled by onAuthStateChanged
         })
         .catch((error) => {
 
@@ -106,10 +101,10 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.email = user.email
           this.isVerified = user.emailVerified
 
-          this.router.push("/")
+          this.router.push("/");
 
-          // if user has some tests. send them to the fb before reading
-          const storeResults = useStoreResults()
+          // if anon user has some tests. save them to fb before reading
+          const storeResults = useStoreResults();
           if (storeResults.totalTestResults) {
             const keys = Object.keys(storeResults.tests)
             keys.forEach((key) => {
@@ -136,6 +131,7 @@ export const useStoreAuth = defineStore("storeAuth", {
       signOut(firebaseAuth)
       const storeResults = useStoreResults()
       storeResults.clearResults()
+      this.router.replace("/user");
 
       // Notify.create({
       //   message: "Logged out",
