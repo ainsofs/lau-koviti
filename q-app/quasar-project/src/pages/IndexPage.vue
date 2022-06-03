@@ -5,7 +5,7 @@
       <!-- empty message -->
       <div v-if="showEmptyMessage">
 
-        <q-card>
+        <q-card flat>
           <q-card-section>
             <q-list>
               <q-item>
