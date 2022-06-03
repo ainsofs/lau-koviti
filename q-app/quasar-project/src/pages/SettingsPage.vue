@@ -20,7 +20,7 @@
               <q-item-label caption>Submit tests to a Demo form.</q-item-label>
             </q-item-section>
             <q-item-section side top>
-              <q-toggle v-model="isDevMode" disable />
+              <q-toggle v-model="isDevMode" />
             </q-item-section>
           </q-item>
 
@@ -56,6 +56,9 @@ export default defineComponent({
   watch: {
     isDarkMode(newVal, oldVal) {
       this.$q.dark.set(newVal)
+    },
+    isDevMode(newVal, oldVal) {
+      this.store.settings.isDevMode = newVal
     }
   }
 })
