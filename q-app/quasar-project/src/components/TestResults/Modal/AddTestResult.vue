@@ -70,6 +70,7 @@
 import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
+import { testResultOptions } from 'src/options/personalOptions'
 
 export default defineComponent({
   emits: ['close'],
@@ -83,11 +84,7 @@ export default defineComponent({
   },
   data() {
     return {
-      options: [
-        { label: 'Positive / Ua aafia', value: 'Positive / Ua aafia' },
-        { label: 'Negative / E lei aafia', value: 'Negative / E lei aafia' },
-        { label: 'Inconclusive / Le mautinoa', value: 'Inconclusive / Le mautinoa' },
-      ],
+      options: testResultOptions,
       test: {},
     }
   },
