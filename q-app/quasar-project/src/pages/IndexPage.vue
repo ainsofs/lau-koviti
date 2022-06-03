@@ -7,29 +7,27 @@
 
         <q-card>
           <q-card-section>
-            <a @click="addTest">
-              <q-list>
-                <q-item clickable>
-                  <q-item-section side top>
-                    <q-icon color="primary" name="medication_liquid" size="lg" />
-                  </q-item-section>
+            <q-list>
+              <q-item>
+                <q-item-section side top>
+                  <q-icon color="primary" name="medication_liquid" size="lg" />
+                </q-item-section>
 
-                  <q-item-section>
-                    <q-item-label>
-                      <p>Talofa lava! You can use this app to <strong>record your test results</strong>.</p>
+                <q-item-section>
+                  <q-item-label>
+                    <p>Talofa lava! You can use this app to <strong>record your test results</strong>.</p>
 
-                      <p>We'll make it easy for you to send them to the Samoa Ministry
-                      of Health or you can do it manually using their
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> Official form.</a></p>
+                    <p>We'll make it easy for you to send them to the Samoa Ministry
+                    of Health or you can do it manually using their
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> Official form.</a></p>
 
-                      <p>You can also <q-btn flat dense label="Register" to="/user" color="primary" /> an account to access to your tests from any device!</p>
+                    <p v-if="!store2.loggedIn">You can also <q-btn flat dense label="Register" to="/user" color="primary" click.stop /> an account to access to your tests from any device!</p>
 
-                      <p>Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong></p>
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </a>
+                    <p @click="addTest" class="cursor-pointer">Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong></p>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
           </q-card-section>
         </q-card>
       </div>
