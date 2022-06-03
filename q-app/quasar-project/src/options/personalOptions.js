@@ -363,8 +363,14 @@ const conditionOptions = [
 ]
 
 const genderOptions = [
-  { label: "Male/ Ali'i", value: "Male/ Ali'i" },
-  { label: "Female/ Tama'ita'i", value: "Female/ Tama'ita'i" },
+  { label: "Male / Alii", value: "Male / Alii" },
+  { label: "Female / Tamaitai", value: "Female / Tamaitai" },
 ]
 
-export { villageOptions, conditionOptions, genderOptions };
+const testResultOptions = [
+  { label: 'Positive / Ua aafia', value: 'Positive / Ua aafia' },
+  { label: 'Negative / E lei aafia', value: 'Negative / E lei aafia' },
+  { label: 'Inconclusive / Le mautinoa', value: 'Inconclusive / Le mautinoa' },
+]
+
+export { villageOptions, conditionOptions, genderOptions, testResultOptions }

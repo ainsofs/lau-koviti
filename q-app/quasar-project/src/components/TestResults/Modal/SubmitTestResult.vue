@@ -161,6 +161,7 @@ import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
 import { useStoreAuth } from 'stores/storeAuth'
+import { useStoreSettings } from 'stores/storeSettings'
 import { villageOptions, conditionOptions, genderOptions } from 'src/options/personalOptions'
 
 export default defineComponent({
@@ -168,10 +169,12 @@ export default defineComponent({
   setup() {
     const store = useStoreResults()
     const storeAuth = useStoreAuth()
+    const storeSettings = useStoreSettings()
 
     return {
       store,
-      storeAuth
+      storeAuth,
+      storeSettings
     }
   },
   data() {
@@ -208,30 +211,62 @@ export default defineComponent({
         // Post results to Google Form. Using a proxy to prevent CORS error
         let endpoint = '/api'
 
-        let googleForm = endpoint + '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
-        // forms/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/
-        let requestOptions = {
-          method: 'POST',
-        }
+        const isDev = this.storeSettings.settings.isDevMode
+        let googleForm = endpoint
+        let mapping = {}
 
-        let mapping = {
-          tests: {
-            date: 'entry.1915046253',
-            result: 'entry.699482213',
-            isSubmitted: '',
-            dateSubmitted: '',
-            personal: {
-              firstName: 'entry.1278994752',
-              lastName: 'entry.1285649044',
-              vaccinationId: 'entry.992834568',
-              dob: 'entry.556991948',
-              gender: 'entry.1224698774',
-              village: 'entry.682058042',
-              conditions: 'entry.389107404',
-              phone: 'entry.1810101260',
-              email: 'entry.1016446264',
+        if (isDev) {
+          // dev form
+          googleForm += '/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse'
+
+          mapping = {
+            tests: {
+              date: 'entry.1915046253',
+              result: 'entry.699482213',
+              isSubmitted: '',
+              dateSubmitted: '',
+              personal: {
+                firstName: 'entry.1278994752',
+                lastName: 'entry.1285649044',
+                vaccinationId: 'entry.992834568',
+                dob: 'entry.556991948',
+                gender: 'entry.1224698774',
+                village: 'entry.682058042',
+                conditions: 'entry.389107404',
+                phone: 'entry.1810101260',
+                email: 'entry.1016446264',
+              }
             }
           }
+        }
+        else {
+          // live form
+          googleForm += '/forms/u/0/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/formResponse'
+
+          mapping = {
+            tests: {
+              date: 'entry.1283207881',
+              result: 'entry.1395453298',
+              isSubmitted: '',
+              dateSubmitted: '',
+              personal: {
+                firstName: 	'entry.590404003',
+                lastName: 'entry.1886925018',
+                vaccinationId: 'entry.1454131097',
+                dob: 'entry.1984486821',
+                gender: 'entry.1660490641',
+                village: 'entry.359444209',
+                conditions: 'entry.41058729',
+                phone: 'entry.1560344217',
+                email: 'entry.101602910',
+              }
+            }
+          }
+
+        }
+
+        let requestOptions = {
+          method: 'POST',
         }
 
         let params = ''
@@ -301,6 +336,7 @@ export default defineComponent({
               this.$emit('close')
             }
             else {
+              this.loading = false
               // form error
               console.log(response, 'error')
               this.$q.notify({
@@ -311,11 +347,15 @@ export default defineComponent({
             }
           })
           .catch(error => {
+            this.loading = false
+
             console.log('error')
             console.log(error)
           })
       }
       else {
+        this.loading = false
+
         this.$q.notify({
           message: 'Please check your form and re-submit',
           icon: 'warning',

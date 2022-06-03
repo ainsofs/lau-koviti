@@ -1,9 +1,9 @@
 version: 0.1
 
-form: https://docs.google.com/forms/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/viewform
-post: https://docs.google.com/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse
+devForm: https://docs.google.com/forms/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/viewform
+devPost: https://docs.google.com/forms/u/0/d/e/1FAIpQLSc41GKKitf_6kXal5n4xIeSM_w0Czw2GX7-i8bIR0CJYLNG6A/formResponse
 
-mapping:
+devMapping:
   tests:
     date: entry.1915046253
     result: entry.699482213
@@ -20,10 +20,10 @@ mapping:
       phone: entry.1810101260
       email: entry.1016446264
 
-form2: https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform
-post2: https://docs.google.com/forms/u/0/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/formResponse
+liveForm: https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform
+livePost: https://docs.google.com/forms/u/0/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/formResponse
 
-mapping2:
+liveMapping:
   tests:
     date: entry.1283207881
     result: entry.1395453298
