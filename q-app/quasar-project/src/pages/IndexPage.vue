@@ -4,29 +4,30 @@
 
       <!-- empty message -->
       <div v-if="showEmptyMessage">
-        <p><strong>You're here!</strong> That means you want to record some test
-        results and maybe share them with Samoa Ministry of Health.</p>
-        <p>If you prefer to use the official form, no worries you can
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank">find it here</a>.
-        But if you're testing regularly, you may find it repetitive.</p>
 
         <q-card>
           <q-card-section>
-            <a @click="addTest">
-              <q-list>
-                <q-item clickable>
-                  <q-item-section side>
-                    <q-icon color="primary" name="medication_liquid" size="lg" />
-                  </q-item-section>
+            <q-list>
+              <q-item>
+                <q-item-section side top>
+                  <q-icon color="primary" name="medication_liquid" size="lg" />
+                </q-item-section>
 
-                  <q-item-section>
-                    <q-item-label>
-                      Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong>
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </a>
+                <q-item-section>
+                  <q-item-label>
+                    <p>Talofa lava! You can use this app to <strong>record your test results</strong>.</p>
+
+                    <p>We'll make it easy for you to send them to the Samoa Ministry
+                    of Health or you can do it manually using their
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> Official form.</a></p>
+
+                    <p v-if="!store2.loggedIn">You can also <q-btn flat dense label="Register" to="/user" color="primary" click.stop /> an account to access to your tests from any device!</p>
+
+                    <p @click="addTest" class="cursor-pointer">Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong></p>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
           </q-card-section>
         </q-card>
       </div>
@@ -36,8 +37,10 @@
 
         <!-- filter and sort -->
         <div class="filter-and-sort">
-          <div class="row items-center no-wrap">
-            <div class="col"><p>Malo lava! You've recorded {{ totalTestResults }} {{ pluralText }}.</p>
+          <div class="">
+            <div class="col">
+              <p>Malo lava! You've recorded <strong>{{ totalTestResults }} {{ pluralText }}</strong>.</p>
+
               <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
                 <div class="absolute-full flex flex-center">
                   <q-badge color="white" text-color="primary" :label="progressLabel" />
@@ -63,44 +66,48 @@
         </div>
 
         <!-- list -->
-        <q-list bordered padding class="rounded-borders">
+        <q-card flat>
+          <q-card-section>
+            <q-list class="rounded-borders">
 
-          <transition-group
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut">
-            <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.sortedTestResults" :key="key" >
+              <transition-group
+                appear
+                enter-active-class="animated fadeIn"
+                leave-active-class="animated fadeOut">
+                <q-item clickable v-ripple @click="editTest(key, t)"  v-for="(t, key) in store.testsFiltered" :key="key" >
 
-              <q-item-section avatar top>
-                <q-avatar v-if="t.result === 'Positive / Ua aafia'" color="negative" text-color="white">
-                  {{ firstLetter(t.result) }}
-                </q-avatar>
-                <q-avatar v-if="t.result === 'Negative / E lei aafia'" color="positive" text-color="white" >
-                  {{ firstLetter(t.result) }}
-                </q-avatar>
-                <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" color="grey" text-color="white" >
-                  {{ firstLetter(t.result) }}
-                </q-avatar>
-              </q-item-section>
+                  <q-item-section avatar top>
+                    <q-avatar v-if="t.result === 'Positive / Ua aafia'" color="negative" text-color="white">
+                      {{ firstLetter(t.result) }}
+                    </q-avatar>
+                    <q-avatar v-if="t.result === 'Negative / E lei aafia'" color="positive" text-color="white" >
+                      {{ firstLetter(t.result) }}
+                    </q-avatar>
+                    <q-avatar v-if="t.result === 'Inconclusive / Le mautinoa'" color="grey" text-color="white" >
+                      {{ firstLetter(t.result) }}
+                    </q-avatar>
+                  </q-item-section>
 
-              <q-item-section>
-                <q-item-label lines="1">{{ t.result }}</q-item-label>
-                <q-item-label caption>{{ formatDate(t.date) }}</q-item-label>
-              </q-item-section>
+                  <q-item-section>
+                    <q-item-label lines="1">{{ t.result }}</q-item-label>
+                    <q-item-label caption>{{ formatDate(t.date) }}</q-item-label>
+                  </q-item-section>
 
-              <q-item-section side>
-                <q-icon @click.stop="deleteTest(key)" name="delete" color="red" />
-              </q-item-section>
+                  <q-item-section side>
+                    <q-icon @click.stop="deleteTest(key)" name="delete" color="red" />
+                  </q-item-section>
 
-              <q-item-section side>
-                <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
-                <q-icon v-else name="task_alt" color="grey" />
-              </q-item-section>
+                  <q-item-section side>
+                    <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
+                    <q-icon v-else name="task_alt" color="grey" />
+                  </q-item-section>
 
-            </q-item>
-          </transition-group>
+                </q-item>
+              </transition-group>
 
-        </q-list>
+            </q-list>
+          </q-card-section>
+        </q-card>
       </div>
 
       <template v-if="!store.testsDownloaded && store2.loggedIn">

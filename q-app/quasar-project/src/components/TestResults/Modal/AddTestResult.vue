@@ -118,6 +118,7 @@ export default defineComponent({
           this.store.updateResult(this.resultId, this.test)
         }
         else {
+          this.test.profileId = this.store.profileId
           this.store.addResult(this.test)
         }
 

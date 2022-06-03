@@ -65,13 +65,10 @@ export default defineComponent({
       this.$refs.password.validate()
 
       if (!this.$refs.email.hasError && !this.$refs.password.hasError) {
-        // TODO: check if there are any tests. warn user that tests
-        //    will be sent to fb
         if (this.tab === 'login') {
           this.store.loginUser(this.formDetails)
         }
         else {
-        // TODO: Require email verification
           this.store.registerUser(this.formDetails)
         }
       }
