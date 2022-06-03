@@ -136,12 +136,12 @@ export default defineComponent({
       return date1 <= date.formatDate(Date.now(), 'YYYY/MM/DD')
     },
     eventsFn (date1) {
-      const list = this.store.tests
+      const list = this.store.testsFiltered
       const keys = Object.keys(list)
       let isEvent = false
 
       keys.forEach((key) => {
-        let someDate = date.extractDate(this.store.tests[key].date, 'DD/MM/YYYY')
+        let someDate = date.extractDate(list[key].date, 'DD/MM/YYYY')
         someDate = date.formatDate(someDate, 'YYYY/MM/DD')
         if (someDate === date1) {
           isEvent = true
