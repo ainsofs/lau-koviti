@@ -6,14 +6,15 @@
     <div class="row q-gutter-md q-pb-md">
 
       <div v-for="(p, key) in store.profiles" :key="key"
-      class="hover-accent shadow-2 rounded-borders q-pa-lg cursor-pointer"
+      class="hover-accent rounded-borders q-pa-lg cursor-pointer"
       :class="{'bg-accent text-grey-9': key === store.profileId}"
       @click="setProfile(key)">{{ p.firstName }}
       </div>
       <div>
         <q-btn
           padding="md"
-          color="secondary"
+          class="q-mt-xs"
+          color="primary"
           icon="add"
           @click="prompt = true"
         />
@@ -29,12 +30,11 @@
 
         <q-card-section class="q-pt-none row">
           <q-input ref="firstName" autofocus outlined @keyup.enter="createProfile" v-model="profile.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your name.' ]" />
-          <q-input ref="lastName" outlined @keyup.enter="createProfile" v-model="profile.lastName" label="Last name" hint="Fa'ai'u" class="col" :rules="[ val => val.length || 'Please enter your name.' ]" />
         </q-card-section>
 
-        <q-card-actions align="right" class="text-primary">
+        <q-card-actions align="right" >
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Add Profile" @click="createProfile" />
+          <q-btn flat label="Add Profile" @click="createProfile" color="primary" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -69,16 +69,13 @@ export default defineComponent({
   methods: {
     createProfile() {
       this.$refs.firstName.validate()
-      this.$refs.lastName.validate()
 
-      if (!this.$refs.firstName.hasError &&
-          !this.$refs.lastName.hasError) {
+      if (!this.$refs.firstName.hasError) {
 
         this.store.addProfile(this.profile)
 
         this.prompt = false
-        this.profile.firstName = "",
-        this.profile.lastName = ""
+        this.profile.firstName = ""
       }
       else {
 
@@ -98,7 +95,9 @@ export default defineComponent({
 
 <style lang="scss">
 .hover-accent {
+  background: $light;
   transition: $animate-duration;
+  color: $dark;
 }
 
 .hover-accent:hover {

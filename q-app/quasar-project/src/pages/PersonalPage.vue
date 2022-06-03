@@ -4,7 +4,7 @@
       <div class="q-pb-md">Update your profile details. They will be submitted with your test results.</div>
 
       <form  @submit.prevent="submitForm">
-        <q-card>
+        <q-card flat>
           <q-card-section>
 
             <div class="q-gutter-md q-pb-md" >

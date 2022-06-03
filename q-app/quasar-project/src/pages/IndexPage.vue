@@ -68,7 +68,7 @@
         </div>
 
         <!-- list -->
-        <q-card>
+        <q-card flat>
           <q-card-section>
             <q-list class="rounded-borders">
 

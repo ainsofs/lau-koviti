@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md col">
     <div class="text-weight-medium q-pb-md">Settings</div>
-    <q-card>
+    <q-card flat>
       <q-card-section>
 
         <q-list >
