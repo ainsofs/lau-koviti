@@ -8,8 +8,12 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0",
-    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim"
+    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
+    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim",
+    "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress open\"",
+    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run\"",
+    "test:component": "cross-env NODE_ENV=test cypress open-ct",
+    "test:component:ci": "cross-env NODE_ENV=test cypress run-ct"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -23,11 +27,14 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app-webpack": "^3.0.0",
+    "@quasar/quasar-app-extension-testing": "^2.0.4",
+    "@quasar/quasar-app-extension-testing-e2e-cypress": "^4.1.2",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^8.5.0",
     "eslint-webpack-plugin": "^3.1.1",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "eslint-plugin-cypress": "^2.11.3"
   },
   "browserslist": [
     "last 10 Chrome versions",
