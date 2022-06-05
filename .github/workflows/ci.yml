@@ -11,5 +11,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: yarn test:e2e:ci
+          command: yarn test:e2e:ci
           working-directory: q-app/quasar-project
