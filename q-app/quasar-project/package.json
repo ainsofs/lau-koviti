@@ -11,7 +11,7 @@
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim",
     "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress open\"",
-    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run\"",
+    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --config video=false\"",
     "test:component": "cross-env NODE_ENV=test cypress open-ct",
     "test:component:ci": "cross-env NODE_ENV=test cypress run-ct"
   },
