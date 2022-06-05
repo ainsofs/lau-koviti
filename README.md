@@ -2,6 +2,8 @@
 
 Repo for learning Quasar.
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/93197cbc-73fd-4a46-9313-6413044b7945/deploy-status)](https://app.netlify.com/sites/koviti/deploys)
+[![End-to-end tests](https://github.com/ainsofs/quasar-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/ainsofs/quasar-learning/actions/workflows/ci.yml)
 
 **Getting started**
 
