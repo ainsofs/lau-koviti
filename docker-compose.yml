@@ -213,6 +213,18 @@ services:
     ports:
       - '8080:8080'
 
+  cypress:
+    image: cypress/included:4.4.0
+    container_name: "${PROJECT_NAME}_cypress"
+    working_dir: /e2e/q-app/quasar-project
+    depends_on:
+      - node
+    environment:
+      - CYPRESS_baseUrl=http://node:8080
+    command: npx cypress run
+    volumes:
+    - ./:/e2e
+
 #  blackfire:
 #    image: blackfire/blackfire
 #    container_name: "${PROJECT_NAME}_blackfire"

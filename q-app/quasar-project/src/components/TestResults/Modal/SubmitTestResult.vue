@@ -316,6 +316,7 @@ export default defineComponent({
               this.test.isSubmitted = true
               this.test.dateSubmitted = date.formatDate(Date.now(), 'YYYY/MM/DD')
               this.test.personal = Object.assign({}, this.personal)
+              this.test.profileId = this.store.profileId
 
               this.store.updateResult(this.resultId, this.test)
 

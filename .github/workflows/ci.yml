@@ -1,0 +1,23 @@
+name: End-to-end tests
+on: [push]
+# future use to limit tests
+# on:
+#   push:
+#     branches:
+#     - master
+
+#     tags:
+#     - '*'
+
+#   pull_request:
+jobs:
+  cypress-run:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          command: yarn test:e2e:ci
+          working-directory: q-app/quasar-project
