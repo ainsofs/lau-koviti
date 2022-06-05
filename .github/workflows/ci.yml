@@ -1,5 +1,15 @@
 name: End-to-end tests
 on: [push]
+# future use to limit tests
+# on:
+#   push:
+#     branches:
+#     - master
+
+#     tags:
+#     - '*'
+
+#   pull_request:
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
