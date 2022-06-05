@@ -1,10 +1,5 @@
-/// <reference types="cypress" />
-// Use `cy.dataCy` custom command for more robust tests
-// See https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements
+// La'u Koviti tests
 
-// ** This file is an example of how to write Cypress tests, you can safely delete it **
-
-// This test will pass when run against a clean Quasar project
 describe('Landing', () => {
   beforeEach(() => {
     cy.visit("/");
@@ -27,51 +22,55 @@ describe('Landing', () => {
   // appears not signed in
   // can add test x2
   it("can add test", () => {
-    cy.get(".q-btn--fab")
-      .as('addButton')
-      .click();
-    cy.contains("Save")
-      .click();
-    cy.get("div.q-notification__message")
-      .as('notify')
-      .contains("Added");
-    cy.get('div.filter-and-sort')
-      .as('result')
-      .contains("1 test result");
-
-    cy.get('@addButton').click();
+    cy.get(".q-btn--fab").as("addButton").click();
+    cy.contains("Add");
     cy.contains("Save").click();
-    cy.get("@notify").contains("Added");
-    cy.get('@result').contains("2 test results");
-    cy.wait(5000);
+    cy.contains("Added");
+    cy.get("div.filter-and-sort").as("result").contains("1 test result");
 
+    cy.get("@addButton").click();
+    cy.contains("Save").click();
+    cy.contains("Added");
+    cy.get("@result").contains("2 test results");
+
+    // can edit test
+    cy.get("div.q-item--clickable").as("list").first().click();
+    cy.contains("Edit");
+    cy.contains("Save").click();
+    cy.contains("Updated");
+    cy.get("@result").contains("2 test results");
+
+    // can submit test
+    cy.get("@list").first().contains("send").click();
+    cy.get('input[aria-label="First name"]').focus().type("test first");
+    cy.get('input[aria-label="Last name"]').focus().type("test last");
+    cy.get('.btn-submit').click();
+    cy.contains("Updated");
+    cy.get("@result").contains("2 test results");
+
+    // check that progress bar is displaying
+    cy.get(".q-linear-progress")
+      .as('progress')
+      .contains("1 of 2 tests submitted");
+    cy.get("@progress").should("have.class", "text-accent");
+    // test results should be the same
+    cy.get("@result").contains("2 test results");
+
+    // TODO cannot delete test once submitted
+    // cy.get("@list").first().contains("delete").click();
+    // cy.contains("really delete?");
+    // cy.get("button").contains("delete").click();
+    // cy.get("@result").contains("1 test results");
+
+    // can delete other tests
+    cy.get("@list").eq(1).contains("delete").click();
+    cy.contains("delete?");
+    cy.get("button").contains("Delete").click();
+    cy.contains("Deleted");
+    cy.get("@result").contains("1 test result");
+
+    // check progress bar is now green
+    cy.get("@progress").contains("All test results sent");
+    cy.get("@progress").should("have.class", "text-positive");
   });
-  // can edit test
-  // can submit test
-  // cannot delete test once submitted
 })
-
-// ** The following code is an example to show you how to write some tests for your home page **
-//
-// describe('Home page tests', () => {
-//   beforeEach(() => {
-//     cy.visit('/')
-//   })
-//   it('has pretty background', () => {
-//     cy.dataCy('landing-wrapper')
-//       .should('have.css', 'background').and('match', /(".+(\/img\/background).+\.png)/)
-//   })
-//   it('has pretty logo', () => {
-//     cy.dataCy('landing-wrapper img')
-//       .should('have.class', 'logo-main')
-//       .and('have.attr', 'src')
-//       .and('match', /^(data:image\/svg\+xml).+/)
-//   })
-//   it('has very important information', () => {
-//     cy.dataCy('instruction-wrapper')
-//       .should('contain', 'SETUP INSTRUCTIONS')
-//       .and('contain', 'Configure Authentication')
-//       .and('contain', 'Database Configuration and CRUD operations')
-//       .and('contain', 'Continuous Integration & Continuous Deployment CI/CD')
-//   })
-// })

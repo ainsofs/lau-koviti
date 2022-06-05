@@ -39,4 +39,7 @@ docker-compose logs -f node
 # log into node container (this will allow use of drush and composer)
 docker-compose exec node sh
 
+# run tests
+docker-compose up -d && docker-compose logs -f cypress
+
 ```
