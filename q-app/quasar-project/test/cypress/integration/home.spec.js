@@ -75,7 +75,7 @@ describe('Landing', () => {
 
   // check all pages work
   // can add test x2
-  it("check all pages to work", () => {
+  it("check all pages work", () => {
     cy.visit("/#/personal");
     cy.visit("/#/settings");
     cy.visit("/#/help");
