@@ -2,9 +2,6 @@ name: End-to-end tests
 on: [push]
 jobs:
   cypress-run:
-    strategy:
-      matrix:
-        browser: [ firefox,chrome ]
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -12,7 +9,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          browser: ${{ matrix.browser }}
-          headless: true
           command: yarn test:e2e:ci
           working-directory: q-app/quasar-project
