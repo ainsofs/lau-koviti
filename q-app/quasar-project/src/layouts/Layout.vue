@@ -10,18 +10,17 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
+        <q-space />
         <q-select
           v-model="locale"
           :options="localeOptions"
-          label="Quasar Language"
           dense
           borderless
           emit-value
           map-options
           options-dense
-          style="min-width: 150px"
+          class="lang-select"
         />
-        <q-space />
         <!-- guest -->
         <q-btn v-if="!store.loggedIn" dense flat no-wrap to="user">
           <q-avatar size="26px">
@@ -192,4 +191,15 @@ export default defineComponent({
   filter: grayscale(100%)
 
 }
+
+.lang-select {
+  .q-field__native, .q-icon {
+    color: $light !important;
+    opacity: .8;
+  }
+  :hover {
+    opacity: 1;
+  }
+}
+
 </style>

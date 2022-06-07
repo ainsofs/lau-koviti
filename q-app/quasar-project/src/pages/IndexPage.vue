@@ -50,14 +50,14 @@
 
               <i18n-t keypath="pages.home.resultsFound" tag="p" >
                 <template #count>
-                <strong class="text-lowercase" >
-                {{ totalTestResults }}
-                </strong>
+                  <strong class="text-lowercase" >
+                    {{ totalTestResults }}
+                  </strong>
                 </template>
                 <template #pluralText>
-                <strong class="text-lowercase" >
-                 {{ pluralText }}
-                 </strong>
+                  <strong class="text-lowercase" >
+                    {{ pluralText }}
+                  </strong>
                 </template>
               </i18n-t>
 
