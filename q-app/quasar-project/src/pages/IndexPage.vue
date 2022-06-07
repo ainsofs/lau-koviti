@@ -72,10 +72,10 @@
                 <q-menu cover auto-close>
                   <q-list>
                     <q-item clickable @click="toggleSort(true)" >
-                      <q-item-section >Sort newest to oldest</q-item-section>
+                      <q-item-section >{{ $t('pages.home.sortDesc') }}</q-item-section>
                     </q-item>
                     <q-item clickable @click="toggleSort(false)">
-                      <q-item-section>Sort oldest to newest</q-item-section>
+                      <q-item-section>{{ $t('pages.home.sortAsc') }}</q-item-section>
                     </q-item>
                   </q-list>
                 </q-menu>
