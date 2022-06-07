@@ -20,6 +20,7 @@ export default {
     send: "Send",
     date: "Date",
     close: "Close",
+    officialForm: "Official form",
   },
   pages: {
     home: {
@@ -27,7 +28,6 @@ export default {
       p1: "Tālofa lava! You can use this app to {0}",
       p1Bold: "record your test results",
       p2: "We'll make it easy for you to send them to the Samoa Ministry of Health or you can do it manually using their {0}",
-      p2Form: "Official form",
       p3: "You can also {0} an account to access your tests from any device!",
       p4: "Press the {0} button to {1}",
       p4GetStarted: "get started!",
@@ -41,12 +41,16 @@ export default {
     },
     settings: {
       name: "Settings",
+      p1: "Dark Mode",
+      p1Caption: "Activate dark mode goodness.",
+      p2: "Dev Mode",
+      p2Caption: "Submit tests to a Demo form.",
     },
     help: {
       name: "Help",
       p1: "This app is in development",
       p2: "It aims to make recording and sharing your COVID-19 Rapid Test Self-Reporting easier Sharing results to Samoa MOH is optional",
-      p3: "Press here for the Official Form",
+      p3: "Press here for the {0}",
     },
     user: {
       name: "User",

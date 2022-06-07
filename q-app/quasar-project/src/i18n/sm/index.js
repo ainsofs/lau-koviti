@@ -18,6 +18,7 @@ export default {
     send: "Lafo",
     date: "Aso",
     close: "Tapuni",
+    officialForm: "Fomu Aloaia",
   },
   pages: {
     home: {
@@ -25,7 +26,6 @@ export default {
       p1: "Tālofa lava! E mafai ona e faaaogaina le polokalama lenei e {0}",
       p1Bold: "faamaumau ai taunuuga o au suega",
       p2: "O le a matou faafaigofieina mo oe ona auina atu ile Matagaluega o le Soifua Maloloina au faamaumauga, pe e te faatumuina lava e oe le latou {0}",
-      p2Form: "Fomu Aloaia",
       p3: "E mafai foi ona {0} se faitotoa e faaaoga ai au suega mai soo se masini!",
       p4: "Oomi le faamau {0} e {1}",
       p4GetStarted: "amata ai loa!",
@@ -35,16 +35,20 @@ export default {
     },
     profile: {
       name: "Talaaga Otooto",
-      p1: "Faafou ou faamaumauga O le a auina atu faatasi ma taunuuga o au suega",
+      p1: "Faafou ou faamaumauga. E auina atu faatasi ma taunuuga o au suega",
     },
     settings: {
       name: "Faatulagaga",
+      p1: "Fa'apogisā",
+      p1Caption: "Fa'apogisā le polokalame.",
+      p2: "Atina'e",
+      p2Caption: "Lafo au fa'amatalaga i se komepiuta atina'e.",
     },
     help: {
       name: "Fesoasoani",
       p1: "O loo atiina ae lenei polokalama",
       p2: "Ole faamoemoe ia faafaigofie ai le pueina ma le faasoaina atu o lau COVID-19 Rapid Test Self-Reporting E le faamalosia le lafoina o au suesuega ile  Samoa MOH",
-      p3: "Oomi i i mo le Fomu Aloaia",
+      p3: "'O'omi 'i mo le {0}",
     },
     user: {
       name: "Tagata e Faaaogaina",

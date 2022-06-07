@@ -1,14 +1,14 @@
 <template>
   <q-page class="q-pa-md col">
-    <div class="text-weight-medium q-pb-md">Settings</div>
+    <div class="text-weight-medium q-pb-md">{{ $t('pages.settings.name') }}</div>
     <q-card flat>
       <q-card-section>
 
         <q-list >
           <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label>Dark Mode</q-item-label>
-              <q-item-label caption>Activate dark mode goodness.</q-item-label>
+              <q-item-label>{{ $t('pages.settings.p1') }}</q-item-label>
+              <q-item-label caption>{{ $t('pages.settings.p1Caption') }}.</q-item-label>
             </q-item-section>
             <q-item-section side top>
               <q-toggle v-model="isDarkMode" />
@@ -16,8 +16,8 @@
           </q-item>
           <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label>Dev Mode</q-item-label>
-              <q-item-label caption>Submit tests to a Demo form.</q-item-label>
+              <q-item-label>{{ $t('pages.settings.p2') }}</q-item-label>
+              <q-item-label caption>{{ $t('pages.settings.p2Caption') }}.</q-item-label>
             </q-item-section>
             <q-item-section side top>
               <q-toggle v-model="isDevMode" />

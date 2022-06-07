@@ -158,7 +158,7 @@ export default defineComponent({
       locale,
       localeOptions: [
         { value: 'en-US', label: 'English' },
-        { value: 'en-GB', label: 'Fa\'asámoa' }
+        { value: 'en-GB', label: 'Fa\'asāmoa' }
       ],
     }
   },

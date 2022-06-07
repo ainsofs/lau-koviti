@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md col">
-    <div class="text-weight-medium q-pb-md">Profile</div>
-      <div class="q-pb-md">Update your profile details. They will be submitted with your test results.</div>
+    <div class="text-weight-medium q-pb-md">{{ $t('pages.profile.name') }}</div>
+      <div class="q-pb-md">{{ $t('pages.profile.p1') }}.</div>
 
       <form  @submit.prevent="submitForm">
         <q-card flat>
@@ -100,8 +100,8 @@
             </div>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn flat color="negative" label="Delete" @click="showDeleteModal = true" v-show="store.totalProfiles > 1" />
-            <q-btn type="submit" flat color="primary" label="Save" class="btn-submit" />
+            <q-btn flat color="negative" :label="$t('label.delete')" @click="showDeleteModal = true" v-show="store.totalProfiles > 1" />
+            <q-btn type="submit" flat color="primary" :label="$t('label.save')" class="btn-submit" />
           </q-card-actions>
         </q-card>
       </form>
