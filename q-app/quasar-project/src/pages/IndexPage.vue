@@ -16,11 +16,11 @@
                 <q-item-section>
                   <q-item-label>
                     <i18n-t keypath="pages.home.p1" tag="p">
-                      <strong>{{ $t('pages.home.p1Bold') }}</strong>
+                      <strong>{{ $t('pages.home.p1Bold') }}.</strong>
                     </i18n-t>
 
                     <i18n-t keypath="pages.home.p2" tag="p">
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> {{ $t('pages.home.p2Form')}}</a>.
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> {{ $t('pages.home.p2Form')}}.</a>
                     </i18n-t>
 
                     <i18n-t keypath="pages.home.p3" tag="p" v-if="!store2.loggedIn">
@@ -219,13 +219,14 @@ export default defineComponent({
     },
     progressLabel() {
       if (this.progress === 1) {
-        return "Seki! All test results sent!"
+        return this.$t('label.completeText')
       }
 
       let a = this.totalSubmitted
       let b = this.totalTestResults
 
-      return a + " of " + b + " tests submitted"
+      // return a + " of " + b + " tests submitted"
+      return this.$t('label.progressText', {count: a, total: b})
     },
     progressColour() {
       if (this.progress === 1) {

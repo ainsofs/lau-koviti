@@ -16,7 +16,9 @@ export default {
     delete: "Delete",
     personalDetails: "Personal Details",
     progressText: "{ count } of { total } submitted",
-    completeText: "Seki! All {@:label.testResults} sent!",
+    completeText: "Seki! All @:label.testResultPlural sent!",
+    send: "Send",
+    date: "Date",
   },
   pages: {
     home: {
@@ -28,21 +30,21 @@ export default {
       p3: "You can also {0} an account to access your tests from any device!",
       p4: "Press the {0} button to {1}",
       p4GetStarted: "get started!",
-      resultsFound: "Malo lava! You've recorded {count} {pluralText}.",
+      resultsFound: "Malo lava! You've recorded {count} {pluralText}",
       sortDesc: "Sort newest to oldest",
       sortAsc: "Sort oldest to newest",
     },
     profile: {
       name: "Profile",
-      p1: "Update your profile details. They will be submitted with your test results.",
+      p1: "Update your profile details They will be submitted with your test results",
     },
     settings: {
       name: "Settings",
     },
     help: {
       name: "Help",
-      p1: "This app is in development.",
-      p2: "It aims to make recording and sharing your COVID-19 Rapid Test Self-Reporting easier. Sharing results to Samoa MOH is optional.",
+      p1: "This app is in development",
+      p2: "It aims to make recording and sharing your COVID-19 Rapid Test Self-Reporting easier Sharing results to Samoa MOH is optional",
       p3: "Press here for the Official Form",
     },
     user: {
@@ -59,12 +61,13 @@ export default {
     },
     submitTest: {
       name: "Send @:label.testResult",
-      p1: "Fill in the details below and press send to send your reuslts to Samoa MOH.",
+      p1: "Fill in the details below and press @:label.send to send your reuslts to Samoa MOH",
+      p2: "Review your details and press @:label.send to send your reuslts to Samoa MOH",
       e1: "Please check your form and re-submit",
     },
     delete: {
       name: "Koe sau kasi a...",
-      p1: "Really delete? This cannot be undone.",
+      p1: "Really delete? This cannot be undone",
     },
   },
 };
