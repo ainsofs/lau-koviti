@@ -190,7 +190,7 @@ export default defineComponent({
       else {
 
         this.$q.notify({
-          message: 'Please check your form and re-submit',
+          message: this.$t('modals.submitTest.e1'),
           icon: 'warning',
           color: 'warning',
         })
@@ -205,7 +205,7 @@ export default defineComponent({
       if (this.store.totalProfiles === 1) {
         // alert - cannot delete
         this.$q.notify({
-          message: 'Cannot delete. This is the only profile.',
+          message: this.$t('pages.profile.e1'),
           icon: 'warning',
           color: 'warning',
         })
@@ -215,7 +215,7 @@ export default defineComponent({
       if (this.store.totalTestResults) {
         // alert - cannot delete
         this.$q.notify({
-          message: 'Cannot delete. There are tests associated with this profile.',
+          message: this.$t('pages.profile.e2'),
           icon: 'warning',
           color: 'warning',
         })

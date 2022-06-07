@@ -39,6 +39,8 @@ export default {
     profile: {
       name: "Tala'aga 'oto'oto",
       p1: "Fa'afou ou fa'amaumauga. E auina atu fa'atasi ma taunuuga o au suega",
+      e1: "E le mafai ona tapē. Ua na o le pau lenei o le tala'aga 'oto'oto.",
+      e2: "E le mafai ona tapē. O loo i ai suega e o faatasi ma lenei tala'aga 'oto'oto.",
     },
     settings: {
       name: "Faatulagaga",
@@ -71,6 +73,7 @@ export default {
       name: "Faaopoopo se @.lower:label.testResult",
       edit: "Faasa'o se @.lower:label.testResult",
       view: "@.lower:label.testResult",
+      e1: "Fa'amolemole toe siaki lau fomu",
     },
     submitTest: {
       name: "Lafo le @.lower:label.testResult",

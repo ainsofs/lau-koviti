@@ -123,7 +123,7 @@ export default defineComponent({
       }
       else {
         this.$q.notify({
-          message: 'Please check your form',
+          message: this.$t('modals.addTest.e1'),
           icon: 'warning',
           color: 'warning',
         })

@@ -20,7 +20,7 @@
                     </i18n-t>
 
                     <i18n-t keypath="pages.home.p2" tag="p">
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> {{ $t('pages.home.p2Form')}}.</a>
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> {{ $t('label.officialForm')}}.</a>
                     </i18n-t>
 
                     <i18n-t keypath="pages.home.p3" tag="p" v-if="!store2.loggedIn">

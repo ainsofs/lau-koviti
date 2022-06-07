@@ -41,6 +41,8 @@ export default {
     profile: {
       name: "Profile",
       p1: "Update your profile details They will be submitted with your test results",
+      e1: "Cannot delete. This is the only profile.",
+      e2: "Cannot delete. There are tests associated with this profile.",
     },
     settings: {
       name: "Settings",
@@ -73,6 +75,7 @@ export default {
       name: "Add @.lower:label.testResult",
       edit: "Edit @.lower:label.testResult",
       view: "@.lower:label.testResult",
+      e1: "Please check your form",
     },
     submitTest: {
       name: "Send @:label.testResult",
