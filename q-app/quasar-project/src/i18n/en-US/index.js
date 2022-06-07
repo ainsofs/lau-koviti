@@ -1,0 +1,70 @@
+export default {
+  isoName: "en-GB",
+  nativeName: "English (GB)",
+  label: {
+    save: "Save",
+    cancel: "Cancel",
+    login: "Login",
+    register: "Register",
+    testResult: "Test Result",
+    testResultPlural: "Test Results",
+    updated: "Updated",
+    added: "Added",
+    deleted: "Deleted",
+    update: "Update",
+    add: "Add",
+    delete: "Delete",
+    personalDetails: "Personal Details",
+    progressText: "{ count } of { total } submitted",
+    completeText: "Seki! All {@:label.testResults} sent!",
+  },
+  pages: {
+    home: {
+      name: "Home",
+      p1: "Talofa lava! You can use this app to {0}",
+      p1Bold: "record your test results",
+      p2: "We'll make it easy for you to send them to the Samoa Ministry of Health or you can do it manually using their {0}",
+      p2Form: "Official form",
+      p3: "You can also {0} an account to access your tests from any device!",
+      p4: "Press the {0} button to {1}",
+      p4GetStarted: "get started!",
+      resultsFound: "Malo lava! You've recorded {count} {pluralText}.",
+      sortDesc: "Sort newest to oldest",
+      sortAsc: "Sort oldest to newest",
+    },
+    profile: {
+      name: "Profile",
+      p1: "Update your profile details. They will be submitted with your test results.",
+    },
+    settings: {
+      name: "Settings",
+    },
+    help: {
+      name: "Help",
+      p1: "This app is in development.",
+      p2: "It aims to make recording and sharing your COVID-19 Rapid Test Self-Reporting easier. Sharing results to Samoa MOH is optional.",
+      p3: "Press here for the Official Form",
+    },
+    user: {
+      name: "User",
+      p1: "Login to download your test results!",
+      p2: "Register to access your test results from any device!",
+    },
+  },
+  modals: {
+    addTest: {
+      name: "Add @.lower:label.testResult",
+      edit: "Edit @.lower:label.testResult",
+      view: "@.lower:label.testResult",
+    },
+    submitTest: {
+      name: "Send @:label.testResult",
+      p1: "Fill in the details below and press send to send your reuslts to Samoa MOH.",
+      e1: "Please check your form and re-submit",
+    },
+    delete: {
+      name: "Koe sau kasi a...",
+      p1: "Really delete? This cannot be undone.",
+    },
+  },
+};

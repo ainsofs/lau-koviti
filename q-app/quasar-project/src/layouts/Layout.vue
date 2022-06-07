@@ -10,7 +10,17 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
+        <q-select
+          v-model="locale"
+          :options="localeOptions"
+          label="Quasar Language"
+          dense
+          borderless
+          emit-value
+          map-options
+          options-dense
+          style="min-width: 150px"
+        />
         <q-space />
         <!-- guest -->
         <q-btn v-if="!store.loggedIn" dense flat no-wrap to="user">
@@ -96,6 +106,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 import { date } from 'quasar'
 import { useStoreAuth } from 'stores/storeAuth'
 import { useStoreResults } from 'stores/storeResults'
+import { useI18n } from 'vue-i18n'
 
 const linksList = [
   {
@@ -128,6 +139,7 @@ export default defineComponent({
   },
 
   setup () {
+    const { locale } = useI18n({ useScope: 'global' })
     const leftDrawerOpen = ref(false)
     const store = useStoreAuth()
     const storeResults = useStoreResults()
@@ -140,6 +152,11 @@ export default defineComponent({
       },
       store,
       storeResults,
+      locale,
+      localeOptions: [
+        { value: 'en-US', label: 'English' },
+        { value: 'en-GB', label: 'Samoan' }
+      ],
     }
   },
 

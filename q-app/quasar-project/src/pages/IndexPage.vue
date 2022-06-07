@@ -15,15 +15,23 @@
 
                 <q-item-section>
                   <q-item-label>
-                    <p>Talofa lava! You can use this app to <strong>record your test results</strong>.</p>
+                    <i18n-t keypath="pages.home.p1" tag="p">
+                      <strong>{{ $t('pages.home.p1Bold') }}</strong>
+                    </i18n-t>
 
-                    <p>We'll make it easy for you to send them to the Samoa Ministry
-                    of Health or you can do it manually using their
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> Official form.</a></p>
+                    <i18n-t keypath="pages.home.p2" tag="p">
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> {{ $t('pages.home.p2Form')}}</a>.
+                    </i18n-t>
 
-                    <p v-if="!store2.loggedIn">You can also <q-btn flat dense label="Register" to="/user" color="primary" /> an account to access your tests from any device!</p>
+                    <i18n-t keypath="pages.home.p3" tag="p" v-if="!store2.loggedIn">
+                      <q-btn flat dense :label="$t('label.register')" to="/user" color="primary" />
+                    </i18n-t>
 
-                    <p @click="addTest" class="cursor-pointer">Press the <q-avatar icon="add" color="primary" class="text-white" size="xs" /> button to <strong>get started!</strong></p>
+                    <i18n-t keypath="pages.home.p4" tag="p" @click="addTest" class="cursor-pointer">
+                      <q-avatar icon="add" color="primary" class="text-white" size="xs" />
+                      <strong>{{ $t('pages.home.p4GetStarted') }}</strong>
+                    </i18n-t>
+
                   </q-item-label>
                 </q-item-section>
               </q-item>
@@ -39,7 +47,19 @@
         <div class="filter-and-sort">
           <div class="">
             <div class="col">
-              <p>Malo lava! You've recorded <strong>{{ totalTestResults }} {{ pluralText }}</strong>.</p>
+
+              <i18n-t keypath="pages.home.resultsFound" tag="p" >
+                <template #count>
+                <strong class="text-lowercase" >
+                {{ totalTestResults }}
+                </strong>
+                </template>
+                <template #pluralText>
+                <strong class="text-lowercase" >
+                 {{ pluralText }}
+                 </strong>
+                </template>
+              </i18n-t>
 
               <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
                 <div class="absolute-full flex flex-center">
@@ -183,10 +203,10 @@ export default defineComponent({
   computed: {
     pluralText() {
       if (this.totalTestResults === 1) {
-        return "test result"
+        return this.$t('label.testResult')
       }
 
-      return "test results"
+      return this.$t('label.testResultPlural')
     },
     showEmptyMessage() {
       return this.totalTestResults === 0

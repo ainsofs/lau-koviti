@@ -58,7 +58,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn type="submit" flat color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" />
+        <q-btn type="submit" flat color="primary" :class="{ 'hidden': test.isSubmitted}" :label="$t('label.save')" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -92,12 +92,12 @@ export default defineComponent({
     formHeading() {
       if (this.formMode === 'edit') {
         if(this.test.isSubmitted) {
-          return 'Test result'
+          return this.$t('modals.addTest.view')
         }
-        return 'Edit test result'
+        return this.$t('modals.addTest.edit')
       }
       else {
-        return 'Add test result'
+        return this.$t('modals.addTest.name')
       }
 
     },
