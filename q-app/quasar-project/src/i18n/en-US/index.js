@@ -24,7 +24,7 @@ export default {
   pages: {
     home: {
       name: "Home",
-      p1: "Talofa lava! You can use this app to {0}",
+      p1: "Tālofa lava! You can use this app to {0}",
       p1Bold: "record your test results",
       p2: "We'll make it easy for you to send them to the Samoa Ministry of Health or you can do it manually using their {0}",
       p2Form: "Official form",

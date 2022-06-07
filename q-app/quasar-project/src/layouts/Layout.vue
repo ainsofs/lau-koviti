@@ -111,22 +111,26 @@ const linksList = [
   {
     title: 'Home',
     icon: 'home',
-    link: '/'
+    link: '/',
+    key: 'home',
   },
   {
     title: 'Profile',
     icon: 'person',
-    link: '/personal'
+    link: '/personal',
+    key: 'profile',
   },
   {
     title: 'Settings',
     icon: 'settings',
-    link: '/settings'
+    link: '/settings',
+    key: 'settings',
   },
   {
     title: 'Help',
     icon: 'help',
-    link: '/help'
+    link: '/help',
+    key: 'help',
   },
 ]
 
@@ -144,7 +148,7 @@ export default defineComponent({
     const storeResults = useStoreResults()
 
     return {
-      essentialLinks: linksList,
+      // essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
@@ -170,6 +174,14 @@ export default defineComponent({
   },
 
   computed: {
+    essentialLinks() {
+
+      linksList.forEach((link) => {
+        link.title = this.$t('pages.' + link.key + '.name')
+      })
+
+      return linksList
+    },
     todaysDate() {
       return date.formatDate(Date.now(), 'dddd D MMMM, YYYY')
     },
