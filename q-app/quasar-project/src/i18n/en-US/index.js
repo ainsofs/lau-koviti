@@ -21,6 +21,9 @@ export default {
     date: "Date",
     close: "Close",
     officialForm: "Official form",
+    password: "Password",
+    signOut: "Sign out",
+    addProfile: "@:label.add @:pages.profile.name",
   },
   pages: {
     home: {
@@ -56,6 +59,13 @@ export default {
       name: "User",
       p1: "Login to download your test results!",
       p2: "Register to access your test results from any device!",
+      p3Heading: "Psst...",
+      p3: "Looks like you have some tests results recorded. We'll save them to your account when you {tab}",
+    },
+    manageProfiles: {
+      name: "Manage Profiles",
+      p1: "Use profiles to record tests for multiple people. Perfect for people not who dont have access to this app",
+      p2: "Which profile would you like to use?",
     },
   },
   modals: {
@@ -69,10 +79,18 @@ export default {
       p1: "Fill in the details below and press @:label.send to send your reuslts to Samoa MOH",
       p2: "Review your details and press @:label.send to send your reuslts to Samoa MOH",
       e1: "Please check your form and re-submit",
+      e2: "Somethings wrong, please contact the developer",
     },
     delete: {
       name: "Koe sau kasi a...",
       p1: "Really delete? This cannot be undone",
+    },
+    loginRegister: {
+      name: "",
+      e1: "Passwords do not match!",
+    },
+    addProfile: {
+      name: "Profile name",
     },
   },
 };

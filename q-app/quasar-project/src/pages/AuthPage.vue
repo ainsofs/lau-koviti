@@ -11,8 +11,8 @@
           align="justify"
           narrow-indicator
         >
-          <q-tab name="login" label="Login" />
-          <q-tab name="register" label="Register" />
+          <q-tab name="login" :label="$t('label.login')" />
+          <q-tab name="register" :label="$t('label.register')"/>
         </q-tabs>
 
         <q-separator />
@@ -22,14 +22,14 @@
             <div class="q-gutter-md q-pb-md" >
               <q-card flat bordered v-show="store.totalTestResults">
                 <q-card-section class="bg-secondary text-white">
-                  <div class="text-h6">Psst...</div>
+                  <div class="text-h6">{{ $t('pages.user.p3Heading') }}</div>
                   <div class="q-py-md">
-                    Looks like you have some tests results recorded. We'll save them to your account when you {{ tab }}.
+                    {{ $t('pages.user.p3', {tab: tabName.toLowerCase() }) }}.
                   </div>
                 </q-card-section>
               </q-card>
 
-              <div class="q-pb-md">Login to download your test results!
+              <div class="q-pb-md">{{ $t('pages.user.p1') }}
               </div>
 
               <login-register tab="login" />
@@ -42,14 +42,14 @@
 
               <q-card flat bordered v-show="store.totalTestResults">
                 <q-card-section class="bg-secondary text-white">
-                  <div class="text-h6">Psst...</div>
+                  <div class="text-h6">{{ $t('pages.user.p3Heading') }}</div>
                   <div class="q-py-md">
-                    Looks like you have some tests results recorded. We'll save them to your account when you {{ tab }}.
+                    {{ $t('pages.user.p3', {tab: tabName.toLowerCase() }) }}.
                   </div>
                 </q-card-section>
               </q-card>
 
-              <div class="q-pb-md">Register to access your test results from any device!
+              <div class="q-pb-md">{{ $t('pages.user.p2') }}
               </div>
 
               <login-register tab="register" />
@@ -78,6 +78,17 @@ export default defineComponent({
     return {
       tab: "login"
     }
+  },
+  computed: {
+    tabName() {
+      if (this.isRegister) {
+        return this.$t('label.register')
+      }
+      return this.$t('label.login')
+    },
+    isRegister() {
+      return this.tab === 'register'
+    },
   },
   components: {
     'login-register': require('components/Auth/LoginRegister.vue').default,

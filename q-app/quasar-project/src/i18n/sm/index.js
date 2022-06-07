@@ -19,6 +19,9 @@ export default {
     date: "Aso",
     close: "Tapuni",
     officialForm: "Fomu Aloaia",
+    password: "'Upu fa'alilolilo",
+    signOut: "Saini i fafo",
+    addProfile: "@:label.add",
   },
   pages: {
     home: {
@@ -34,8 +37,8 @@ export default {
       sortAsc: "Faavasega le aupito leva i le mea aupito fou",
     },
     profile: {
-      name: "Talaaga Otooto",
-      p1: "Faafou ou faamaumauga. E auina atu faatasi ma taunuuga o au suega",
+      name: "Tala'aga 'oto'oto",
+      p1: "Fa'afou ou fa'amaumauga. E auina atu fa'atasi ma taunuuga o au suega",
     },
     settings: {
       name: "Faatulagaga",
@@ -54,6 +57,13 @@ export default {
       name: "Tagata e Faaaogaina",
       p1: "Alu i totonu e sii mai ai taunuuga o lau suega!",
       p2: "Lesitala ina ia maua taunuuga o au suega mai soo se masini!",
+      p3Heading: "Psst...",
+      p3: "E foliga mai o loo i ai ni au taunuuga o suega ua faamaumauina. O le a matou sefeina i lau faitotoa pe a e {tab}",
+    },
+    manageProfiles: {
+      name: "Puleaina o tala'aga 'oto'oto",
+      p1: "Faaaoga talaaga 'oto'oto e faamaumau ai suega mo ni tagata se toatele. Atoatoa mo tagata e le mafai ona faaaogaina lenei polokalama",
+      p2: "O le a le talaaga 'oto'oto e te mana'o e fa'aogā?",
     },
   },
   modals: {
@@ -65,12 +75,20 @@ export default {
     submitTest: {
       name: "Lafo le @.lower:label.testResult",
       p1: "Faatumu faamatalaga o loo i lalo ma oomi le @:label.send e auina atu ai au suesuega ile Samoa MOH",
-      p2: "Toe iloilo au faamatalaga ma oomi le @:label.send e auina atu ai au tupe i Samoa MOH",
+      p2: "Toe iloilo au faamatalaga ma oomi le @.lower:label.send e auina atu ai au tupe i Samoa MOH",
       e1: "Faamolemole siaki lau fomu ma toe auina mai",
+      e2: "E i ai se mea o faaletonu, faamolemole faafesootai le tagata na faia le polokalame",
     },
     delete: {
       name: "Koe sau sau kasi a...",
       p1: "Tape moni lava? E le mafai ona toe suia lenei mea",
+    },
+    loginRegister: {
+      name: "",
+      e1: "E le tutusa 'upu fa'alilolilo!",
+    },
+    addProfile: {
+      name: "@:pages.profile.name",
     },
   },
 };

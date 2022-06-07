@@ -339,7 +339,7 @@ export default defineComponent({
               // form error
               console.log(response, 'error')
               this.$q.notify({
-                message: 'Somethings wrong, please contact the developer.',
+                message: this.$t('modals.submitTest.e2'),
                 icon: 'warning',
                 color: 'warning',
               })
@@ -356,7 +356,7 @@ export default defineComponent({
         this.loading = false
 
         this.$q.notify({
-          message: 'Please check your form and re-submit',
+          message: this.$t('modals.submitTest.e1'),
           icon: 'warning',
           color: 'warning',
         })

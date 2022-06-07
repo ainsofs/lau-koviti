@@ -1,8 +1,8 @@
 <template>
   <q-page class="q-pa-md col">
-    <div class="text-weight-medium q-pb-md">Manage Profiles</div>
-    <div class="q-pb-md">Use profiles to record tests for multiple people. Perfect for people not who dont have access to this app.</div>
-    <div class="q-pb-md" v-if="!store.validProfileId">Which profile would you like to use?</div>
+    <div class="text-weight-medium q-pb-md">{{ $t('pages.manageProfiles.name') }}</div>
+    <div class="q-pb-md">{{ $t('pages.manageProfiles.p1') }}.</div>
+    <div class="q-pb-md" v-if="!store.validProfileId">{{ $t('pages.manageProfiles.p2') }}</div>
     <div class="row q-gutter-md q-pb-md">
 
       <div v-for="(p, key) in store.profiles" :key="key"
@@ -25,7 +25,7 @@
     <q-dialog v-model="prompt" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">Profile name</div>
+          <div class="text-h6">{{ $t('modals.addProfile.name') }}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none row">
@@ -33,8 +33,8 @@
         </q-card-section>
 
         <q-card-actions align="right" >
-          <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Add Profile" @click="createProfile" color="primary" />
+          <q-btn flat :label="$t('label.cancel')" v-close-popup />
+          <q-btn flat :label="$t('label.addProfile')" @click="createProfile" color="primary" />
         </q-card-actions>
       </q-card>
     </q-dialog>

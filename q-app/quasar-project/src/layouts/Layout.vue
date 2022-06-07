@@ -48,11 +48,11 @@
                 </q-item-section>
               </q-item>
               <q-item clickable class="GL__menu-link" to="/manage">
-                <q-item-section>Manage Profiles</q-item-section>
+                <q-item-section>{{ $t('pages.manageProfiles.name') }}</q-item-section>
               </q-item>
               <q-separator />
               <q-item clickable class="GL__menu-link" @click="logoutUser" >
-                <q-item-section>Sign out</q-item-section>
+                <q-item-section>{{ $t('label.signOut') }}</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -79,11 +79,6 @@
       :width="220"
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Navigation
-        </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
