@@ -32,7 +32,7 @@
                     navigation-min-year-month="2020/01"
                     :navigation-max-year-month="navMaxMonth">
                     <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
+                      <q-btn v-close-popup :label="$t('label.close')" color="primary" flat />
                     </div>
                   </q-date>
                 </q-popup-proxy>

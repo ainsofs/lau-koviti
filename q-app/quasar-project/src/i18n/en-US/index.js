@@ -19,6 +19,7 @@ export default {
     completeText: "Seki! All @.lower:label.testResultPlural sent!",
     send: "Send",
     date: "Date",
+    close: "Close",
   },
   pages: {
     home: {

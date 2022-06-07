@@ -17,6 +17,7 @@ export default {
     completeText: "Seki! Auina uma @.lower:label.testResultPlural !",
     send: "Lafo",
     date: "Aso",
+    close: "Tapuni",
   },
   pages: {
     home: {
