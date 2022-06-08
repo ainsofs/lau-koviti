@@ -2,7 +2,7 @@ export default {
   label: {
     save: "Sefe",
     cancel: "Fa'alēaogāina",
-    login: "Saini totonu",
+    login: "Saini ini",
     register: "Resitala",
     testResult: "Fa'ai'uga 'ole su'esu'ega",
     testResultPlural: "Fa'ai'uga 'o su'esu'ega",
@@ -20,7 +20,7 @@ export default {
     close: "Tapuni",
     officialForm: "Fomu aloa'ia",
     password: "'Upu fa'alilolilo",
-    signOut: "Saini i fafo",
+    signOut: "Saini fafo",
     addProfile: "@:label.add",
     moh: "Matāgaluega o Soifua Malōlōina",
     // status
