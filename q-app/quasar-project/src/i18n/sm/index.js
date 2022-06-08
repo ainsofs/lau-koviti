@@ -22,7 +22,7 @@ export default {
     password: "'Upu fa'alilolilo",
     signOut: "Saini fafo",
     addProfile: "@:label.add",
-    moh: "Matāgaluega o Soifua Malōlōina",
+    moh: "Matāgaluega olebSoifua Mālōlōina",
     // status
     testResultAdded: "@:label.added le @.lower:label.testResult",
     testResultUpdated: "@:label.updated le @.lower:label.testResult",
