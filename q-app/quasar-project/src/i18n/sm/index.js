@@ -34,10 +34,10 @@ export default {
   pages: {
     home: {
       name: "Fale",
-      p1: "Tālofa lava! 'E mafai 'ona 'e fa'a'aogāina lenei polokalama 'e {0}",
+      p1: "Tālofa lava! 'E mafai 'ona 'e fa'a'aogāina lenei polokalame 'e {0}",
       p1Bold: "fa'amaumau ai au @.lower:label.testResultPlural",
-      p2: "Ole'a mātou fa'afaigofieina 'ona 'auina atu ile @:label.moh au fa'amaumauga, pe 'e te tago e fa'atumu le lātou {0}",
-      p3: "E mafai foi ona {0} sau tusi fa'amaumauga 'e fa'a'aoga ai au @.lower:label.testResult mai so'o se masini!",
+      p2: "'Ole'ā mātou fa'afaigofieina 'ona 'auina atu ile @:label.moh au fa'amaumauga, pe 'e te tago e fa'atumu le lātou {0}",
+      p3: "'E mafai fo'i ona {0} sau tusi fa'amaumauga 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p4: "'O'omi le fa'amau {0} e {1}",
       p4GetStarted: "'āmata loa na fa'amau!",
       resultsFound: "Mālo lava! 'Ua fa'amauina au {pluralText} 'e {count}.",
@@ -59,7 +59,7 @@ export default {
     },
     help: {
       name: "Fesoasoani",
-      p1: "O lo'o atina'e lenei polokalama",
+      p1: "O lo'o atina'e lenei polokalame",
       p2: "Ole fa'amoemoe 'ia fa'afaigofie ai le pu'eina ma le laofina o au @.lower:label.testResult (COVID-19 Rapid Test Self-Reporting) ile @:label.moh . E lē fa'amalosia le lafoina o au @.lower:label.testResult ile @:label.moh",
       p3: "'O'omi 'i'i mo le {0}",
     },
@@ -72,7 +72,7 @@ export default {
     },
     manageProfiles: {
       name: "Pūleaina o @.lower:pages.profile.name",
-      p1: "Fa'a'aogā @.lower:pages.profile.name e fa'amaumau ai @.lower:label.testResult mo nisi tagata. 'Aemaise tagata e le mafai 'ona fa'aaogaina lenei polokalama",
+      p1: "Fa'a'aogā @.lower:pages.profile.name e fa'amaumau ai @.lower:label.testResult mo nisi tagata. 'Aemaise tagata e le mafai 'ona fa'aaogaina lenei polokalame",
       p2: "Ole ā le @.lower:pages.profile.name e te mana'o e fa'aogā?",
     },
   },
@@ -92,7 +92,7 @@ export default {
     },
     delete: {
       name: "Koe sau sau kasi a...",
-      p1: "'E tape mo'i a? 'E le mafai ona toe suia lenei tulaga",
+      p1: "'E tape mo'i a? 'E lē mafai ona toe suia lenei tūlaga.",
     },
     loginRegister: {
       name: "",
