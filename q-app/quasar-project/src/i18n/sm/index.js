@@ -22,7 +22,7 @@ export default {
     password: "'Upu fa'alilolilo",
     signOut: "Saini fafo",
     addProfile: "@:label.add",
-    moh: "Matāgaluega olebSoifua Mālōlōina",
+    moh: "Matāgaluega 'o le Soifua Mālōlōina",
     // status
     testResultAdded: "@:label.added le @.lower:label.testResult",
     testResultUpdated: "@:label.updated le @.lower:label.testResult",
@@ -64,7 +64,7 @@ export default {
       p3: "'O'omi 'i'i mo le {0}",
     },
     user: {
-      name: "Tagata e fa'aogāina",
+      name: "Tagata",
       p1: "@:label.login 'e 'aumai ai au @.lower:label.testResultPlural !",
       p2: "Resitala 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p3Heading: "Psst...",
