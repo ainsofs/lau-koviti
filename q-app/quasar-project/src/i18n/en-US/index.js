@@ -55,9 +55,9 @@ export default {
     settings: {
       name: "Settings",
       p1: "Dark Mode",
-      p1Caption: "Activate dark mode goodness.",
+      p1Caption: "Activate dark mode goodness",
       p2: "Dev Mode",
-      p2Caption: "Submit tests to a Demo form.",
+      p2Caption: "Submit tests to a Demo form",
     },
     help: {
       name: "Help",
