@@ -66,7 +66,7 @@ export default {
     user: {
       name: "Tagata e fa'aogāina",
       p1: "@:label.login 'e 'aumai ai au @.lower:label.testResultPlural !",
-      p2: "Resitala ma maua ai au @.lower:label.testResultPlural mai so'o se masini!",
+      p2: "Resitala 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p3Heading: "Psst...",
       p3: "E foliga mai o lo'o i ai ni au @.lower:label.testResult ua fa'amaumauina. Ole'ā mātou sefeina i lau tusi fa'amaumauga pe 'a 'e {tab}",
     },
