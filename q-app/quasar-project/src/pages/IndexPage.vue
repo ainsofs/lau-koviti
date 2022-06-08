@@ -23,7 +23,7 @@
                       <a href="https://docs.google.com/forms/d/e/1FAIpQLSepjuDUzEza-YA0YUIr0bM8M4Jkn-tp6h1F1Cq6Zed1sBkRqQ/viewform" target="_blank"> {{ $t('label.officialForm')}}.</a>
                     </i18n-t>
 
-                    <i18n-t keypath="pages.home.p3" tag="p" v-if="!store2.loggedIn">
+                    <i18n-t keypath="pages.home.p3" tag="p" v-if="!storeAuth.loggedIn">
                       <q-btn flat dense :label="$t('label.register')" to="/user" color="primary" />
                     </i18n-t>
 
@@ -130,7 +130,7 @@
         </q-card>
       </div>
 
-      <template v-if="!store.testsDownloaded && store2.loggedIn">
+      <template v-if="!store.testsDownloaded && storeAuth.loggedIn">
         <span class="absolute-center">
           <q-spinner
             color="primary"
@@ -181,11 +181,11 @@ export default defineComponent({
   name: 'IndexPage',
   setup() {
     const store = useStoreResults()
-    const store2 = useStoreAuth()
+    const storeAuth = useStoreAuth()
 
     return {
       store,
-      store2
+      storeAuth
     }
   },
   data() {
@@ -284,6 +284,12 @@ export default defineComponent({
         this.fabPos[ 1 ] - ev.delta.y
       ]
     }
+  },
+  created() {
+    // i18n for pinia
+    this.store.t = this.$t
+    this.storeAuth.t = this.$t
+
   },
   components: {
     'add-results': require('components/TestResults/Modal/AddTestResult.vue').default,

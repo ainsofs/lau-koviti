@@ -51,17 +51,15 @@ export const useStoreResults = defineStore("storeResults", {
     },
     profiles: {
       // 1234: {
-      //   personal: {
-      //     firstName: "",
-      //     lastName: "",
-      //     vaccinationId: "",
-      //     dob: "",
-      //     gender: "",
-      //     village: "",
-      //     conditions: [],
-      //     phone: "",
-      //     email: "",
-      //   },
+      //   firstName: "",
+      //   lastName: "",
+      //   vaccinationId: "",
+      //   dob: "",
+      //   gender: "",
+      //   village: "",
+      //   conditions: [],
+      //   phone: "",
+      //   email: "",
       // },
     },
     sort: "date",
@@ -183,7 +181,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbAddTestResult({ id: id, testResult: testResult })
         }
       } else {
-        Notify.create({ message: "Test Result Added", icon: "cloud_off" })
+        Notify.create({ message: this.t("label.testResultAdded"), icon: "cloud_off" })
       }
     },
     updateResult(id, testResult, options = { updateCloud: true }) {
@@ -199,7 +197,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbUpdateTestResult({ id: id, updates: testResult })
         }
       } else {
-        Notify.create({ message: "Test Result Updated", icon: "cloud_off" })
+        Notify.create({ message: this.t("label.testResultUpdated"), icon: "cloud_off" })
       }
     },
     deleteResult(id, options = { updateCloud: true }) {
@@ -211,7 +209,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbDeleteTestResult(id)
         }
       } else {
-        Notify.create({ message: "Test Result Deleted", icon: "cloud_off" })
+        Notify.create({ message: this.t("label.testResultDeleted"), icon: "cloud_off" })
       }
     },
 
@@ -247,7 +245,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbAddProfile({ id: id, profile: payload })
         }
       } else {
-        Notify.create({ message: "Profile Added", icon: "cloud_off" })
+        Notify.create({ message: this.t("label.profileAdded"), icon: "cloud_off" })
       }
     },
     updateProfile(id, profile, options = { updateCloud: true }) {
@@ -264,7 +262,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbUpdateProfile({ id: id, updates: payload })
         }
       } else {
-        Notify.create({ message: "Profile Updated", icon: "cloud_off" })
+        Notify.create({ message: this.t("label.profileUpdated"), icon: "cloud_off" })
       }
     },
     deleteProfile(id, options = { updateCloud: true }) {
@@ -276,7 +274,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbDeleteProfile(id)
         }
       } else {
-        Notify.create({ message: "Profile Deleted", icon: "cloud_off" })
+        Notify.create({ message: this.t("label.profileDeleted"), icon: "cloud_off" })
       }
 
       let newId = this.firstProfileId
@@ -303,12 +301,12 @@ export const useStoreResults = defineStore("storeResults", {
           // set profile Id
           if (this.profileId === "-1") {
             if (this.totalProfiles) {
-              let firstKey = this.firstProfileId;
-              this.setProfileId(firstKey);
+              let firstKey = this.firstProfileId
+              this.setProfileId(firstKey)
 
               // allow user to choose an account before continuing
               if (this.totalProfiles > 1) {
-                this.router.push("/manage");
+                this.router.push("/manage")
               }
             } else {
               this.updatePersonal({ firstName: "", lastName: "" })
@@ -375,7 +373,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       set(testRef, payload.testResult)
         .then(() => {
-          Notify.create({ message: "Test Result Added", icon: "cloud_done" })
+          Notify.create({ message: this.t("label.testResultAdded"), icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -387,7 +385,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       update(testRef, payload.updates)
         .then(() => {
-          Notify.create({ message: "Test Result Updated", icon: "cloud_done" })
+          Notify.create({ message: this.t("label.testResultUpdated"), icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -398,8 +396,7 @@ export const useStoreResults = defineStore("storeResults", {
       let testRef = ref(firebaseDb, userId + "/tests/" + id)
       remove(testRef)
         .then(() => {
-          // Notify.create("Task deleted!")
-          Notify.create({ message: "Test Result Deleted", icon: "cloud_done" })
+          Notify.create({ message: this.t("label.testResultDeleted"), icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -413,7 +410,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       set(profileRef, payload.profile)
         .then(() => {
-          Notify.create({ message: "Profile Added", icon: "cloud_done" })
+          Notify.create({ message: this.t("label.profileAdded"), icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -425,7 +422,7 @@ export const useStoreResults = defineStore("storeResults", {
 
       update(profileRef, payload.updates)
         .then(() => {
-          Notify.create({ message: "Profile Updated", icon: "cloud_done" })
+          Notify.create({ message: this.t("label.profileUpdated"), icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)
@@ -436,7 +433,7 @@ export const useStoreResults = defineStore("storeResults", {
       let profileRef = ref(firebaseDb, userId + "/profiles/" + id)
       remove(profileRef)
         .then(() => {
-          Notify.create({ message: "Profile Deleted", icon: "cloud_done" })
+          Notify.create({ message: this.t("label.profileDeleted"), icon: "cloud_done" })
         })
         .catch((error) => {
           console.log(error)

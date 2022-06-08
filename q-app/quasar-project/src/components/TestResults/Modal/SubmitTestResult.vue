@@ -320,10 +320,10 @@ export default defineComponent({
 
               const quotes = [
                 "You rock!",
-                "Seki a oe!",
-                "Faafetai lava",
-                "Malo!",
-                "Best a oe!",
+                "Seki a 'oe!",
+                "Fa'afetai lava!",
+                "Mālō!",
+                "Best a 'oe!",
               ]
               let randomNumber = Math.floor(Math.random() * quotes.length)
 
@@ -424,6 +424,11 @@ export default defineComponent({
     },
   },
   created() {
+    // i18n for pinia
+    this.store.t = this.$t
+    this.storeAuth.t = this.$t
+    this.storeSettings.t = this.$t
+
     Object.assign(this.test, this.testResult)
   },
   // emits: ['close'],

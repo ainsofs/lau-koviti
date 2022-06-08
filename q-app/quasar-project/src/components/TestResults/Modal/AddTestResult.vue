@@ -150,6 +150,9 @@ export default defineComponent({
     }
   },
   created() {
+    // i18n for pinia
+    this.store.t = this.$t
+
     if (this.formMode === 'edit') {
       Object.assign(this.test, this.testResult)
 		  this.test = Object.assign({}, this.testResult)

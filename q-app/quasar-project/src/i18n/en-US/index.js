@@ -25,6 +25,13 @@ export default {
     signOut: "Sign out",
     addProfile: "@:label.add @:pages.profile.name",
     moh: "Sāmoan Ministry of Health",
+    // status
+    testResultAdded: "@:label.testResult @.lower:label.added",
+    testResultUpdated: "@:label.testResult @.lower:label.updated",
+    testResultDeleted: "@:label.testResult @.lower:label.deleted",
+    profileAdded: "@:pages.profile.name @.lower:label.added",
+    profileUpdated: "@:pages.profile.name @.lower:label.updated",
+    profileDeleted: "@:pages.profile.name @.lower:label.deleted",
   },
   pages: {
     home: {

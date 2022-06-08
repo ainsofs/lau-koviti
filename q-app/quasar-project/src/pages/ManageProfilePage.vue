@@ -89,6 +89,11 @@ export default defineComponent({
         this.$router.push("/personal")
       }, 300)
     }
+  },
+  created() {
+    // i18n for pinia
+    this.store.t = this.$t
+    this.storeAuth.t = this.$t
   }
 })
 </script>

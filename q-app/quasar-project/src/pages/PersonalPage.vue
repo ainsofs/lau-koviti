@@ -251,6 +251,12 @@ export default defineComponent({
     },
 
   },
+  created() {
+    // i18n for pinia
+    this.store.t = this.$t
+    this.storeAuth.t = this.$t
+
+  },
   components: {
     'delete-alert': require('components/TestResults/Modal/DeleteAlert.vue').default,
   }
