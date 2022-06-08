@@ -2,7 +2,7 @@ export default {
   label: {
     save: "Sefe",
     cancel: "Fa'alēaogāina",
-    login: "Alu i totonu",
+    login: "Saini totonu",
     register: "Resitala",
     testResult: "Fa'ai'uga 'ole su'esu'ega",
     testResultPlural: "Fa'ai'uga 'o su'esu'ega",
@@ -28,7 +28,7 @@ export default {
     home: {
       name: "Fale",
       p1: "Tālofa lava! 'E mafai 'ona 'e fa'a'aogāina lenei polokalama 'e {0}",
-      p1Bold: "fa'amaumau ai taunu'uga o au su'ega",
+      p1Bold: "fa'amaumau ai au @.lower:label.testResultPlural",
       p2: "Ole'a mātou fa'afaigofieina 'ona 'auina atu ile @:label.moh au fa'amaumauga, pe 'e te tago e fa'atumu le lātou {0}",
       p3: "E mafai foi ona {0} sau tusi fa'amaumauga 'e fa'a'aoga ai au su'ega mai so'o se masini!",
       p4: "'O'omi le fa'amau {0} e {1}",
@@ -39,7 +39,7 @@ export default {
     },
     profile: {
       name: "Tala'aga 'oto'oto",
-      p1: "Fa'afou ou fa'amaumauga. 'E 'auina atu fa'atasi ma taunu'uga o au su'ega",
+      p1: "Fa'afou ou fa'amaumauga. 'E 'auina atu fa'atasi ma au @.lower:label.testResultPlural",
       e1: "E lē mafai ona tapē. Ua pau lenei o le @.lower:pages.profile.name.",
       e2: "E lē mafai ona tapē. O lo'o iai su'ega 'e ō fa'atasi ma lenei @.lower:pages.profile.name.",
     },
@@ -58,8 +58,8 @@ export default {
     },
     user: {
       name: "Tagata e fa'aogāina",
-      p1: "Saini i totonu 'e 'aumai ai taunu'uga o au @.lower:label.testResult!",
-      p2: "Resitala ma maua ai taunu'uga o au @.lower:label.testResult mai so'o se masini!",
+      p1: "@:label.login 'e 'aumai ai au @.lower:label.testResultPlural !",
+      p2: "Resitala ma maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p3Heading: "Psst...",
       p3: "E foliga mai o lo'o i ai ni au @.lower:label.testResult ua fa'amaumauina. Ole'ā mātou sefeina i lau tusi fa'amaumauga pe 'a 'e {tab}",
     },
