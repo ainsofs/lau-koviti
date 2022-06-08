@@ -40,7 +40,7 @@ export default {
       p3: "'E mafai fo'i ona {0} sau tusi fa'amaumauga 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p4: "'O'omi le fa'amau {0} e {1}",
       p4GetStarted: "'āmata loa na fa'amau!",
-      resultsFound: "Mālo lava! 'Ua fa'amauina au {pluralText} 'e {count}.",
+      resultsFound: "Mālō lava! 'Ua fa'amauina au {pluralText} 'e {count}.",
       sortDesc: "Soka mai mea fou i mea tuai",
       sortAsc: "Soka mai mea tuai leva i mea fou",
     },
