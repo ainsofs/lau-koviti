@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md col">
     <div class="q-gutter-y-md" style="max-width: 600px">
-      <q-card>
+      <q-card flat bordered>
         <q-tabs
           v-model="tab"
           dense

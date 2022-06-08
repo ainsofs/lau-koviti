@@ -4,7 +4,7 @@
       <div class="q-pb-md">{{ $t('pages.profile.p1') }}.</div>
 
       <form  @submit.prevent="submitForm">
-        <q-card flat>
+        <q-card flat bordered>
           <q-card-section>
 
             <div class="q-gutter-md q-pb-md" >

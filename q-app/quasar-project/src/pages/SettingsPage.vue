@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md col">
     <div class="text-weight-medium q-pb-md">{{ $t('pages.settings.name') }}</div>
-    <q-card flat>
+    <q-card flat bordered>
       <q-card-section>
 
         <q-list >

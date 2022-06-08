@@ -5,7 +5,7 @@
       <!-- empty message -->
       <div v-if="showEmptyMessage">
 
-        <q-card flat>
+        <q-card flat bordered>
           <q-card-section>
             <q-list>
               <q-item>
@@ -86,7 +86,7 @@
         </div>
 
         <!-- list -->
-        <q-card flat>
+        <q-card flat bordered>
           <q-card-section>
             <q-list class="rounded-borders">
 
