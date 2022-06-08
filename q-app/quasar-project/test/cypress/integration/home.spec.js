@@ -15,7 +15,7 @@ describe('Landing', () => {
   // })
 
   it("do not show test results if none", () => {
-    cy.get("main").should("not.contain", "1 test result");
+    cy.get("main").should("not.contain", "1 test result", { matchCase: false });
   });
 
   // TODO appears not signed in
@@ -25,28 +25,28 @@ describe('Landing', () => {
     cy.get(".q-btn--fab").as("addButton").click();
     cy.contains("Add");
     cy.contains("Save").click();
-    cy.contains("Added");
-    cy.get("div.filter-and-sort").as("result").contains("1 test result");
+    cy.contains("added");
+    cy.get("div.filter-and-sort").as("result").contains("1 test result", { matchCase: false });
 
     cy.get("@addButton").click();
     cy.contains("Save").click();
-    cy.contains("Added");
-    cy.get("@result").contains("2 test results");
+    cy.contains("added");
+    cy.get("@result").contains("2 test results", { matchCase: false });
 
     // can edit test
     cy.get("div.q-item--clickable").as("list").first().click();
     cy.contains("Edit");
     cy.contains("Save").click();
-    cy.contains("Updated");
-    cy.get("@result").contains("2 test results");
+    cy.contains("updated");
+    cy.get("@result").contains("2 test results", { matchCase: false });
 
     // can submit test
     cy.get("@list").first().contains("send").click();
     cy.get('input[aria-label="First name"]').focus().type("test first");
     cy.get('input[aria-label="Last name"]').focus().type("test last");
     cy.get(".btn-submit").click();
-    cy.contains("Updated");
-    cy.get("@result").contains("2 test results");
+    cy.contains("updated");
+    cy.get("@result").contains("2 test results", { matchCase: false });
 
     // cannot edit test after submission
     cy.get("div.q-item--clickable").as("list").first().click();
@@ -56,17 +56,17 @@ describe('Landing', () => {
     // check that progress bar is displaying
     cy.get(".q-linear-progress")
       .as("progress")
-      .contains("1 of 2 tests submitted");
+      .contains("1 of 2");
     cy.get("@progress").should("have.class", "text-accent");
     // test results should be the same
-    cy.get("@result").contains("2 test results");
+    cy.get("@result").contains("2 test results", { matchCase: false });
 
     // can delete other tests
     cy.get("@list").eq(1).contains("delete").click();
     cy.contains("delete?");
     cy.get("button").contains("Delete").click();
-    cy.contains("Deleted");
-    cy.get("@result").contains("1 test result");
+    cy.contains("deleted");
+    cy.get("@result").contains("1 test result", { matchCase: false });
 
     // check progress bar is now green
     cy.get("@progress").contains("All test results sent");

@@ -1,7 +1,7 @@
 <template>
   <q-card >
     <q-card-section class="row items-center">
-      <div class="text-h6">Send test result</div>
+      <div class="text-h6">{{ $t('modals.submitTest.name') }}</div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
@@ -9,16 +9,14 @@
     <form @submit.prevent="submitForm">
 
       <q-card-section class="q-pt-none">
-        <p v-if="isPersonalEmpty">Fill in the details below and press send to send your reuslts to
-            Samoa MOH.</p>
-        <p v-else>Review your details and press send to send your reuslts to
-            Samoa MOH.</p>
+        <p v-if="isPersonalEmpty">{{ $t('modals.submitTest.p1') }}.</p>
+        <p v-else>{{ $t('modals.submitTest.p2') }}.</p>
 
         <q-list bordered>
           <q-expansion-item
             :default-opened="isPersonalEmpty"
             icon="person"
-            label="Personal details"
+            :label="$t('label.personalDetails')"
             header-class="text-primary">
             <q-separator />
             <q-card>
@@ -124,17 +122,17 @@
           <q-expansion-item
             :default-opened="!isPersonalEmpty"
             icon="medication_liquid"
-            label="Test result"
+            :label="$t('label.testResult')"
             header-class="text-primary">
             <q-separator />
             <q-card>
               <q-card-section>
                 <div class="row">
-                  <div class="col-5">Date:</div>
+                  <div class="col-5">{{ $t('label.date') }}:</div>
                   <div class="col">{{ formatDate(test.date) }}</div>
                 </div>
                 <div class="row">
-                  <div class="col-5">Test Result:</div>
+                  <div class="col-5">{{ $t('label.testResult') }}:</div>
                   <div class="col">{{ test.result }}</div>
                 </div>
               </q-card-section>
@@ -148,7 +146,7 @@
         <q-btn @click="markSubmitted" flat color="grey-9" label="Mark Submitted" v-close-popup />
         <q-btn @click="submitLater" flat color="grey-9" label="Submit Later" v-close-popup />
         -->
-        <q-btn type="submit" :loading="loading" flat color="primary" label="Send" class="btn-submit" />
+        <q-btn type="submit" :loading="loading" flat color="primary" :label="$t('label.send')" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -322,10 +320,10 @@ export default defineComponent({
 
               const quotes = [
                 "You rock!",
-                "Seki a oe!",
-                "Faafetai lava",
-                "Malo!",
-                "Best a oe!",
+                "Seki a 'oe!",
+                "Fa'afetai lava!",
+                "Mālō!",
+                "Best a 'oe!",
               ]
               let randomNumber = Math.floor(Math.random() * quotes.length)
 
@@ -341,7 +339,7 @@ export default defineComponent({
               // form error
               console.log(response, 'error')
               this.$q.notify({
-                message: 'Somethings wrong, please contact the developer.',
+                message: this.$t('modals.submitTest.e2'),
                 icon: 'warning',
                 color: 'warning',
               })
@@ -358,7 +356,7 @@ export default defineComponent({
         this.loading = false
 
         this.$q.notify({
-          message: 'Please check your form and re-submit',
+          message: this.$t('modals.submitTest.e1'),
           icon: 'warning',
           color: 'warning',
         })
@@ -426,6 +424,11 @@ export default defineComponent({
     },
   },
   created() {
+    // i18n for pinia
+    this.store.t = this.$t
+    this.storeAuth.t = this.$t
+    this.storeSettings.t = this.$t
+
     Object.assign(this.test, this.testResult)
   },
   // emits: ['close'],

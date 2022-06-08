@@ -10,8 +10,17 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
         <q-space />
+        <q-select
+          v-model="locale"
+          :options="localeOptions"
+          dense
+          borderless
+          emit-value
+          map-options
+          options-dense
+          class="lang-select"
+        />
         <!-- guest -->
         <q-btn v-if="!store.loggedIn" dense flat no-wrap to="user">
           <q-avatar size="26px">
@@ -39,11 +48,11 @@
                 </q-item-section>
               </q-item>
               <q-item clickable class="GL__menu-link" to="/manage">
-                <q-item-section>Manage Profiles</q-item-section>
+                <q-item-section>{{ $t('pages.manageProfiles.name') }}</q-item-section>
               </q-item>
               <q-separator />
               <q-item clickable class="GL__menu-link" @click="logoutUser" >
-                <q-item-section>Sign out</q-item-section>
+                <q-item-section>{{ $t('label.signOut') }}</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -70,11 +79,6 @@
       :width="220"
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Navigation
-        </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -96,27 +100,32 @@ import EssentialLink from 'components/EssentialLink.vue'
 import { date } from 'quasar'
 import { useStoreAuth } from 'stores/storeAuth'
 import { useStoreResults } from 'stores/storeResults'
+import { useI18n } from 'vue-i18n'
 
 const linksList = [
   {
     title: 'Home',
     icon: 'home',
-    link: '/'
+    link: '/',
+    key: 'home',
   },
   {
     title: 'Profile',
     icon: 'person',
-    link: '/personal'
+    link: '/personal',
+    key: 'profile',
   },
   {
     title: 'Settings',
     icon: 'settings',
-    link: '/settings'
+    link: '/settings',
+    key: 'settings',
   },
   {
     title: 'Help',
     icon: 'help',
-    link: '/help'
+    link: '/help',
+    key: 'help',
   },
 ]
 
@@ -128,18 +137,24 @@ export default defineComponent({
   },
 
   setup () {
+    const { locale } = useI18n({ useScope: 'global' })
     const leftDrawerOpen = ref(false)
     const store = useStoreAuth()
     const storeResults = useStoreResults()
 
     return {
-      essentialLinks: linksList,
+      // essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       store,
       storeResults,
+      locale,
+      localeOptions: [
+        { value: 'en-US', label: 'English' },
+        { value: 'en-GB', label: 'Fa\'asāmoa' }
+      ],
     }
   },
 
@@ -154,6 +169,14 @@ export default defineComponent({
   },
 
   computed: {
+    essentialLinks() {
+
+      linksList.forEach((link) => {
+        link.title = this.$t('pages.' + link.key + '.name')
+      })
+
+      return linksList
+    },
     todaysDate() {
       return date.formatDate(Date.now(), 'dddd D MMMM, YYYY')
     },
@@ -175,4 +198,15 @@ export default defineComponent({
   filter: grayscale(100%)
 
 }
+
+.lang-select {
+  .q-field__native, .q-icon {
+    color: $light !important;
+    opacity: .8;
+  }
+  :hover {
+    opacity: 1;
+  }
+}
+
 </style>

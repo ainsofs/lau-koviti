@@ -32,7 +32,7 @@
                     navigation-min-year-month="2020/01"
                     :navigation-max-year-month="navMaxMonth">
                     <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
+                      <q-btn v-close-popup :label="$t('label.close')" color="primary" flat />
                     </div>
                   </q-date>
                 </q-popup-proxy>
@@ -58,7 +58,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn type="submit" flat color="primary" :class="{ 'hidden': test.isSubmitted}" label="Save" class="btn-submit" />
+        <q-btn type="submit" flat color="primary" :class="{ 'hidden': test.isSubmitted}" :label="$t('label.save')" class="btn-submit" />
       </q-card-actions>
 
     </form>
@@ -92,12 +92,12 @@ export default defineComponent({
     formHeading() {
       if (this.formMode === 'edit') {
         if(this.test.isSubmitted) {
-          return 'Test result'
+          return this.$t('modals.addTest.view')
         }
-        return 'Edit test result'
+        return this.$t('modals.addTest.edit')
       }
       else {
-        return 'Add test result'
+        return this.$t('modals.addTest.name')
       }
 
     },
@@ -123,7 +123,7 @@ export default defineComponent({
       }
       else {
         this.$q.notify({
-          message: 'Please check your form',
+          message: this.$t('modals.addTest.e1'),
           icon: 'warning',
           color: 'warning',
         })
@@ -150,6 +150,9 @@ export default defineComponent({
     }
   },
   created() {
+    // i18n for pinia
+    this.store.t = this.$t
+
     if (this.formMode === 'edit') {
       Object.assign(this.test, this.testResult)
 		  this.test = Object.assign({}, this.testResult)
