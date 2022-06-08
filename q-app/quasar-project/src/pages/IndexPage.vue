@@ -45,42 +45,40 @@
 
         <!-- filter and sort -->
         <div class="filter-and-sort">
-          <div class="">
-            <div class="col">
+          <div class="col q-pr-md">
 
-              <i18n-t keypath="pages.home.resultsFound" tag="p" >
-                <template #count>
-                  <strong class="text-lowercase" >
-                    {{ totalTestResults }}
-                  </strong>
-                </template>
-                <template #pluralText>
-                  <strong class="text-lowercase" >
-                    {{ pluralText }}
-                  </strong>
-                </template>
-              </i18n-t>
+            <i18n-t keypath="pages.home.resultsFound" tag="p" >
+              <template #count>
+                <strong class="text-lowercase" >
+                  {{ totalTestResults }}
+                </strong>
+              </template>
+              <template #pluralText>
+                <strong class="text-lowercase" >
+                  {{ pluralText }}
+                </strong>
+              </template>
+            </i18n-t>
 
-              <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
-                <div class="absolute-full flex flex-center">
-                  <q-badge color="white" text-color="primary" :label="progressLabel" />
-                </div>
-              </q-linear-progress>
-            </div>
-            <div class="col-auto">
-              <q-btn color="grey-7" round flat icon="more_vert" class="absolute-top-right q-mt-sm">
-                <q-menu cover auto-close>
-                  <q-list>
-                    <q-item clickable @click="toggleSort(true)" >
-                      <q-item-section >{{ $t('pages.home.sortDesc') }}</q-item-section>
-                    </q-item>
-                    <q-item clickable @click="toggleSort(false)">
-                      <q-item-section>{{ $t('pages.home.sortAsc') }}</q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-            </div>
+            <q-linear-progress v-if="totalSubmitted" size="25px" :value="progress" :color="progressColour" rounded >
+              <div class="absolute-full flex flex-center">
+                <q-badge color="white" text-color="primary" :label="progressLabel" />
+              </div>
+            </q-linear-progress>
+          </div>
+          <div class="col-auto">
+            <q-btn color="grey-7" round flat icon="more_vert" class="absolute-top-right q-mt-sm">
+              <q-menu cover auto-close>
+                <q-list>
+                  <q-item clickable @click="toggleSort(true)" >
+                    <q-item-section >{{ $t('pages.home.sortDesc') }}</q-item-section>
+                  </q-item>
+                  <q-item clickable @click="toggleSort(false)">
+                    <q-item-section>{{ $t('pages.home.sortAsc') }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </div>
 
         </div>
@@ -299,3 +297,10 @@ export default defineComponent({
 })
 </script>
 
+<style lang="scss" scoped>
+.mobile {
+  .q-item {
+    padding: .4rem 0;
+  }
+}
+</style>
