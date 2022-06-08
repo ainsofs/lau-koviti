@@ -20,17 +20,18 @@ export default {
     send: "Send",
     date: "Date",
     close: "Close",
-    officialForm: "Official form",
+    officialForm: "Official COVID-19 Rapid Test Self-Reporting form",
     password: "Password",
     signOut: "Sign out",
     addProfile: "@:label.add @:pages.profile.name",
+    moh: "Sāmoan Ministry of Health",
   },
   pages: {
     home: {
       name: "Home",
       p1: "Tālofa lava! You can use this app to {0}",
       p1Bold: "record your test results",
-      p2: "We'll make it easy for you to send them to the Samoa Ministry of Health or you can do it manually using their {0}",
+      p2: "We'll make it easy for you to send them to the @:label.moh or you can do it manually using their {0}",
       p3: "You can also {0} an account to access your tests from any device!",
       p4: "Press the {0} button to {1}",
       p4GetStarted: "get started!",
@@ -54,7 +55,7 @@ export default {
     help: {
       name: "Help",
       p1: "This app is in development",
-      p2: "It aims to make recording and sharing your COVID-19 Rapid Test Self-Reporting easier Sharing results to Samoa MOH is optional",
+      p2: "It aims to make recording and sharing your COVID-19 Rapid Test Self-Reporting easier. Sharing results to @:label.moh is optional",
       p3: "Press here for the {0}",
     },
     user: {
@@ -79,8 +80,8 @@ export default {
     },
     submitTest: {
       name: "Send @:label.testResult",
-      p1: "Fill in the details below and press @:label.send to send your reuslts to Samoa MOH",
-      p2: "Review your details and press @:label.send to send your reuslts to Samoa MOH",
+      p1: "Fill in the details below and press @:label.send to send your reuslts to @:label.moh",
+      p2: "Review your details and press @:label.send to send your reuslts to @:label.moh",
       e1: "Please check your form and re-submit",
       e2: "Somethings wrong, please contact the developer",
     },
