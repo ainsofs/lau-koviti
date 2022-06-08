@@ -14,7 +14,7 @@ export default {
     delete: "Tapē",
     personalDetails: "Au fa'amatalaga",
     progressText: "{ count } o { total } ua lafo",
-    completeText: "Seki! Ua lafo uma @.lower:label.testResultPlural !",
+    completeText: "Seki! 'Ua lafo 'uma @.lower:label.testResultPlural !",
     send: "Lafo",
     date: "Aso sā fa’atinoina ai le su’esu’ega",
     close: "Tapuni",
