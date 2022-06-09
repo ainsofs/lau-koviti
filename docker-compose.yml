@@ -209,9 +209,10 @@ services:
     - "3000"
     volumes:
     - ./:/var/www/html
-    command: sh -c 'yarn install && yarn quasar dev'
+    command: sh -c 'yarn install && yarn quasar dev -m pwa'
     ports:
       - '8080:8080'
+      - '8081:8081'
 
   cypress:
     image: cypress/included:4.4.0

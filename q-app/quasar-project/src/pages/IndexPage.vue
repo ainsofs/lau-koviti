@@ -86,7 +86,7 @@
         <!-- list -->
         <q-card flat bordered>
           <q-card-section>
-            <q-list class="rounded-borders">
+            <q-list class="rounded-borders test-result-list">
 
               <transition-group
                 appear
@@ -298,7 +298,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.mobile {
+.test-result-list {
   .q-item {
     padding: .4rem 0;
   }

@@ -78,7 +78,7 @@
       bordered
       :width="220"
     >
-      <q-list>
+      <q-list class="q-pt-md">
 
         <EssentialLink
           v-for="link in essentialLinks"
