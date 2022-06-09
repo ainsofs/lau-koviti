@@ -1,0 +1,25 @@
+name: Firefox E2E
+on: [push]
+# future use to limit tests
+# on:
+#   push:
+#     branches:
+#     - master
+
+#     tags:
+#     - '*'
+
+#   pull_request:
+jobs:
+  firefox:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node12.16.1-chrome80-ff73
+      options: --user 1001
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
+        with:
+          command: yarn test:e2e:ci
+          working-directory: q-app/quasar-project
+          browser: firefox

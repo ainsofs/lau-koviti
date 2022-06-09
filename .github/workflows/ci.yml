@@ -21,3 +21,4 @@ jobs:
         with:
           command: yarn test:e2e:ci
           working-directory: q-app/quasar-project
+          browser: chrome

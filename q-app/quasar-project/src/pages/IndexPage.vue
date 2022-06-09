@@ -154,7 +154,7 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
       >
-        <q-banner v-show="showInstallBanner" inline-actions class="bg-secondary text-white absolute-bottom" dense>
+        <q-banner v-if="showInstallBanner" inline-actions class="bg-secondary text-white absolute-bottom" dense>
           <q-avatar color="primary" size="md" class="q-mr-xs">
             <q-icon color="white" name="medication_liquid" size="xs" />
           </q-avatar>
