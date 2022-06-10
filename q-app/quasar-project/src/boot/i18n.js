@@ -4,9 +4,9 @@ import messages from "src/i18n"
 export default ({ app }) => {
   const i18n = createI18n({
     legacy: false,
-    locale: "en-US",
+    locale: "en-GB",
     messages,
-  });
+  })
 
   app.use(i18n)
 }

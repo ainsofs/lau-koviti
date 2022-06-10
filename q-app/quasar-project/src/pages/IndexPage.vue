@@ -158,12 +158,12 @@
           <q-avatar color="primary" size="md" class="q-mr-xs">
             <q-icon color="white" name="medication_liquid" size="xs" />
           </q-avatar>
-          Install La'u Koviti?
+          {{ $t('pages.home.installApp') }}
 
           <template v-slot:action>
-            <q-btn flat label="Yes" dense class="q-px-sm" @click="installApp" />
-            <q-btn flat label="Later" dense class="q-px-sm" @click="showInstallBanner = false" />
-            <q-btn flat label="Dismiss" dense class="q-px-sm" @click="dismissAppInstall" />
+            <q-btn flat :label="$t('label.yes')" dense class="q-px-sm" @click="installApp" />
+            <q-btn flat :label="$t('label.later')" dense class="q-px-sm" @click="showInstallBanner = false" />
+            <q-btn flat :label="$t('label.dismiss')" dense class="q-px-sm" @click="dismissAppInstall" />
           </template>
         </q-banner>
       </transition>

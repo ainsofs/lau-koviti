@@ -23,6 +23,9 @@ export default {
     signOut: "Saini fafo",
     addProfile: "@:label.add",
     moh: "Matāgaluega 'o le Soifua Mālōlōina",
+    yes: "'Ioe",
+    later: "Se'i 'uma",
+    dismiss: "Lēai",
     // status
     testResultAdded: "@:label.added le @.lower:label.testResult",
     testResultUpdated: "@:label.updated le @.lower:label.testResult",
@@ -37,18 +40,19 @@ export default {
       p1: "Tālofa lava! 'E mafai 'ona 'e fa'a'aogāina lenei polokalame 'e {0}",
       p1Bold: "fa'amaumau ai au @.lower:label.testResultPlural",
       p2: "'Ole'ā mātou fa'afaigofieina 'ona 'auina atu ile @:label.moh au fa'amaumauga, pe 'e te tago e fa'atumu le lātou {0}",
-      p3: "'E mafai fo'i ona {0} sau tusi fa'amaumauga 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
+      p3: "'E mafai fo'i 'ona {0} sau tusi fa'amaumauga 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p4: "'O'omi le fa'amau {0} e {1}",
       p4GetStarted: "'āmata loa na fa'amau!",
       resultsFound: "Mālō lava! 'Ua fa'amauina au {pluralText} 'e {count}.",
       sortDesc: "Soka mai mea fou i mea tuai",
       sortAsc: "Soka mai mea tuai leva i mea fou",
+      installApp: "Inisito \"La'u Kōviti\"?",
     },
     profile: {
       name: "Tala'aga 'oto'oto",
       p1: "Fa'afou ou fa'amaumauga. 'E 'auina atu fa'atasi ma au @.lower:label.testResultPlural",
-      e1: "E lē mafai ona tapē. Ua pau lenei o le @.lower:pages.profile.name.",
-      e2: "E lē mafai ona tapē. O lo'o iai @.lower:label.testResult 'e ō fa'atasi ma lenei @.lower:pages.profile.name .",
+      e1: "E lē mafai 'ona tapē. Ua pau lenei o le @.lower:pages.profile.name.",
+      e2: "E lē mafai 'ona tapē. O lo'o iai @.lower:label.testResult 'e ō fa'atasi ma lenei @.lower:pages.profile.name .",
     },
     settings: {
       name: "Fa'atulagaga",
@@ -79,7 +83,7 @@ export default {
   modals: {
     addTest: {
       name: "Fa'aopoopo se @.lower:label.testResult",
-      edit: "Toe sui se @.lower:label.testResult",
+      edit: "Sui se @.lower:label.testResult",
       view: "@.lower:label.testResult",
       e1: "Fa'amolemole toe siaki lau fomu",
     },
@@ -92,7 +96,7 @@ export default {
     },
     delete: {
       name: "Koe sau sau kasi a...",
-      p1: "'E tape mo'i a? 'E lē mafai ona toe suia lenei tūlaga.",
+      p1: "'E tape mo'i a? 'E lē mafai 'ona toe suia lenei tūlaga.",
     },
     loginRegister: {
       name: "",

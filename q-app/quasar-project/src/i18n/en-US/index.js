@@ -25,6 +25,9 @@ export default {
     signOut: "Sign out",
     addProfile: "@:label.add @:pages.profile.name",
     moh: "Sāmoan Ministry of Health",
+    yes: "Yes",
+    later: "Later",
+    dismiss: "Dismiss",
     // status
     testResultAdded: "@:label.testResult @.lower:label.added",
     testResultUpdated: "@:label.testResult @.lower:label.updated",
@@ -45,6 +48,7 @@ export default {
       resultsFound: "Malo lava! You've recorded {count} {pluralText}.",
       sortDesc: "Sort newest to oldest",
       sortAsc: "Sort oldest to newest",
+      installApp: "Install \"La'u Kōviti\"?",
     },
     profile: {
       name: "Profile",
