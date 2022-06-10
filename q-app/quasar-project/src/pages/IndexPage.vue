@@ -308,17 +308,18 @@ export default defineComponent({
         this.fabPos[ 1 ] - ev.delta.y
       ]
     },
-    installApp() {
-      // deferredPrompt is a global variable we've been using in the sample to capture the `beforeinstallevent`
+    async installApp() {
+      // deferredPrompt is a global variable we've been using to capture the `beforeinstallevent`
       deferredPrompt.prompt()
       // Find out whether the user confirmed the installation or not
-      const { outcome } = deferredPrompt.userChoice
+      const { outcome } = await deferredPrompt.userChoice
       // The deferredPrompt can only be used once.
       deferredPrompt = null
       // Act on the user's choice
       if (outcome === 'accepted') {
         this.showInstallBanner = false
       } else if (outcome === 'dismissed') {
+        // console.log('dismissed')
       }
     },
     dismissAppInstall() {
