@@ -70,7 +70,7 @@ services:
       NGINX_STATIC_OPEN_FILE_CACHE: "off"
       NGINX_ERROR_LOG_LEVEL: debug
       NGINX_BACKEND_HOST: php
-      NGINX_SERVER_ROOT: /var/www/html/q-app/quasar-project/dist/spa/
+      NGINX_SERVER_ROOT: /var/www/html/q-app/quasar-project/dist/pwa/
       NGINX_VHOST_PRESET: $NGINX_VHOST_PRESET
     #      NGINX_DRUPAL_FILE_PROXY_URL: http://example.com
     volumes:
@@ -209,22 +209,26 @@ services:
     - "3000"
     volumes:
     - ./:/var/www/html
-    command: sh -c 'yarn install && yarn quasar dev -m pwa'
+    command: sh -c 'yarn install && yarn dev'
     ports:
       - '8080:8080'
-      - '8081:8081'
 
   cypress:
     image: cypress/included:4.4.0
+    # image: cypress/browsers:node16.14.0-chrome99-ff97
+    # user: "1001"
     container_name: "${PROJECT_NAME}_cypress"
     working_dir: /e2e/q-app/quasar-project
     depends_on:
       - node
     environment:
       - CYPRESS_baseUrl=http://node:8080
-    command: npx cypress run
+    # command: "npx test:e2e:ci:firefox"
+    command: "npx cypress run --browser chrome"
+    # command: "npx cypress run --browser firefox"
     volumes:
     - ./:/e2e
+
 
 #  blackfire:
 #    image: blackfire/blackfire

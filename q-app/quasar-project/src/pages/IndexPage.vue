@@ -309,7 +309,7 @@ export default defineComponent({
       ]
     },
     async installApp() {
-      // deferredPrompt is a global variable we've been using to capture the `beforeinstallevent`
+      // deferredPrompt is a global variable we've been using to capture the `beforeinstallprompt` event
       deferredPrompt.prompt()
       // Find out whether the user confirmed the installation or not
       const { outcome } = await deferredPrompt.userChoice
