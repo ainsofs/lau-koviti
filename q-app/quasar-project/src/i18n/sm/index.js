@@ -64,7 +64,7 @@ export default {
     help: {
       name: "Fesoasoani",
       p1: "O lo'o atina'e lenei polokalame",
-      p2: "Ole fa'amoemoe 'ia fa'afaigofie ai le pu'eina ma le laofina o au @.lower:label.testResult (COVID-19 Rapid Test Self-Reporting) ile @:label.moh . E lē fa'amalosia le lafoina o au @.lower:label.testResult ile @:label.moh",
+      p2: "Ole fa'amoemoe 'ia fa'afaigofie ai le pu'eina ma le laofina o au @.lower:label.testResult (COVID-19 Rapid Test Self-Reporting) 'ile @:label.moh . E lē fa'amalosia le lafoina o au @.lower:label.testResult 'ile @:label.moh",
       p3: "'O'omi 'i'i mo le {0}",
     },
     user: {
@@ -89,8 +89,8 @@ export default {
     },
     submitTest: {
       name: "Lafo le @.lower:label.testResult",
-      p1: "Fa'atumu fa'amatalaga o lo'o i lalo ma 'o'omi le fa'amau \" @:label.send \" 'e 'auina atu ai au @.lower:label.testResult ile @:label.moh",
-      p2: "Toe iloilo au fa'amatalaga ma 'o'omi le fa'amau \" @:label.send \" 'e 'auina atu ai au @.lower:label.testResult ile @:label.moh",
+      p1: "Fa'atumu fa'amatalaga o lo'o i lalo ma 'o'omi le fa'amau \" @:label.send \" 'e 'auina atu ai au @.lower:label.testResult 'ile @:label.moh",
+      p2: "Toe iloilo au fa'amatalaga ma 'o'omi le fa'amau \" @:label.send \" 'e 'auina atu ai au @.lower:label.testResult 'ile @:label.moh",
       e1: "Fa'amolemole siaki lau fomu ma toe lafo",
       e2: "'E iai se mea o fa'alētonu. Fa'amolemole feso'otai le tagata na faia le polokalame",
     },
