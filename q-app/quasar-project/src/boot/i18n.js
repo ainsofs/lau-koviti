@@ -6,7 +6,7 @@ export default ({ app }) => {
     legacy: false,
     locale: "en-US",
     messages,
-  });
+  })
 
   app.use(i18n)
 }

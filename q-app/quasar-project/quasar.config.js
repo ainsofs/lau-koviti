@@ -83,7 +83,7 @@ module.exports = configure(function (ctx) {
         type: "http",
       },
       port: 8080,
-      open: true, // opens browser window automatically
+      open: false, // opens browser window automatically
 
       proxy: {
         // proxy requests to fix cors error. also update public/_redirects file
@@ -159,13 +159,13 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `La'u Koviti`,
+        name: `La'u Koviti - Record and share your COVID-19 self tests easily`,
         short_name: `La'u Koviti`,
         description: `Make recording and sharing your COVID-19 self tests easier`,
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",
-        theme_color: "#027be3",
+        theme_color: "#019267",
         icons: [
           {
             src: "icons/icon-128x128.png",

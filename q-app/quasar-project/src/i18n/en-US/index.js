@@ -25,6 +25,9 @@ export default {
     signOut: "Sign out",
     addProfile: "@:label.add @:pages.profile.name",
     moh: "Sāmoan Ministry of Health",
+    yes: "Yes",
+    later: "Later",
+    dismiss: "Dismiss",
     // status
     testResultAdded: "@:label.testResult @.lower:label.added",
     testResultUpdated: "@:label.testResult @.lower:label.updated",
@@ -45,6 +48,7 @@ export default {
       resultsFound: "Malo lava! You've recorded {count} {pluralText}.",
       sortDesc: "Sort newest to oldest",
       sortAsc: "Sort oldest to newest",
+      installApp: "Install \"La'u Kōviti\"?",
     },
     profile: {
       name: "Profile",
@@ -55,9 +59,9 @@ export default {
     settings: {
       name: "Settings",
       p1: "Dark Mode",
-      p1Caption: "Activate dark mode goodness.",
+      p1Caption: "Activate dark mode goodness",
       p2: "Dev Mode",
-      p2Caption: "Submit tests to a Demo form.",
+      p2Caption: "Submit tests to a Demo form",
     },
     help: {
       name: "Help",

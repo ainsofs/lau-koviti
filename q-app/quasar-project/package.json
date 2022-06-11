@@ -6,12 +6,19 @@
   "author": "Ainsof So'o <ainsof.soo@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "quasar dev -m spa",
+    "build": "quasar build -m pwa",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
-    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim",
+    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim --theme-color=019267",
     "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress open\"",
-    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --config video=false\"",
+    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run\"",
+    "test:e2e:ci:chrome": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --browser chrome\"",
+    "test:e2e:ci:firefox": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --browser firefox\"",
+    "test:e2e:ci:novid": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --config video=false\"",
+    "test:e2e:ci:novid:chrome": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --config video=false --browser chrome\"",
+    "test:e2e:ci:novid:firefox": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --config video=false --browser firefox\"",
     "test:component": "cross-env NODE_ENV=test cypress open-ct",
     "test:component:ci": "cross-env NODE_ENV=test cypress run-ct"
   },
@@ -35,7 +42,8 @@
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-vue": "^8.5.0",
     "eslint-webpack-plugin": "^3.1.1",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "workbox-webpack-plugin": "^6.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",

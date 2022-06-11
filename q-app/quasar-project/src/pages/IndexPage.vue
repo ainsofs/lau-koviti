@@ -86,7 +86,7 @@
         <!-- list -->
         <q-card flat bordered>
           <q-card-section>
-            <q-list class="rounded-borders">
+            <q-list class="rounded-borders test-result-list">
 
               <transition-group
                 appear
@@ -148,6 +148,26 @@
           @click="addTest" />
       </q-page-sticky>
 
+      <!-- install prompt -->
+      <transition
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+      >
+        <q-banner v-if="showInstallBanner" inline-actions class="bg-secondary text-white absolute-bottom" dense>
+          <q-avatar color="primary" size="md" class="q-mr-xs">
+            <q-icon color="white" name="medication_liquid" size="xs" />
+          </q-avatar>
+          {{ $t('pages.home.installApp') }}
+
+          <template v-slot:action>
+            <q-btn flat :label="$t('label.yes')" dense class="q-px-sm" @click="installApp" />
+            <q-btn flat :label="$t('label.later')" dense class="q-px-sm" @click="showInstallBanner = false" />
+            <q-btn flat :label="$t('label.dismiss')" dense class="q-px-sm" @click="dismissAppInstall" />
+          </template>
+        </q-banner>
+      </transition>
+
       <!-- Add Modal -->
       <q-dialog v-model="showAddModal">
         <add-results :testResult="testResult" :formMode="formMode" :resultId="resultId" @close="showAddModal = false" />
@@ -171,19 +191,24 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { date } from 'quasar'
+import { date,useQuasar } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
 import { useStoreAuth } from 'stores/storeAuth'
+
+// This variable will save the event for later use.
+let deferredPrompt
 
 export default defineComponent({
   name: 'IndexPage',
   setup() {
     const store = useStoreResults()
     const storeAuth = useStoreAuth()
+    const $q = useQuasar()
 
     return {
       store,
-      storeAuth
+      storeAuth,
+      $q
     }
   },
   data() {
@@ -196,6 +221,7 @@ export default defineComponent({
       resultId: 0,
       fabPos: [ 18, 18 ],
       draggingFab: false,
+      showInstallBanner: false,
     }
   },
   computed: {
@@ -281,13 +307,46 @@ export default defineComponent({
         this.fabPos[ 0 ] - ev.delta.x,
         this.fabPos[ 1 ] - ev.delta.y
       ]
+    },
+    async installApp() {
+      // deferredPrompt is a global variable we've been using to capture the `beforeinstallprompt` event
+      deferredPrompt.prompt()
+      // Find out whether the user confirmed the installation or not
+      const { outcome } = await deferredPrompt.userChoice
+      // The deferredPrompt can only be used once.
+      deferredPrompt = null
+      // Act on the user's choice
+      if (outcome === 'accepted') {
+        this.showInstallBanner = false
+      } else if (outcome === 'dismissed') {
+        // console.log('dismissed')
+      }
+    },
+    dismissAppInstall() {
+      this.$q.localStorage.set("dismissAppInstall", true)
+      this.showInstallBanner = false
+    }
+  },
+  mounted() {
+    const dismissAppInstall = this.$q.localStorage.getItem("dismissAppInstall")
+
+    if (!dismissAppInstall) {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevents the default mini-infobar or install dialog from appearing on mobile
+        e.preventDefault()
+        // Save the event because you'll need to trigger it later.
+        deferredPrompt = e
+        // Show your customized install prompt for your PWA
+        setTimeout(() => {
+          this.showInstallBanner = true
+        }, 3000)
+      })
     }
   },
   created() {
     // i18n for pinia
     this.store.t = this.$t
     this.storeAuth.t = this.$t
-
   },
   components: {
     'add-results': require('components/TestResults/Modal/AddTestResult.vue').default,
@@ -298,9 +357,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.mobile {
+.test-result-list {
   .q-item {
-    padding: .4rem 0;
+    padding: .4rem 0
   }
 }
 </style>
