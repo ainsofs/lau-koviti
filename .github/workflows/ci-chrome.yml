@@ -1,4 +1,4 @@
-name: End-to-end tests
+name: Chrome E2E tests
 on: [push]
 # future use to limit tests
 # on:
@@ -19,6 +19,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          command: yarn test:e2e:ci:novid
+          command: yarn test:e2e:ci:novid:chrome
           working-directory: q-app/quasar-project
           browser: chrome
