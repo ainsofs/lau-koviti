@@ -161,6 +161,7 @@ import { useStoreResults } from 'stores/storeResults'
 import { useStoreAuth } from 'stores/storeAuth'
 import { useStoreSettings } from 'stores/storeSettings'
 import { villageOptions, conditionOptions, genderOptions } from 'src/options/personalOptions'
+import { showErrorMessage, showSuccessMessage } from 'src/functions/function-show-message'
 
 export default defineComponent({
   props: ['testResult', 'resultId'],
@@ -327,10 +328,7 @@ export default defineComponent({
               ]
               let randomNumber = Math.floor(Math.random() * quotes.length)
 
-              this.$q.notify({
-                message: quotes[randomNumber],
-                icon: 'send',
-              })
+              showSuccessMessage(quotes[randomNumber], {icon: 'send' })
 
               this.$emit('close')
             }
@@ -338,11 +336,7 @@ export default defineComponent({
               this.loading = false
               // form error
               console.log(response, 'error')
-              this.$q.notify({
-                message: this.$t('modals.submitTest.e2'),
-                icon: 'warning',
-                color: 'warning',
-              })
+              showErrorMessage(this.$t('modals.submitTest.e2'))
             }
           })
           .catch(error => {
@@ -354,12 +348,7 @@ export default defineComponent({
       }
       else {
         this.loading = false
-
-        this.$q.notify({
-          message: this.$t('modals.submitTest.e1'),
-          icon: 'warning',
-          color: 'warning',
-        })
+        showErrorMessage(this.$t('modals.submitTest.e1'))
       }
     },
     submitLater() {

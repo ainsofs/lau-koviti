@@ -71,6 +71,7 @@ import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
 import { testResultOptions } from 'src/options/personalOptions'
+import { showErrorMessage } from 'src/functions/function-show-message'
 
 export default defineComponent({
   emits: ['close'],
@@ -122,11 +123,7 @@ export default defineComponent({
         this.$emit('close')
       }
       else {
-        this.$q.notify({
-          message: this.$t('modals.addTest.e1'),
-          icon: 'warning',
-          color: 'warning',
-        })
+        showErrorMessage($t('modals.addTest.e1'))
       }
     },
     optionsFn (date1) {

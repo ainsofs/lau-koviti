@@ -51,6 +51,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStoreAuth } from 'stores/storeAuth'
+import { showErrorMessage } from 'src/functions/function-show-message'
 
 export default defineComponent({
   name: 'AuthPage',
@@ -116,11 +117,7 @@ export default defineComponent({
             this.store.registerUser(this.formDetails)
           }
           else {
-            this.$q.notify({
-              message: this.$t('modals.loginRegister.e1'),
-              icon: 'warning',
-              color: 'warning',
-            })
+            showErrorMessage(this.$t('modals.loginRegister.e1'))
           }
         }
       }

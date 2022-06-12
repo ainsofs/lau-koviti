@@ -8,7 +8,7 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth"
 import { useStoreResults } from './storeResults'
-import { Notify, Loading, LocalStorage } from "quasar"
+import { Loading, LocalStorage } from "quasar"
 import { handleFbErrors } from "src/functions/function-handle-fb-errors"
 import { showSuccessMessage } from "src/functions/function-show-message"
 
