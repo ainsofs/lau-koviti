@@ -67,9 +67,9 @@ export default {
     settings: {
       name: "Fa'atulagaga",
       p1: "Fa'apogisā",
-      p1Caption: "Fa'apogisā le polokalame.",
-      p2: "Fa'aātina'e",
-      p2Caption: "Lafo au fa'amatalaga i se komepiuta atina'e.",
+      p1Caption: "Fa'apogisā le polokalame",
+      p2: "Fa'aātīna'e",
+      p2Caption: "Lafo au fa'amatalaga 'i se komepiuta ātīna'e",
     },
     help: {
       name: "Fesoasoani",
