@@ -1,5 +1,3 @@
-// La'u Koviti tests
-
 describe('Landing', () => {
   beforeEach(() => {
     cy.visit("/");
@@ -26,7 +24,9 @@ describe('Landing', () => {
     cy.contains("Add");
     cy.contains("Save").click();
     cy.contains("added");
-    cy.get("div.filter-and-sort").as("result").contains("1 test result", { matchCase: false });
+    cy.get("div.filter-and-sort")
+      .as("result")
+      .contains("1 test result", { matchCase: false });
 
     cy.get("@addButton").click();
     cy.contains("Save").click();
@@ -50,13 +50,14 @@ describe('Landing', () => {
 
     // cannot edit test after submission
     cy.get("div.q-item--clickable").as("list").first().click();
-    cy.get('input[aria-label="Date of the test"]').should("have.attr", 'disabled');
+    cy.get('input[aria-label="Date of the test"]').should(
+      "have.attr",
+      "disabled"
+    );
     cy.get("body").type("{esc}");
 
     // check that progress bar is displaying
-    cy.get(".q-linear-progress")
-      .as("progress")
-      .contains("1 of 2");
+    cy.get(".q-linear-progress").as("progress").contains("1 of 2");
     cy.get("@progress").should("have.class", "text-accent");
     // test results should be the same
     cy.get("@result").contains("2 test results", { matchCase: false });
@@ -83,7 +84,46 @@ describe('Landing', () => {
     cy.visit("/#/manage");
   });
 
+  it("test install banner", () => {
+    cy.contains("Install").should("not.exist");
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      // check that install banner appears
+      cy.wait(3000);
+      cy.contains("Install");
+      // TODO check that prompt is displayed if yes
+      cy.contains("Yes");
+
+      // check that re-promted on refresh if later clicked
+      cy.contains("Later").click();
+      cy.reload();
+      cy.wait(3000);
+      cy.contains("Later");
+
+      // check not reprompted on dismiss
+      cy.contains("Dismiss").click();
+      cy.reload();
+      cy.wait(3000);
+      cy.contains("Install").should("not.exist");
+    });
+  });
+
+  // test forget password
+  it("test forget password", () => {
+    cy.visit("/#/user");
+    cy.contains("Forgot password").click();
+
+    cy.get('input[aria-label="Email address"]')
+      .parent()
+      .parent()
+      .should("have.class", "text-negative");
+
+    cy.get(".q-tab__label").contains("Register").click();
+    cy.contains("Forgot password").should("not.exist");
+  });
+
+
+  // TODO Test translations work
   // TODO Check basic fb integration
   // TODO check manage profiles, cannot delete profile if they have tests
-  // TODO test in mobile mode
 })

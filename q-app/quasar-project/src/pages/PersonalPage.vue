@@ -120,6 +120,7 @@ import { date } from 'quasar'
 import { useStoreResults } from 'stores/storeResults'
 import { useStoreAuth } from 'stores/storeAuth'
 import { villageOptions, conditionOptions, genderOptions } from 'src/options/personalOptions'
+import { showErrorMessage } from 'src/functions/function-show-message'
 
 export default defineComponent({
   name: 'PersonalPage',
@@ -188,12 +189,7 @@ export default defineComponent({
         this.store.updateProfile(id, this.personal)
       }
       else {
-
-        this.$q.notify({
-          message: this.$t('modals.submitTest.e1'),
-          icon: 'warning',
-          color: 'warning',
-        })
+        showErrorMessage(this.$t('modals.submitTest.e1'))
       }
 
     },
@@ -204,21 +200,13 @@ export default defineComponent({
       // check that its not the last profile
       if (this.store.totalProfiles === 1) {
         // alert - cannot delete
-        this.$q.notify({
-          message: this.$t('pages.profile.e1'),
-          icon: 'warning',
-          color: 'warning',
-        })
+        showErrorMessage(this.$t('pages.profile.e1'))
         canDelete = false
 
       }
       if (this.store.totalTestResults) {
         // alert - cannot delete
-        this.$q.notify({
-          message: this.$t('pages.profile.e2'),
-          icon: 'warning',
-          color: 'warning',
-        })
+        showErrorMessage(this.$t('pages.profile.e2'))
         canDelete = false
 
       }

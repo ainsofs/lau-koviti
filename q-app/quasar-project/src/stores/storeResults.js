@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { uid, Notify, date } from 'quasar'
+import { uid, date } from 'quasar'
 import { firebaseAuth, firebaseDb } from "boot/firebase"
 import {
   ref,
@@ -12,6 +12,8 @@ import {
   onValue,
 } from "firebase/database"
 import { useStoreAuth } from "./storeAuth"
+import { handleFbErrors } from 'src/functions/function-handle-fb-errors'
+import { showOfflineMessage, showOnlineMessage } from 'src/functions/function-show-message'
 
 export const useStoreResults = defineStore("storeResults", {
   state: () => ({
@@ -181,7 +183,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbAddTestResult({ id: id, testResult: testResult })
         }
       } else {
-        Notify.create({ message: this.t("label.testResultAdded"), icon: "cloud_off" })
+        showOfflineMessage(this.t("label.testResultAdded"))
       }
     },
     updateResult(id, testResult, options = { updateCloud: true }) {
@@ -197,7 +199,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbUpdateTestResult({ id: id, updates: testResult })
         }
       } else {
-        Notify.create({ message: this.t("label.testResultUpdated"), icon: "cloud_off" })
+        showOfflineMessage(this.t("label.testResultUpdated"))
       }
     },
     deleteResult(id, options = { updateCloud: true }) {
@@ -209,7 +211,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbDeleteTestResult(id)
         }
       } else {
-        Notify.create({ message: this.t("label.testResultDeleted"), icon: "cloud_off" })
+        showOfflineMessage(this.t("label.testResultDeleted"))
       }
     },
 
@@ -245,7 +247,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbAddProfile({ id: id, profile: payload })
         }
       } else {
-        Notify.create({ message: this.t("label.profileAdded"), icon: "cloud_off" })
+        showOfflineMessage(this.t("label.profileAdded"))
       }
     },
     updateProfile(id, profile, options = { updateCloud: true }) {
@@ -262,7 +264,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbUpdateProfile({ id: id, updates: payload })
         }
       } else {
-        Notify.create({ message: this.t("label.profileUpdated"), icon: "cloud_off" })
+        showOfflineMessage(this.t("label.profileUpdated"))
       }
     },
     deleteProfile(id, options = { updateCloud: true }) {
@@ -274,7 +276,7 @@ export const useStoreResults = defineStore("storeResults", {
           this.fbDeleteProfile(id)
         }
       } else {
-        Notify.create({ message: this.t("label.profileDeleted"), icon: "cloud_off" })
+        showOfflineMessage(this.t("label.profileDeleted"))
       }
 
       let newId = this.firstProfileId
@@ -373,10 +375,10 @@ export const useStoreResults = defineStore("storeResults", {
 
       set(testRef, payload.testResult)
         .then(() => {
-          Notify.create({ message: this.t("label.testResultAdded"), icon: "cloud_done" })
+          showOnlineMessage(this.t("label.testResultAdded"))
         })
         .catch((error) => {
-          console.log(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbUpdateTestResult(payload) {
@@ -385,10 +387,10 @@ export const useStoreResults = defineStore("storeResults", {
 
       update(testRef, payload.updates)
         .then(() => {
-          Notify.create({ message: this.t("label.testResultUpdated"), icon: "cloud_done" })
+          showOnlineMessage(this.t("label.testResultUpdated"))
         })
         .catch((error) => {
-          console.log(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbDeleteTestResult(id) {
@@ -396,10 +398,10 @@ export const useStoreResults = defineStore("storeResults", {
       let testRef = ref(firebaseDb, userId + "/tests/" + id)
       remove(testRef)
         .then(() => {
-          Notify.create({ message: this.t("label.testResultDeleted"), icon: "cloud_done" })
+          showOnlineMessage(this.t("label.testResultDeleted"))
         })
         .catch((error) => {
-          console.log(error)
+          handleFbErrors(error, this.t)
         })
     },
 
@@ -410,10 +412,10 @@ export const useStoreResults = defineStore("storeResults", {
 
       set(profileRef, payload.profile)
         .then(() => {
-          Notify.create({ message: this.t("label.profileAdded"), icon: "cloud_done" })
+          showOnlineMessage(this.t("label.profileAdded"))
         })
         .catch((error) => {
-          console.log(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbUpdateProfile(payload) {
@@ -422,10 +424,10 @@ export const useStoreResults = defineStore("storeResults", {
 
       update(profileRef, payload.updates)
         .then(() => {
-          Notify.create({ message: this.t("label.profileUpdated"), icon: "cloud_done" })
+          showOnlineMessage(this.t("label.profileUpdated"))
         })
         .catch((error) => {
-          console.log(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbDeleteProfile(id) {
@@ -433,10 +435,10 @@ export const useStoreResults = defineStore("storeResults", {
       let profileRef = ref(firebaseDb, userId + "/profiles/" + id)
       remove(profileRef)
         .then(() => {
-          Notify.create({ message: this.t("label.profileDeleted"), icon: "cloud_done" })
+          showOnlineMessage(this.t("label.profileDeleted"))
         })
         .catch((error) => {
-          console.log(error)
+          handleFbErrors(error, this.t)
         })
     },
   },

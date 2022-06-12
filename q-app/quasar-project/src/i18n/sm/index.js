@@ -26,6 +26,8 @@ export default {
     yes: "'Ioe",
     later: "Se'i 'uma",
     dismiss: "Lēai",
+    forgotPassword: "Galo le @.lower:label.password",
+    email: "'Ī-meli",
     // status
     testResultAdded: "@:label.added le @.lower:label.testResult",
     testResultUpdated: "@:label.updated le @.lower:label.testResult",
@@ -33,6 +35,14 @@ export default {
     profileAdded: "@:label.added le @.lower:pages.profile.name",
     profileUpdated: "@:label.updated le @.lower:pages.profile.name",
     profileDeleted: "@:label.deleted le @.lower:pages.profile.name",
+    // errors
+    noInternet: "Pē le 'initaneti",
+    wrongPassword: "Sesē le @.lower:label.password",
+    userNotFound: "Lēai se @.lower:label.email na maua",
+    emailInUse: "'Ua fa'aogā le @.lower:label.email lea",
+    userDisabled: "'Ua tapē le @.lower:label.email lea",
+    weakPassword: "Vaivai le @.lower:label.password",
+    invalidEmail: "Sesē le @.lower:label.email",
   },
   pages: {
     home: {
@@ -46,7 +56,7 @@ export default {
       resultsFound: "Mālō lava! 'Ua fa'amauina au {pluralText} 'e {count}.",
       sortDesc: "Soka mai mea fou i mea tuai",
       sortAsc: "Soka mai mea tuai leva i mea fou",
-      installApp: "Inisito \"La'u Kōviti\"?",
+      installApp: 'Inisito "La\'u Kōviti"?',
     },
     profile: {
       name: "Tala'aga 'oto'oto",
@@ -57,9 +67,9 @@ export default {
     settings: {
       name: "Fa'atulagaga",
       p1: "Fa'apogisā",
-      p1Caption: "Fa'apogisā le polokalame.",
-      p2: "Fa'aātina'e",
-      p2Caption: "Lafo au fa'amatalaga i se komepiuta atina'e.",
+      p1Caption: "Fa'apogisā le polokalame",
+      p2: "Fa'aātīna'e",
+      p2Caption: "Lafo au fa'amatalaga 'i se komepiuta ātīna'e",
     },
     help: {
       name: "Fesoasoani",

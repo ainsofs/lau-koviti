@@ -38,8 +38,8 @@
           />
       </div>
 
-      <!-- TODO add forgot password -->
       <div class="text-right">
+        <q-btn flat color="secondary" :label="$t('label.forgotPassword')" @click="forgotPassword" v-if="!isRegister" />
         <q-btn type="submit" flat color="primary" :label="tabName" class="btn-submit" />
       </div>
     </div>
@@ -50,10 +50,11 @@
 <script>
 import { defineComponent } from 'vue'
 import { useStoreAuth } from 'stores/storeAuth'
+import { showErrorMessage } from 'src/functions/function-show-message'
 
 export default defineComponent({
   name: 'AuthPage',
-  props: ['tab'],
+  props: ['tab', 'email'],
   setup() {
     const store = useStoreAuth()
 
@@ -64,7 +65,7 @@ export default defineComponent({
   data() {
     return {
       formDetails: {
-        email: '',
+        email: this.email,
         password: '',
       },
       password2: '',
@@ -86,6 +87,15 @@ export default defineComponent({
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(String(email).toLowerCase())
     },
+    forgotPassword() {
+      this.$refs.password.resetValidation()
+      this.$refs.email.validate()
+
+      if (!this.$refs.email.hasError) {
+        const email = this.formDetails.email
+        this.store.forgotPassword(email)
+      }
+    },
     submitForm() {
       this.$refs.email.validate()
       this.$refs.password.validate()
@@ -106,15 +116,11 @@ export default defineComponent({
             this.store.registerUser(this.formDetails)
           }
           else {
-            this.$q.notify({
-              message: this.$t('modals.loginRegister.e1'),
-              icon: 'warning',
-              color: 'warning',
-            })
+            showErrorMessage(this.$t('modals.loginRegister.e1'))
           }
         }
       }
-    }
+    },
   }
 })
 </script>
