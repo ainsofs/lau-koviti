@@ -52,7 +52,7 @@ export default {
       p2: "'Ole'ā mātou fa'afaigofieina 'ona 'auina atu ile @:label.moh au fa'amaumauga, pe 'e te tago e fa'atumu le lātou {0}",
       p3: "'E mafai fo'i 'ona {0} sau tusi fa'amaumauga 'e maua ai au @.lower:label.testResultPlural mai so'o se masini!",
       p4: "'O'omi le fa'amau {0} e {1}",
-      p4GetStarted: "'āmata loa na fa'amau!",
+      p4GetStarted: "'āmata loa na fa'aogā!",
       resultsFound: "Mālō lava! 'Ua fa'amauina au {pluralText} 'e {count}.",
       sortDesc: "Soka mai mea fou i mea tuai",
       sortAsc: "Soka mai mea tuai leva i mea fou",
@@ -74,7 +74,7 @@ export default {
     help: {
       name: "Fesoasoani",
       p1: "O lo'o atina'e lenei polokalame",
-      p2: "Ole fa'amoemoe 'ia fa'afaigofie ai le pu'eina ma le laofina o au @.lower:label.testResult (COVID-19 Rapid Test Self-Reporting) 'ile @:label.moh . E lē fa'amalosia le lafoina o au @.lower:label.testResult 'ile @:label.moh",
+      p2: "'Ole fa'amoemoe, 'ia fa'afaigofie le fa'amaumauga ma le lafoina o au @.lower:label.testResult (COVID-19 Rapid Test Self-Reporting) 'ile @:label.moh . E lē fa'amalosia le lafoina o au @.lower:label.testResult 'ile @:label.moh",
       p3: "'O'omi 'i'i mo le {0}",
     },
     user: {
