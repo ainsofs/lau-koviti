@@ -40,6 +40,7 @@
 
       <!-- TODO add forgot password -->
       <div class="text-right">
+        <q-btn flat color="secondary" label="Forgot password" class="btn-submit" @click="forgotPassword" />
         <q-btn type="submit" flat color="primary" :label="tabName" class="btn-submit" />
       </div>
     </div>
@@ -53,7 +54,7 @@ import { useStoreAuth } from 'stores/storeAuth'
 
 export default defineComponent({
   name: 'AuthPage',
-  props: ['tab'],
+  props: ['tab', 'email'],
   setup() {
     const store = useStoreAuth()
 
@@ -64,7 +65,7 @@ export default defineComponent({
   data() {
     return {
       formDetails: {
-        email: '',
+        email: this.email,
         password: '',
       },
       password2: '',
@@ -85,6 +86,15 @@ export default defineComponent({
     isValidEmailAddress(email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(String(email).toLowerCase())
+    },
+    forgotPassword() {
+      this.$refs.password.resetValidation()
+      this.$refs.email.validate()
+
+      if (!this.$refs.email.hasError) {
+        const email = this.formDetails.email
+        this.store.forgotPassword(email)
+      }
     },
     submitForm() {
       this.$refs.email.validate()
@@ -114,7 +124,7 @@ export default defineComponent({
           }
         }
       }
-    }
+    },
   }
 })
 </script>

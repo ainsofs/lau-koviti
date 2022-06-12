@@ -4,10 +4,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth"
 import { useStoreResults } from './storeResults'
 import { Notify, Loading, LocalStorage } from "quasar"
+import { handleFbErrors } from "src/functions/function-handle-fb-errors"
+import { showSuccessMessage } from "src/functions/function-show-message"
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => ({
@@ -32,26 +35,11 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          Notify.create({
-            message: "Registered",
-            icon: "announcement" })
+          showSuccessMessage("Registered")
         })
         .catch((error) => {
           Loading.hide()
-
-          let errorCode = error.code
-          let errorMessage = error.message
-          if (errorCode === "auth/email-already-in-use") {
-            errorMessage = "Email already in use."
-          }
-
-          Notify.create({
-            message: errorMessage,
-            icon: "warning",
-            color: "warning",
-          })
-          console.log(error)
-          console.log(errorCode)
+          handleFbErrors(error)
         })
     },
     loginUser(userDetails) {
@@ -66,25 +54,8 @@ export const useStoreAuth = defineStore("storeAuth", {
           // handled by onAuthStateChanged
         })
         .catch((error) => {
-
           Loading.hide()
-
-          let errorCode = error.code
-          let errorMessage = error.message
-          if (errorCode === "auth/wrong-password") {
-            errorMessage = "Wrong password."
-          }
-          else if (errorCode === "auth/user not found") {
-            errorMessage = "User not found."
-          }
-
-          Notify.create({
-            message: errorMessage,
-            icon: "warning",
-            color: "warning",
-          })
-          console.log(error)
-          console.log(errorCode)
+          handleFbErrors(error)
         })
     },
     handleAuthStateChange() {
@@ -101,10 +72,10 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.email = user.email
           this.isVerified = user.emailVerified
 
-          this.router.push("/");
+          this.router.push("/")
 
           // if anon user has some tests. save them to fb before reading
-          const storeResults = useStoreResults();
+          const storeResults = useStoreResults()
           if (storeResults.totalTestResults) {
             const keys = Object.keys(storeResults.tests)
             keys.forEach((key) => {
@@ -131,12 +102,26 @@ export const useStoreAuth = defineStore("storeAuth", {
       signOut(firebaseAuth)
       const storeResults = useStoreResults()
       storeResults.clearResults()
-      this.router.replace("/user");
+      this.router.replace("/user")
 
       // Notify.create({
       //   message: "Logged out",
       //   icon: "announcement",
       // })
+    },
+    forgotPassword(email) {
+      const actionCodeSettings = {
+        url: window.location.href + '?email=' + email,
+        handleCodeInApp: true
+      }
+
+      sendPasswordResetEmail(firebaseAuth, email, actionCodeSettings)
+        .then(() => {
+          showSuccessMessage("Password reset link sent", { icon: 'send' })
+        })
+        .catch((error) => {
+          handleFbErrors(error)
+        })
     }
   },
 })

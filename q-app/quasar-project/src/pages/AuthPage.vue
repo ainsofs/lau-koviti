@@ -32,7 +32,7 @@
               <div class="q-pb-md">{{ $t('pages.user.p1') }}
               </div>
 
-              <login-register tab="login" />
+              <login-register tab="login" :email="email" />
             </div>
 
           </q-tab-panel>
@@ -76,7 +76,8 @@ export default defineComponent({
   },
   data() {
     return {
-      tab: "login"
+      tab: "login",
+      email: "",
     }
   },
   computed: {
@@ -92,6 +93,9 @@ export default defineComponent({
   },
   components: {
     'login-register': require('components/Auth/LoginRegister.vue').default,
+  },
+  created() {
+    this.email = this.$route.query.email || ""
   }
 })
 </script>
