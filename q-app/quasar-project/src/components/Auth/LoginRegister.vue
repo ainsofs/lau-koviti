@@ -39,7 +39,7 @@
       </div>
 
       <div class="text-right">
-        <q-btn flat color="secondary" label="Forgot password" @click="forgotPassword" v-if="!isRegister" />
+        <q-btn flat color="secondary" :label="$t('label.forgotPassword')" @click="forgotPassword" v-if="!isRegister" />
         <q-btn type="submit" flat color="primary" :label="tabName" class="btn-submit" />
       </div>
     </div>

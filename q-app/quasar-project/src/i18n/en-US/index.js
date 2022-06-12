@@ -28,6 +28,8 @@ export default {
     yes: "Yes",
     later: "Later",
     dismiss: "Dismiss",
+    forgotPassword: "Forgot password",
+    email: "Email",
     // status
     testResultAdded: "@:label.testResult @.lower:label.added",
     testResultUpdated: "@:label.testResult @.lower:label.updated",
@@ -35,6 +37,14 @@ export default {
     profileAdded: "@:pages.profile.name @.lower:label.added",
     profileUpdated: "@:pages.profile.name @.lower:label.updated",
     profileDeleted: "@:pages.profile.name @.lower:label.deleted",
+    // errors
+    noInternet: "No internet detected",
+    wrongPassword: "Wrong password",
+    userNotFound: "Email not found",
+    emailInUse: "Email already in use",
+    userDisabled: "Email is disabled",
+    weakPassword: "Weak password",
+    invalidEmail: "Invalid emeail",
   },
   pages: {
     home: {
@@ -48,7 +58,7 @@ export default {
       resultsFound: "Malo lava! You've recorded {count} {pluralText}.",
       sortDesc: "Sort newest to oldest",
       sortAsc: "Sort oldest to newest",
-      installApp: "Install \"La'u Kōviti\"?",
+      installApp: 'Install "La\'u Kōviti"?',
     },
     profile: {
       name: "Profile",

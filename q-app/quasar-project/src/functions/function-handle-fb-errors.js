@@ -1,30 +1,30 @@
 import { showErrorMessage } from "./function-show-message"
 
-export function handleFbErrors(error) {
+export function handleFbErrors(error, $t) {
   const errorCode = error.code
   let errorMessage = ""
 
   switch (errorCode) {
     case "auth/network-request-failed":
-      errorMessage = "No internet detected."
+      errorMessage = $t('label.noInternet')
       break
     case "auth/wrong-password":
-      errorMessage = "Wrong password."
+      errorMessage = $t("label.wrongPassword")
       break
     case "auth/user-not-found":
-      errorMessage = "Email not found."
+      errorMessage = $t("label.userNotFound")
       break
     case "auth/email-already-in-use":
-      errorMessage = "Email already in use."
+      errorMessage = $t("label.emailInUse")
       break
     case "auth/user-disabled":
-      errorMessage = "Email is disabled."
+      errorMessage = $t("label.userDisabled")
       break
     case 'auth/weak-password':
-      errorMessage = "Weak password"
+      errorMessage = $t("label.weakPassword")
       break
     case 'auth/invalid-email':
-      errorMessage = "Invalid emeail"
+      errorMessage = $t("label.invalidEmail")
       break
     default:
       console.log(error.code)

@@ -39,7 +39,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         })
         .catch((error) => {
           Loading.hide()
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
     loginUser(userDetails) {
@@ -55,7 +55,7 @@ export const useStoreAuth = defineStore("storeAuth", {
         })
         .catch((error) => {
           Loading.hide()
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
     handleAuthStateChange() {
@@ -120,7 +120,7 @@ export const useStoreAuth = defineStore("storeAuth", {
           showSuccessMessage("Password reset link sent", { icon: 'send' })
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     }
   },

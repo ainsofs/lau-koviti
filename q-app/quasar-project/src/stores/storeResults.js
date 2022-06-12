@@ -378,7 +378,7 @@ export const useStoreResults = defineStore("storeResults", {
           showOnlineMessage(this.t("label.testResultAdded"))
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbUpdateTestResult(payload) {
@@ -390,7 +390,7 @@ export const useStoreResults = defineStore("storeResults", {
           showOnlineMessage(this.t("label.testResultUpdated"))
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbDeleteTestResult(id) {
@@ -401,7 +401,7 @@ export const useStoreResults = defineStore("storeResults", {
           showOnlineMessage(this.t("label.testResultDeleted"))
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
 
@@ -415,7 +415,7 @@ export const useStoreResults = defineStore("storeResults", {
           showOnlineMessage(this.t("label.profileAdded"))
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbUpdateProfile(payload) {
@@ -427,7 +427,7 @@ export const useStoreResults = defineStore("storeResults", {
           showOnlineMessage(this.t("label.profileUpdated"))
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
     fbDeleteProfile(id) {
@@ -438,7 +438,7 @@ export const useStoreResults = defineStore("storeResults", {
           showOnlineMessage(this.t("label.profileDeleted"))
         })
         .catch((error) => {
-          handleFbErrors(error)
+          handleFbErrors(error, this.t)
         })
     },
   },
