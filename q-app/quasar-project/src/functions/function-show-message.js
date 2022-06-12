@@ -8,22 +8,22 @@ export function showErrorMessage(errorMessage) {
   })
 }
 
-export function showOnlineMessage(errorMessage) {
+export function showOnlineMessage(message) {
   Notify.create({
-    message: errorMessage,
+    message: message,
     icon: "cloud_done",
   });
 }
-export function showOfflineMessage(errorMessage) {
+export function showOfflineMessage(message) {
   Notify.create({
-    message: errorMessage,
+    message: message,
     icon: "cloud_off",
   });
 }
 
-export function showSuccessMessage(errorMessage, options = { icon: check }) {
+export function showSuccessMessage(message, options = { icon: check }) {
   Notify.create({
-    message: errorMessage,
+    message: message,
     color: "positive",
     icon: options.icon,
   });

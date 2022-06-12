@@ -20,6 +20,12 @@ export function handleFbErrors(error) {
     case "auth/user-disabled":
       errorMessage = "Email is disabled."
       break
+    case 'auth/weak-password':
+      errorMessage = "Weak password"
+      break
+    case 'auth/invalid-email':
+      errorMessage = "Invalid emeail"
+      break
     default:
       console.log(error.code)
       errorMessage = error.message

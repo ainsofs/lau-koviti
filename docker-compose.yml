@@ -224,7 +224,7 @@ services:
     environment:
       - CYPRESS_baseUrl=http://node:8080
     # command: "npx test:e2e:ci:firefox"
-    command: "npx cypress run --browser chrome"
+    # command: "npx cypress run --browser chrome"
     # command: "npx cypress run --browser firefox"
     volumes:
     - ./:/e2e
