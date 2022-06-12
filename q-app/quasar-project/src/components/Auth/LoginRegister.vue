@@ -38,9 +38,8 @@
           />
       </div>
 
-      <!-- TODO add forgot password -->
       <div class="text-right">
-        <q-btn flat color="secondary" label="Forgot password" class="btn-submit" @click="forgotPassword" />
+        <q-btn flat color="secondary" label="Forgot password" @click="forgotPassword" v-if="!isRegister" />
         <q-btn type="submit" flat color="primary" :label="tabName" class="btn-submit" />
       </div>
     </div>

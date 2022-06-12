@@ -1,5 +1,3 @@
-// La'u Koviti tests
-
 describe('Landing', () => {
   beforeEach(() => {
     cy.visit("/");
@@ -110,8 +108,22 @@ describe('Landing', () => {
     });
   });
 
+  // test forget password
+  it("test forget password", () => {
+    cy.visit("/#/user");
+    cy.contains("Forgot password").click();
+
+    cy.get('input[aria-label="Email address"]')
+      .parent()
+      .parent()
+      .should("have.class", "text-negative");
+
+    cy.get(".q-tab__label").contains("Register").click();
+    cy.contains("Forgot password").should("not.exist");
+  });
+
+
   // TODO Test translations work
   // TODO Check basic fb integration
   // TODO check manage profiles, cannot delete profile if they have tests
-  // TODO test in mobile mode
 })
