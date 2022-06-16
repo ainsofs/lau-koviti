@@ -94,7 +94,7 @@ export default {
     addTest: {
       name: "Fa'aopoopo se @.lower:label.testResult",
       edit: "Sui se @.lower:label.testResult",
-      view: "@.lower:label.testResult",
+      view: "@label.testResult",
       e1: "Fa'amolemole toe siaki lau fomu",
     },
     submitTest: {

@@ -96,7 +96,7 @@ export default {
     addTest: {
       name: "Add @.lower:label.testResult",
       edit: "Edit @.lower:label.testResult",
-      view: "@.lower:label.testResult",
+      view: "@:label.testResult",
       e1: "Please check your form",
     },
     submitTest: {
