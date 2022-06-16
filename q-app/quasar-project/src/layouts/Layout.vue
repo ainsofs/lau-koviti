@@ -62,7 +62,7 @@
       <div class="q-pa-md">
         <q-item to="/" class="text-white">
           <q-item-section>
-            <div class="text-h4">La'u Koviti</div>
+            <div class="text-h4">La'u Kōviti</div>
             <div class="text-subtitle1">{{ todaysDate }}</div>
           </q-item-section>
         </q-item>
