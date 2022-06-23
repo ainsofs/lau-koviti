@@ -1,0 +1,7 @@
+
+ARG FROM_TAG
+FROM wodby/node:${FROM_TAG}
+
+RUN yarn global add @quasar/cli
+
+CMD [ "yarn" ]

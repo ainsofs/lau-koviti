@@ -198,17 +198,36 @@ services:
 #      WEAVER_WORKER_TIMEOUT: 90
 #      WEAVER_CONVERSION_FALLBACK: "false"
 
-  node:
-    image: wodby/node:$NODE_TAG
-    container_name: "${PROJECT_NAME}_node"
-    working_dir: /var/www/html/q-app/quasar-project/
+  # node:
+  #   image: wodby/node:$NODE_TAG
+  #   container_name: "${PROJECT_NAME}_node"
+  #   working_dir: /var/www/html/q-app/quasar-project/
+  #   labels:
+  #   - "traefik.http.services.${PROJECT_NAME}_node.loadbalancer.server.port=3000"
+  #   - "traefik.http.routers.${PROJECT_NAME}_node.rule=Host(`node.${PROJECT_BASE_URL}`)"
+  #   expose:
+  #   - "3000"
+  #   volumes:
+  #   - ./:/var/www/html
+  #   command: sh -c 'yarn install && yarn dev'
+  #   ports:
+  #     - '8080:8080'
+
+  quasar:
+    # image: wodby/node:$NODE_TAG
+    build:
+      context: ./build_images/quasar
+      args:
+        FROM_TAG: $NODE_TAG
+    container_name: "${PROJECT_NAME}_quasar"
+    working_dir: /app/q-app/quasar-project/
     labels:
     - "traefik.http.services.${PROJECT_NAME}_node.loadbalancer.server.port=3000"
     - "traefik.http.routers.${PROJECT_NAME}_node.rule=Host(`node.${PROJECT_BASE_URL}`)"
     expose:
     - "3000"
     volumes:
-    - ./:/var/www/html
+    - ./:/app
     command: sh -c 'yarn install && yarn dev'
     ports:
       - '8080:8080'
@@ -220,9 +239,9 @@ services:
     container_name: "${PROJECT_NAME}_cypress"
     working_dir: /e2e/q-app/quasar-project
     depends_on:
-      - node
+      - quasar
     environment:
-      - CYPRESS_baseUrl=http://node:8080
+      - CYPRESS_baseUrl=http://quasar:8080
     # command: "npx test:e2e:ci:firefox"
     # command: "npx cypress run --browser chrome"
     # command: "npx cypress run --browser firefox"
