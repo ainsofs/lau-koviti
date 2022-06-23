@@ -55,7 +55,7 @@ export default {
       p3: "You can also {0} an account to access your tests from any device!",
       p4: "Press the {0} button to {1}",
       p4GetStarted: "get started!",
-      resultsFound: "Malo lava! You've recorded {count} {pluralText}.",
+      resultsFound: "Mālō lava! You've recorded {count} {pluralText}.",
       sortDesc: "Sort newest to oldest",
       sortAsc: "Sort oldest to newest",
       installApp: 'Install "La\'u Kōviti"?',

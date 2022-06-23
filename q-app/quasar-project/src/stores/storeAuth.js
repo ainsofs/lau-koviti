@@ -37,7 +37,7 @@ export const useStoreAuth = defineStore("storeAuth", {
       )
         .then((response) => {
           const user = response.user
-          const currentDomain = window.location.href
+          const currentDomain = window.location.origin
           const actionCodeSettings = {
             url: currentDomain,
           }
@@ -120,9 +120,9 @@ export const useStoreAuth = defineStore("storeAuth", {
       // })
     },
     forgotPassword(email) {
-      const currentDomain = window.location.href
+      const currentPage = window.location.href
       const actionCodeSettings = {
-        url: currentDomain + '?email=' + email,
+        url: currentPage + '?email=' + email,
         handleCodeInApp: true
       }
 

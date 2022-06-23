@@ -373,7 +373,7 @@ export const useStoreResults = defineStore("storeResults", {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
 
-      let isVerified = firebaseAuth.currentUser.isVerified
+      let isVerified = firebaseAuth.currentUser.emailVerified
       if (isVerified) {
         set(testRef, payload.testResult)
         .then(() => {
@@ -383,12 +383,15 @@ export const useStoreResults = defineStore("storeResults", {
           handleFbErrors(error, this.t)
         })
       }
+      else {
+        showOfflineMessage(this.t("label.testResultAdded"))
+      }
     },
     fbUpdateTestResult(payload) {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + payload.id)
 
-      let isVerified = firebaseAuth.currentUser.isVerified
+      let isVerified = firebaseAuth.currentUser.emailVerified
       if (isVerified) {
         update(testRef, payload.updates)
           .then(() => {
@@ -398,12 +401,15 @@ export const useStoreResults = defineStore("storeResults", {
             handleFbErrors(error, this.t)
           })
       }
+      else {
+        showOfflineMessage(this.t("label.testResultUpdated"))
+      }
     },
     fbDeleteTestResult(id) {
       let userId = firebaseAuth.currentUser.uid
       let testRef = ref(firebaseDb, userId + "/tests/" + id)
-      let isVerified = firebaseAuth.currentUser.isVerified
-        if (isVerified) {
+      let isVerified = firebaseAuth.currentUser.emailVerified
+      if (isVerified) {
         remove(testRef)
           .then(() => {
             showOnlineMessage(this.t("label.testResultDeleted"))
@@ -412,6 +418,9 @@ export const useStoreResults = defineStore("storeResults", {
             handleFbErrors(error, this.t)
           })
       }
+      else {
+        showOfflineMessage(this.t("label.testResultDeleted"))
+      }
     },
 
     // Profiles
@@ -419,7 +428,7 @@ export const useStoreResults = defineStore("storeResults", {
       let userId = firebaseAuth.currentUser.uid
       let profileRef = ref(firebaseDb, userId + "/profiles/" + payload.id)
 
-      let isVerified = firebaseAuth.currentUser.isVerified
+      let isVerified = firebaseAuth.currentUser.emailVerified
       if (isVerified) {
         set(profileRef, payload.profile)
         .then(() => {
@@ -429,12 +438,15 @@ export const useStoreResults = defineStore("storeResults", {
           handleFbErrors(error, this.t)
         })
       }
+      else {
+        showOfflineMessage(this.t("label.profileAdded"))
+      }
     },
     fbUpdateProfile(payload) {
       let userId = firebaseAuth.currentUser.uid
       let profileRef = ref(firebaseDb, userId + "/profiles/" + payload.id)
 
-      let isVerified = firebaseAuth.currentUser.isVerified
+      let isVerified = firebaseAuth.currentUser.emailVerified
       if (isVerified) {
         update(profileRef, payload.updates)
         .then(() => {
@@ -444,11 +456,14 @@ export const useStoreResults = defineStore("storeResults", {
           handleFbErrors(error, this.t)
         })
       }
+      else {
+        showOfflineMessage(this.t("label.profileUpdated"))
+      }
     },
     fbDeleteProfile(id) {
       let userId = firebaseAuth.currentUser.uid
       let profileRef = ref(firebaseDb, userId + "/profiles/" + id)
-      let isVerified = firebaseAuth.currentUser.isVerified
+      let isVerified = firebaseAuth.currentUser.emailVerified
       if (isVerified) {
         remove(profileRef)
         .then(() => {
@@ -457,6 +472,9 @@ export const useStoreResults = defineStore("storeResults", {
         .catch((error) => {
           handleFbErrors(error, this.t)
         })
+      }
+      else {
+        showOfflineMessage(this.t("label.profileDeleted"))
       }
     },
   },
