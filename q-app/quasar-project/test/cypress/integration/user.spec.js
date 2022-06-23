@@ -1,4 +1,4 @@
-// La'u Koviti tests
+// La'u Kōviti tests
 describe('User', () => {
   beforeEach(() => {
     cy.visit("/#/user");

@@ -161,8 +161,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `La'u Koviti - Record and share your COVID-19 self tests easily`,
-        short_name: `La'u Koviti`,
+        name: `La'u Kōviti - Record and share your COVID-19 self tests easily`,
+        short_name: `La'u Kōviti`,
         description: `Make recording and sharing your COVID-19 self tests easier`,
         display: "standalone",
         orientation: "portrait",

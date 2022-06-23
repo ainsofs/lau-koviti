@@ -1,4 +1,4 @@
-# La'u Koviti
+# La'u Kōviti
 
 Repo for learning Quasar.
 
