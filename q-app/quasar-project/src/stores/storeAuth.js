@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signOut,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth"
 import { useStoreResults } from './storeResults'
 import { Loading, LocalStorage } from "quasar"
@@ -35,7 +36,16 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          showSuccessMessage("Registered")
+          const user = response.user
+          const currentDomain = window.location.href
+          const actionCodeSettings = {
+            url: currentDomain,
+          }
+
+          sendEmailVerification(user, actionCodeSettings)
+            .then((response) => {
+              showSuccessMessage("Thanks for registering. Please check your email to verify your account.")
+            })
         })
         .catch((error) => {
           Loading.hide()
@@ -110,8 +120,9 @@ export const useStoreAuth = defineStore("storeAuth", {
       // })
     },
     forgotPassword(email) {
+      const currentDomain = window.location.href
       const actionCodeSettings = {
-        url: window.location.href + '?email=' + email,
+        url: currentDomain + '?email=' + email,
         handleCodeInApp: true
       }
 

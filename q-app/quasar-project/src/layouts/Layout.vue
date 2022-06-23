@@ -32,6 +32,13 @@
         <q-btn v-else dense flat no-wrap>
           <q-avatar size="26px" color="accent" text-color="dark">
             {{ alias }}
+            <!-- unverified status -->
+            <q-badge v-if="!store.isVerified" floating color="warning" rounded />
+            <q-tooltip v-if="!store.isVerified">
+              Verify your account to access your tests from any device.
+            </q-tooltip>
+            <!-- verified status -->
+            <q-badge v-if="store.isVerified" floating color="positive" rounded />
           </q-avatar>
           <q-icon name="arrow_drop_down" size="16px" />
 
