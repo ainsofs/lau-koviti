@@ -3,7 +3,7 @@ describe('Landing', () => {
     cy.visit("/");
   });
   it("show correct app name", () => {
-    cy.title().should("include", "La'u Koviti");
+    cy.title().should("include", "La'u Kōviti");
   });
 
   // tests
