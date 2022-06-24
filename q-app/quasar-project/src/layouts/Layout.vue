@@ -66,7 +66,7 @@
         </q-btn>
       </q-toolbar>
 
-      <div class="q-pa-md">
+      <div>
         <q-item to="/" class="text-white">
           <q-item-section>
             <div class="text-h4">La'u Kōviti</div>
@@ -98,6 +98,14 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer class="bg-primary text-white lt-sm">
+      <q-tabs active-color="accent">
+        <q-route-tab to="/personal" icon="person" />
+        <q-route-tab to="/" icon="home" />
+        <q-route-tab to="/settings" icon="settings" />
+      </q-tabs>
+    </q-footer>
   </q-layout>
 </template>
 
