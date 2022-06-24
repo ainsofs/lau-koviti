@@ -3,5 +3,5 @@ import sm from "./sm"
 
 export default {
   "en-US": enUS,
-  "en-GB": sm,
+  "sm": sm,
 };

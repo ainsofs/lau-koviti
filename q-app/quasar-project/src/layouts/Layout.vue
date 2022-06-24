@@ -83,7 +83,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      :width="220"
+      :width="180"
     >
       <q-list class="q-pt-md">
 
@@ -102,12 +102,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-import { date } from 'quasar'
+import { defineComponent, ref, watch } from 'vue'
+import { useQuasar, date, LocalStorage } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { useStoreAuth } from 'stores/storeAuth'
 import { useStoreResults } from 'stores/storeResults'
-import { useI18n } from 'vue-i18n'
+import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
@@ -144,10 +144,22 @@ export default defineComponent({
   },
 
   setup () {
+    const $q = useQuasar()
     const { locale } = useI18n({ useScope: 'global' })
     const leftDrawerOpen = ref(false)
     const store = useStoreAuth()
     const storeResults = useStoreResults()
+
+    watch(locale, val => {
+      // dynamically set the lang pack
+      LocalStorage.set("language", val)
+
+      import(
+        'quasar/lang/' + val
+        ).then(lang => {
+          $q.lang.set(lang.default)
+        })
+    })
 
     return {
       // essentialLinks: linksList,
@@ -160,7 +172,7 @@ export default defineComponent({
       locale,
       localeOptions: [
         { value: 'en-US', label: 'English' },
-        { value: 'en-GB', label: 'Fa\'asāmoa' }
+        { value: 'sm', label: 'Fa\'asāmoa' }
       ],
     }
   },
@@ -185,6 +197,8 @@ export default defineComponent({
       return linksList
     },
     todaysDate() {
+      // hack to trigger updating the date when lang changes
+      let close = this.$q.lang.label.close
       return date.formatDate(Date.now(), 'dddd D MMMM, YYYY')
     },
     alias() {

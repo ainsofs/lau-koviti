@@ -27,6 +27,7 @@ module.exports = configure(function (ctx) {
       'firebase',
       'router-auth',
       'i18n',
+      'quasar-lang-pack',
     ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
@@ -102,7 +103,7 @@ module.exports = configure(function (ctx) {
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set
-      lang: 'en-GB', // Quasar language pack
+      lang: 'sm', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
