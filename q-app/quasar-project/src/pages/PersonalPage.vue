@@ -10,7 +10,7 @@
             <div class="q-gutter-md q-pb-md" >
               <div class="row">
 
-                  <q-input ref="firstName" autofocus outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your name.' ]" />
+                  <q-input ref="firstName" :autofocus="!hasName" outlined v-model="personal.firstName" label="First name" hint="Igoa Muamua" class="col q-pr-md" :rules="[ val => val.length || 'Please enter your name.' ]" />
 
                   <q-input ref="lastName" outlined v-model="personal.lastName" label="Last name" hint="Fa'ai'u" class="col" :rules="[ val => val.length || 'Please enter your name.' ]" />
               </div>
@@ -152,7 +152,12 @@ export default defineComponent({
     }
   },
   computed: {
-
+    hasName() {
+      if(this.personal.firstName && this.personal.lastName) {
+        return true
+      }
+      return false
+    },
     navMin() {
       let newDate = date.subtractFromDate(Date.now(), { years: 200 })
       return date.formatDate(newDate, 'YYYY/MM')

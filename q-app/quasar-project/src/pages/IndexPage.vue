@@ -28,7 +28,7 @@
                     </i18n-t>
 
                     <i18n-t keypath="pages.home.p4" tag="p" @click="addTest" class="cursor-pointer">
-                      <q-avatar icon="add" color="primary" class="text-white" size="xs" />
+                      <q-avatar icon="add" color="accent" class="text-white" size="xs" />
                       <strong>{{ $t('pages.home.p4GetStarted') }}</strong>
                     </i18n-t>
 
@@ -116,7 +116,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="primary" />
+                    <q-icon v-if="!t.isSubmitted" @click.stop="submitTest(key, t)" name="send" color="secondary" />
                     <q-icon v-else name="task_alt" color="grey" />
                   </q-item-section>
 
@@ -142,7 +142,7 @@
         <q-btn
           fab
           icon="add"
-          color="primary"
+          color="accent"
           :disable="draggingFab"
           v-touch-pan.prevent.mouse="moveFab"
           @click="addTest" />
