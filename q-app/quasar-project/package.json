@@ -2,7 +2,7 @@
   "name": "quasar-project",
   "version": "0.0.1",
   "description": "Make recording and sharing your COVID-19 self tests easier",
-  "productName": "La'u Koviti",
+  "productName": "La'u Kōviti",
   "author": "Ainsof So'o <ainsof.soo@gmail.com>",
   "private": true,
   "scripts": {

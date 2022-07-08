@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signOut,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth"
 import { useStoreResults } from './storeResults'
 import { Loading, LocalStorage } from "quasar"
@@ -35,7 +36,16 @@ export const useStoreAuth = defineStore("storeAuth", {
         userDetails.password
       )
         .then((response) => {
-          showSuccessMessage("Registered")
+          const user = response.user
+          const currentDomain = window.location.origin
+          const actionCodeSettings = {
+            url: currentDomain,
+          }
+
+          sendEmailVerification(user, actionCodeSettings)
+            .then((response) => {
+              showSuccessMessage("Thanks for registering. Please check your email to verify your account.")
+            })
         })
         .catch((error) => {
           Loading.hide()
@@ -74,9 +84,9 @@ export const useStoreAuth = defineStore("storeAuth", {
 
           this.router.push("/")
 
-          // if anon user has some tests. save them to fb before reading
+          // if anon user has some tests. save them to fb before reading when they verify their account
           const storeResults = useStoreResults()
-          if (storeResults.totalTestResults) {
+          if (this.isVerified && storeResults.totalTestResults) {
             const keys = Object.keys(storeResults.tests)
             keys.forEach((key) => {
               storeResults.fbAddTestResult({id: key, testResult: storeResults.tests[key]})
@@ -110,8 +120,9 @@ export const useStoreAuth = defineStore("storeAuth", {
       // })
     },
     forgotPassword(email) {
+      const currentPage = window.location.href
       const actionCodeSettings = {
-        url: window.location.href + '?email=' + email,
+        url: currentPage + '?email=' + email,
         handleCodeInApp: true
       }
 
