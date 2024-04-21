@@ -22,5 +22,3 @@ jobs:
           command: yarn test:e2e:ci:novid
           working-directory: q-app/quasar-project
           browser: chrome
-          wait-on: 'http://localhost:8080'  
-          wait-on-timeout: 300  # Timeout in seconds for wait-on
