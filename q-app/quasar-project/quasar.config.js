@@ -85,7 +85,6 @@ module.exports = configure(function (ctx) {
       },
       port: 8080,
       open: false, // opens browser window automatically
-      host: '0.0.0.0', // listen on all IPs
 
       proxy: {
         // proxy requests to fix cors error. also update public/_redirects file
